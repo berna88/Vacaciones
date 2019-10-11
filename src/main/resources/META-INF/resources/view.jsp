@@ -9,16 +9,30 @@
 	
 .hr-remuneracion{
 	border-top: 1px solid #CCB874;
-    width: 97.5%;
+    width: 81%;
     margin: 0px;
     display: block;
     margin: auto;
+    padding-bottom: 2rem;
+}
+.banner-remuneracion{
+  width: 100%;
+  height: 148px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 1rem;
 }
 </style>
 
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/table.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/collapse.css"%>'>
 
+<div class="tituloSeccion-contenedor d-flex align-items-center justify-content-center banner-remuneracion" style="background-image: url('<%=request.getContextPath()+"/img/img-vacaciones.jpg"%>');">
+	<div class="mascara-tituloSeccion"></div>
+	<h1 class="tituloSeccion position-absolute">
+				Vacaciones
+	</h1>
+</div>
 <body id="vacaciones" class="container">
 	<header class="row align-items-center">
 		<div class="offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
