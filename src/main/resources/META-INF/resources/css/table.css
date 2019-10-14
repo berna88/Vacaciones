@@ -7,15 +7,17 @@
 .tablehead-remuneracion, th{
 	border-bottom: solid 1px #838383;
 	text-align: center;
-    font-weight: 400;
+    font-weight: 800;
 }
 .tablehead-remuneracion, .ulti:nth-last-of-type(1){
 	border-top: solid 1px #838383;
 	border-collapse: collapse;
 }
-.tablehead-remuneracion, td:nth-last-child(-n+2){
-	text-align: right;
+.tablehead-remuneracion, td:nth-last-child(-n+4){
+	text-align: center;
 }
-.tablehead-remuneracion, td:nth-last-child(3){
-	font-weight: 500;
+
+.ulti td[colspan="2"]{
+	font-weight: 800;
+	text-align: left;
 }

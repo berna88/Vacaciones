@@ -4,7 +4,8 @@
 	display: inline-block;
 }
 .number{
-	font-size:8rem;
+	font-size:7rem;
+	font-weight: 900;
 }
 	
 .hr-remuneracion{
@@ -29,7 +30,21 @@
   border: none;
   color: transparent;
 }
-
+.fw-g{
+	font-weight: 300;
+}
+.fw-t{
+	font-weight: 500;
+}
+.l-h{
+	line-height: 20px;
+}
+.yellow{
+	color: #cbb874;
+}
+.m-l{
+	margin-left: 1rem;
+}
 
 </style>
 
@@ -47,15 +62,15 @@
 	<header class="row align-items-center">
 		<div class="offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
 			<hgroup>
-				<h2>Gonzalez Marin</h2>
-				<h3>Jose Antonio</h3>
+				<h3 class="fw-g">Gonzalez Marin</h3>
+				<h1 class="fw-t l-h">Jose Antonio</h1>
 			</hgroup>
 		</div>
 		<div class="offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
-			<h1 class="inLine number">8</h1>
+			<h1 class="inLine number yellow">8</h1>
 			<hgroup class="inLine">
-				<h1>Dias</h1>
-				<h1>Habiles diponibles</h1>
+				<h2 class="fw-g">Días</h2>
+				<h2 class="fw-g l-h">hábiles diponibles</h2>
 			</hgroup>
 		</div>
 		<hr class="hr-remuneracion">
@@ -67,7 +82,7 @@
 					<h5>Número de Empleado:</h5>
 				</article>
 				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>01007809</h5>
+					<h5 class="fw-g">01007809</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -77,7 +92,7 @@
 					<h5>Fecha de Ingreso:</h5>
 				</article>
 				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Miercoles, Noviembre 23, 2005</h5>
+					<h5 class="fw-g">Miercoles, Noviembre 23, 2005</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -87,7 +102,7 @@
 					<h5>Puesto:</h5>
 				</article>
 				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Coordinadora Gral RH</h5>
+					<h5 class="fw-g">Coordinadora Gral RH</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -97,7 +112,7 @@
 					<h5>Departamento:</h5>
 				</article>
 				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>RH Domestico</h5>
+					<h5 class="fw-g">RH Domestico</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -107,7 +122,7 @@
 					<h5>Centro de Costos:</h5>
 				</article>
 				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>202G100122</h5>
+					<h5 class="fw-g">202G100122</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -117,7 +132,7 @@
 					<h5>Centro de Trabajo:</h5>
 				</article>
 				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Churubusco</h5>
+					<h5 class="fw-g">Churubusco</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -134,7 +149,7 @@
 	</section><!-- Fin seccion -->
 	<aside class="row">
 		<blockquote class="offset-md-1 col-md-10 colapsable-remuneracion">
-				<button type="button" class="collapsible">Mis Beneficios <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
+				<button type="button" class="collapsible">Días disfrutados <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
 					<div class="content">
 						<div class="table-responsive">
 						  <table class="table-vacaciones" cellpadding="5">
@@ -175,7 +190,7 @@
 					</div>
 		</blockquote><!-- Fin de dias disfrutados -->
 		<blockquote class="offset-md-1 col-md-10 colapsable-remuneracion">
-				<button type="button" class="collapsible">Mis Beneficios <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
+				<button type="button" class="collapsible">Vacaciones pendientes por autorizar con RH <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
 					<div class="content" style="background: black;border-radius: 20px;margin: 22px 5px;padding: 18px;">
 						<section class="row" style="padding: 15px">
 							<article class="col-md-12">
@@ -184,9 +199,9 @@
 							<article class="col-sm-12 col-md-4" style="border: solid 1px white;
     border-radius: 20px;
     padding: 20px;">
-								<section class="row">
-									<article class="col-md-2"><h1>1</h1></article>
-									<article class="col-md-10"><h5>Día a disfrutar</h5></article>
+								<section class="row align-items-center">
+									<article class="col-2 col-sm-2 col-md-12 col-lg-2"><h1 class="yellow number">1</h1></article>
+									<article class="col-10 col-sm-10 col-md-12 col-lg-10"><h3>Día</h3><h3>a disfrutar</h3></article>
 		
 									<article class="col-sm-8 col-md-12 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
 									<article class="col-sm-4 col-lg-4"><h6>05/12/2007</h6></article>
@@ -272,8 +287,8 @@
 										    border-radius: 20px;
 										    padding: 20px;">
 																		<section class="row">
-																			<article class="col-md-2"><h1>1</h1></article>
-																			<article class="col-md-10"><h5>Día a disfrutar</h5></article>
+																			<article class="col-md-2"><h1 class="yellow">1</h1></article>
+																			<article class="col-md-10"><h3 class="m-l">Día</h3><h3 class="m-l">a disfrutar</h3></article>
 												
 																			<article class="col-sm-8 col-md-12 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
 																			<article class="col-sm-4 col-lg-4"><h6>05/12/2007</h6></article>
