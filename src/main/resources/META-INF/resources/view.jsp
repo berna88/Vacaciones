@@ -45,7 +45,12 @@
 .m-l{
 	margin-left: 1rem;
 }
-
+.hr-v{
+	border-top: 1px solid #838383;
+    width: 94%;
+    display: block;
+    margin: 1.1rem auto;
+}
 </style>
 
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/table.css"%>'>
@@ -77,71 +82,71 @@
 	</header>
 	<section class="row">
 		<article class="col-md-12">
-			<section class="row">
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+			<section class="row align-items-center">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5>Número de Empleado:</h5>
 				</article>
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5 class="fw-g">01007809</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 		<article class="col-md-12">
-			<section class="row">
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+			<section class="row align-items-center">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5>Fecha de Ingreso:</h5>
 				</article>
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5 class="fw-g">Miercoles, Noviembre 23, 2005</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 		<article class="col-md-12">
-			<section class="row">
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+			<section class="row align-items-center">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5>Puesto:</h5>
 				</article>
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5 class="fw-g">Coordinadora Gral RH</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 		<article class="col-md-12">
-			<section class="row">
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+			<section class="row align-items-center">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5>Departamento:</h5>
 				</article>
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5 class="fw-g">RH Domestico</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 		<article class="col-md-12">
-			<section class="row">
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+			<section class="row align-items-center">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5>Centro de Costos:</h5>
 				</article>
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5 class="fw-g">202G100122</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 		<article class="col-md-12">
-			<section class="row">
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+			<section class="row align-items-center">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5>Centro de Trabajo:</h5>
 				</article>
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5 class="fw-g">Churubusco</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 		<article class="col-md-12">
-			<section class="row">
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+			<section class="row align-items-center">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5>Aniversario:</h5>
 				</article>
-				<article class="offset-md-1 col-md-5 offset-lg-1 col-lg-5">
+				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5>1</h5>
 				</article>
 			</section>
@@ -201,23 +206,23 @@
     padding: 20px;">
 								<section class="row align-items-center">
 									<article class="col-2 col-sm-2 col-md-12 col-lg-2"><h1 class="yellow number">1</h1></article>
-									<article class="col-10 col-sm-10 col-md-12 col-lg-10"><h3>Día</h3><h3>a disfrutar</h3></article>
+									<article class="col-10 col-sm-10 col-md-12 col-lg-10"><h3 style="margin-left: 1rem">Día</h3><h3 style="margin-left: 1rem">a disfrutar</h3></article>
 		
-									<article class="col-sm-8 col-md-12 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
-									<article class="col-sm-4 col-lg-4"><h6>05/12/2007</h6></article>
-									<article class="col-md-12 col-lg-8"><h6>Regreso a laborar:</h6></article>
-									<article class="col-md-12 col-lg-4"><h6>05/14/2007</h6></article>
-									<article class="col-md-12 col-lg-8"><h6>Saldo anterior:</h6></article>
-									<article class="col-md-12 col-lg-4"><h6>8 días</h6></article>
-									<article class="col-md-12 col-lg-8"><h6>Dias disponibles:</h6></article>
-									<article class="col-md-12 col-lg-4"><h6>7 días</h6></article>
+									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
+									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">05/12/2007</h6></article>
+									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Regreso a laborar:</h6></article>
+									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">05/14/2007</h6></article>
+									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Saldo anterior:</h6></article>
+									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">8 días</h6></article>
+									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Dias disponibles:</h6></article>
+									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">7 días</h6></article>
 								
-									<hr class="hr-remuneracion">
+									<hr class="hr-v">
 								
-									<article class="col-md-12 col-lg-8"><h6>Registro:</h6></article>
-									<article class="col-md-12 col-lg-4"><h6>139</h6></article>
-									<article class="col-md-12 col-lg-8"><h6>Fecha de registro:</h6></article>
-									<article class="col-md-12 col-lg-4"><h6>05/10/2017</h6></article>
+									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Registro:</h6></article>
+									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">139</h6></article>
+									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Fecha de registro:</h6></article>
+									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">05/10/2017</h6></article>
 								</section>
 							</article>
 							<article class="col-sm-12 col-md-8">
