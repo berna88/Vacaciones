@@ -1,6 +1,14 @@
 .table-vacaciones{
-	width: 100%;
+	width: 95%;
     margin-top: 15px;
+    margin:auto;
+    border-collapse: collapse;
+}
+
+.table-vacaciones2{
+	width: 95%;
+    margin-top: 15px;
+    margin:auto;
     border-collapse: collapse;
 }
 
@@ -8,6 +16,8 @@
 	border-bottom: solid 1px #838383;
 	text-align: center;
     font-weight: 800;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
 }
 .tablehead-remuneracion, .ulti:nth-last-of-type(1){
 	border-top: solid 1px #838383;
@@ -20,4 +30,9 @@
 .ulti td[colspan="2"]{
 	font-weight: 800;
 	text-align: left;
+}
+
+.table-vacaciones2 tbody tr td{
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
 }

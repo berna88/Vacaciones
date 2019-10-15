@@ -227,7 +227,7 @@
 							</article>
 							<article class="col-sm-12 col-md-8">
 								<div class="table-responsive">
-									  <table class="table-vacaciones" cellpadding="5">
+									  <table class="table-vacaciones2" cellpadding="5">
 										  <thead>
 										  	<tr>
 										      <th class="thead-title">Personal</th>
@@ -237,7 +237,7 @@
 										  </thead> 
 										  <tbody>
 										  	<tr>
-										      <td>Robles Marin Marian</td>
+										      <td><h3>Robles Marin Marian</h3><h3>Empleado</h3></td>
 										      <td>-</td>
 										      <td>-</td>
 										    </tr>
