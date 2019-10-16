@@ -1,0 +1,46 @@
+@charset "UTF-8";
+.inLine{
+	display: inline-block;
+}
+.number{
+	font-size:7rem;
+	font-weight: 900;
+}
+	
+.hr-vacaciones{
+	border-top: 1px solid #CCB874;
+    width: 81%;
+    margin: 0px;
+    display: block;
+    margin: auto;
+    padding-bottom: 2rem;
+}
+
+.button-cuervo-marcas{
+  width: 50px;
+  height: auto;
+  background: transparent;
+  border: none;
+  color: transparent;
+}
+.fw-g{
+	font-weight: 300;
+}
+.fw-t{
+	font-weight: 500;
+}
+.l-h{
+	line-height: 20px;
+}
+.yellow{
+	color: #cbb874;
+}
+.m-l{
+	margin-left: 1rem;
+}
+.hr-v{
+	border-top: 1px solid #838383;
+    width: 94%;
+    display: block;
+    margin: 1.1rem auto;
+}

@@ -1,86 +1,22 @@
-<%@ include file="/init.jsp" %>
-
-<style>
-.inLine{
-	display: inline-block;
-}
-.number{
-	font-size:7rem;
-	font-weight: 900;
-}
-	
-.hr-remuneracion{
-	border-top: 1px solid #CCB874;
-    width: 81%;
-    margin: 0px;
-    display: block;
-    margin: auto;
-    padding-bottom: 2rem;
-}
-.banner-remuneracion{
-  width: 100%;
-  height: 148px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin-bottom: 1rem;
-}
-.button-cuervo-marcas{
-  width: 50px;
-  height: auto;
-  background: transparent;
-  border: none;
-  color: transparent;
-}
-.fw-g{
-	font-weight: 300;
-}
-.fw-t{
-	font-weight: 500;
-}
-.l-h{
-	line-height: 20px;
-}
-.yellow{
-	color: #cbb874;
-}
-.m-l{
-	margin-left: 1rem;
-}
-.hr-v{
-	border-top: 1px solid #838383;
-    width: 94%;
-    display: block;
-    margin: 1.1rem auto;
-}
-</style>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="init.jsp" %>
+   
+<portlet:renderURL var="renderSolicitud">
+	<portlet:param name="mvcPath" value="/solicitud.jsp"/>
+</portlet:renderURL>
 
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/table.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/collapse.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/modal.css"%>'>
+<link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/banner.css"%>'>
+<link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/general.css"%>'>
 
-<div class="tituloSeccion-contenedor d-flex align-items-center justify-content-center banner-remuneracion" style="background-image: url('<%=request.getContextPath()+"/img/img-vacaciones.jpg"%>');">
-	<div class="mascara-tituloSeccion"></div>
-	<h1 class="tituloSeccion position-absolute">
-				Vacaciones
-	</h1>
-</div>
+<!-- Banner General de Vacaciones -->
+<%@ include file="section/header/banner.jsp" %>
 <body id="vacaciones" class="container">
-	<header class="row align-items-center">
-		<div class="offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
-			<hgroup>
-				<h3 class="fw-g">Gonzalez Marin</h3>
-				<h1 class="fw-t l-h">Jose Antonio</h1>
-			</hgroup>
-		</div>
-		<div class="offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
-			<h1 class="inLine number yellow">8</h1>
-			<hgroup class="inLine">
-				<h2 class="fw-g">D&iacute;as</h2>
-				<h2 class="fw-g l-h">h&aacute;biles diponibles</h2>
-			</hgroup>
-		</div>
-		<hr class="hr-remuneracion">
-	</header>
+	<!-- Seccion de nombre y dias habiles -->
+	<%@ include file="section/header/header.jsp" %>
 	<section class="row">
 		<article class="col-md-12">
 			<section class="row align-items-center">
@@ -274,148 +210,11 @@
 	</aside>
 	<aside class="row">
 		<blockquote class="offset-md-1 col-md-10 offset-lg-1 col-lg-10 offset-xl-1 col-xl-10">
-			<button style="float: right;border: none;background: #CCB874;padding: 5px 34px;">Solicitar d&iacute;as</button>
+			<a href="${renderSolicitud}" style="float: right;border: none;background: #CCB874;padding: 5px 34px;text-decoration: none;color: black;font-weight: 400;">Solicitar d&iacute;as</a>
 		</blockquote>
 	</aside>
-	<!-- Modal -->
-                                                <div id="myModal-cuervo-marcas" class="modal-cuervo-marcas">
-                                                  <div class="modal-content-cuervo-marcas">
-                                                    
-                                                    <div class="container">
-                                                      <div class="row">
-                                                        <div class="col-md-12">
-                                                        	<div class="row" style="padding: 30px">
-                                                        		<div class="col-md-12">
-                                                        			<span class="close-cuervo-marcas" style="color:#CCB874">&times;</span>
-                                                        		</div>
-                                                        		<div class="col-md-12">
-                                                        			<section class="row">
-																	<article class="col-md-12">
-																		<h4>Aviso de vacaciones</h4>
-																	</article>
-																	<article class="col-sm-12 col-md-4" style="border: solid 1px white;
-										    border-radius: 20px;
-										    padding: 20px;">
-																		<section class="row">
-																			<article class="col-md-2"><h1 class="yellow">1</h1></article>
-																			<article class="col-md-10"><h3 class="m-l">Día</h3><h3 class="m-l">a disfrutar</h3></article>
-												
-																			<article class="col-sm-8 col-md-12 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
-																			<article class="col-sm-4 col-lg-4"><h6>05/12/2007</h6></article>
-																			<article class="col-md-12 col-lg-8"><h6>Regreso a laborar:</h6></article>
-																			<article class="col-md-12 col-lg-4"><h6>05/14/2007</h6></article>
-																			<article class="col-md-12 col-lg-8"><h6>Saldo anterior:</h6></article>
-																			<article class="col-md-12 col-lg-4"><h6>8 días</h6></article>
-																			<article class="col-md-12 col-lg-8"><h6>Dias disponibles:</h6></article>
-																			<article class="col-md-12 col-lg-4"><h6>7 días</h6></article>
-																		
-																			<hr class="hr-remuneracion">
-																		
-																			<article class="col-md-12 col-lg-8"><h6>Registro:</h6></article>
-																			<article class="col-md-12 col-lg-4"><h6>139</h6></article>
-																			<article class="col-md-12 col-lg-8"><h6>Fecha de registro:</h6></article>
-																			<article class="col-md-12 col-lg-4"><h6>05/10/2017</h6></article>
-																		</section>
-																	</article>
-																	<article class="col-sm-12 col-md-8">
-																		<div class="table-responsive">
-																			  <table class="table-vacaciones" cellpadding="5">
-																				  <thead>
-																				  	<tr>
-																				      <th class="thead-title">Personal</th>
-																				      <th class="thead-title">Autorización</th>
-																				      <th class="thead-title">Fecha/Hora</th>
-																				    </tr> 
-																				  </thead> 
-																				  <tbody>
-																				  	<tr>
-																				      <td>Robles Marin Marian</td>
-																				      <td>-</td>
-																				      <td>-</td>
-																				    </tr>
-																				    <tr>
-																				      <td>Abad Jonathan Leonel</td>
-																				      <td>-</td>
-																				      <td>-</td>
-																				    </tr>
-																				    <tr>
-																				      <td>Acevedo Pesado Veronica</td>
-																				      <td>-</td>
-																				      <td>-</td>
-																				    </tr>
-																				    <tr>
-																				      <td>Sergio Aguilar</td>
-																				      <td>-</td>
-																				      <td>-</td>
-																				    </tr>
-																				  </tbody>
-																			  </table>
-																			</div>
-																	</article>
-																	
-																	</section>
-                                                        		</div>
-                                                        	</div>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                            <!-- Fin modal -->
+	<%@ include file="section/modal/modal.jsp" %>
 </body>
-<script>
-var coll = document.getElementsByClassName("collapsible");
 
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if(content.style.display === ""){
-    	content.style.display = "block";
-    } 
-    console.log(content.style.display);
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-</script>
-<!-- script modal -->
-    <script>
-    // Get the modal
-    var modal = document.getElementById("myModal-cuervo-marcas");
-      
-    	var modalV = document.getElementsByClassName('button-cuervo-marcas');
-    	
-    	for(var i = 0; i < modalV.length; i++){
-    		modalV[i].addEventListener('click', function(){
-    			modal.style.display = "block";
-    		});
-    	}
-    
-    
-  
-	
-        
-    
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close-cuervo-marcas")[0];
-    
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-</script>
-
-<!-- fin script modal -->
+<script src='<%=request.getContextPath()+"/js/collapsable.js"%>'></script>
+<script src='<%=request.getContextPath()+"/js/modal.js"%>'></script>
