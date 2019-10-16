@@ -15,6 +15,11 @@
 	<%@ include file="section/header/banner.jsp" %>
 	<body id="vacaciones-solicitud" class="container">
 		<%@ include file="section/header/header.jsp" %>
-		
+		<section class="row">
+			<article class="col-12">
+				<h2>Solicitud de vacaciones</h2>
+			</article>
+			
+		</section>
 	</body>
 </html>
