@@ -1,4 +1,5 @@
 <%@ include file="/init.jsp" %>
+
 <style>
 .inLine{
 	display: inline-block;
@@ -74,8 +75,8 @@
 		<div class="offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
 			<h1 class="inLine number yellow">8</h1>
 			<hgroup class="inLine">
-				<h2 class="fw-g">Días</h2>
-				<h2 class="fw-g l-h">hábiles diponibles</h2>
+				<h2 class="fw-g">D&iacute;as</h2>
+				<h2 class="fw-g l-h">h&aacute;biles diponibles</h2>
 			</hgroup>
 		</div>
 		<hr class="hr-remuneracion">
@@ -84,7 +85,7 @@
 		<article class="col-md-12">
 			<section class="row align-items-center">
 				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Número de Empleado:</h5>
+					<h5>N&uacute;mero de Empleado:</h5>
 				</article>
 				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
 					<h5 class="fw-g">01007809</h5>
@@ -154,7 +155,7 @@
 	</section><!-- Fin seccion -->
 	<aside class="row">
 		<blockquote class="offset-md-1 col-md-10 colapsable-remuneracion">
-				<button type="button" class="collapsible">Días disfrutados <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
+				<button type="button" class="collapsible">D&iacute;as disfrutados <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
 					<div class="content">
 						<div class="table-responsive">
 						  <table class="table-vacaciones" cellpadding="5">
@@ -162,7 +163,7 @@
 							  	<tr>
 							      <th class="thead-title">Inicio (mm/dd/aaaa)</th>
 							      <th class="thead-title">Fin (mm/dd/aaaa)</th>
-							      <th class="thead-title">Días disfrutados</th>
+							      <th class="thead-title">D&iacute;as disfrutados</th>
 							      <th class="thead-title">Registro</th>
 							    </tr>
 							    
@@ -182,10 +183,14 @@
 							      <td>12/26/2006</td>
 							      <td>12/30/2006</td>
 							      <td>4</td>
-							      <td><img alt="" src="" /></td>
+							      <td>
+							      	<button id="myBtn" class="button-cuervo-marcas">
+							      		<img class="button-img-cuervo-marcas" src='<%=request.getContextPath()+"/img/doc.cuervo.svg"%>' alt="">
+							      	</button>
+							      </td>
 							    </tr>
 							    <tr class="ulti">
-							      <td colspan="2">Total de días disfrutados</td>
+							      <td colspan="2">Total de d&iacute;as disfrutados</td>
 							      <td>5</td>
 							      <td></td>
 							    </tr>
@@ -206,16 +211,16 @@
     padding: 20px;">
 								<section class="row align-items-center">
 									<article class="col-2 col-sm-2 col-md-12 col-lg-2"><h1 class="yellow number">1</h1></article>
-									<article class="col-10 col-sm-10 col-md-12 col-lg-10"><h3 style="margin-left: 1rem">Día</h3><h3 style="margin-left: 1rem">a disfrutar</h3></article>
+									<article class="col-10 col-sm-10 col-md-12 col-lg-10"><h3 style="margin-left: 1rem">D&iacute;a</h3><h3 style="margin-left: 1rem">a disfrutar</h3></article>
 		
 									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
 									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">05/12/2007</h6></article>
 									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Regreso a laborar:</h6></article>
 									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">05/14/2007</h6></article>
 									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Saldo anterior:</h6></article>
-									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">8 días</h6></article>
+									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">8 dÃ­as</h6></article>
 									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Dias disponibles:</h6></article>
-									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">7 días</h6></article>
+									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">7 dÃ­as</h6></article>
 								
 									<hr class="hr-v">
 								
@@ -231,7 +236,7 @@
 										  <thead>
 										  	<tr>
 										      <th class="thead-title">Personal</th>
-										      <th class="thead-title">Autorización</th>
+										      <th class="thead-title">Autorizaci&oacute;n</th>
 										      <th class="thead-title">Fecha/Hora</th>
 										    </tr> 
 										  </thead> 
@@ -269,7 +274,7 @@
 	</aside>
 	<aside class="row">
 		<blockquote class="offset-md-1 col-md-10 offset-lg-1 col-lg-10 offset-xl-1 col-xl-10">
-			<button style="float: right;border: none;background: #CCB874;padding: 5px 34px;">Solicitar días</button>
+			<button style="float: right;border: none;background: #CCB874;padding: 5px 34px;">Solicitar d&iacute;as</button>
 		</blockquote>
 	</aside>
 	<!-- Modal -->
@@ -293,16 +298,16 @@
 										    padding: 20px;">
 																		<section class="row">
 																			<article class="col-md-2"><h1 class="yellow">1</h1></article>
-																			<article class="col-md-10"><h3 class="m-l">Día</h3><h3 class="m-l">a disfrutar</h3></article>
+																			<article class="col-md-10"><h3 class="m-l">DÃ­a</h3><h3 class="m-l">a disfrutar</h3></article>
 												
 																			<article class="col-sm-8 col-md-12 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
 																			<article class="col-sm-4 col-lg-4"><h6>05/12/2007</h6></article>
 																			<article class="col-md-12 col-lg-8"><h6>Regreso a laborar:</h6></article>
 																			<article class="col-md-12 col-lg-4"><h6>05/14/2007</h6></article>
 																			<article class="col-md-12 col-lg-8"><h6>Saldo anterior:</h6></article>
-																			<article class="col-md-12 col-lg-4"><h6>8 días</h6></article>
+																			<article class="col-md-12 col-lg-4"><h6>8 dÃ­as</h6></article>
 																			<article class="col-md-12 col-lg-8"><h6>Dias disponibles:</h6></article>
-																			<article class="col-md-12 col-lg-4"><h6>7 días</h6></article>
+																			<article class="col-md-12 col-lg-4"><h6>7 dÃ­as</h6></article>
 																		
 																			<hr class="hr-remuneracion">
 																		
@@ -318,7 +323,7 @@
 																				  <thead>
 																				  	<tr>
 																				      <th class="thead-title">Personal</th>
-																				      <th class="thead-title">Autorización</th>
+																				      <th class="thead-title">AutorizaciÃ³n</th>
 																				      <th class="thead-title">Fecha/Hora</th>
 																				    </tr> 
 																				  </thead> 
@@ -383,17 +388,22 @@ for (i = 0; i < coll.length; i++) {
     <script>
     // Get the modal
     var modal = document.getElementById("myModal-cuervo-marcas");
+      
+    	var modalV = document.getElementsByClassName('button-cuervo-marcas');
+    	
+    	for(var i = 0; i < modalV.length; i++){
+    		modalV[i].addEventListener('click', function(){
+    			modal.style.display = "block";
+    		});
+    	}
     
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
+    
+  
+	
+        
     
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close-cuervo-marcas")[0];
-    
-    // When the user clicks the button, open the modal
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
     
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
@@ -407,4 +417,5 @@ for (i = 0; i < coll.length; i++) {
       }
     }
 </script>
+
 <!-- fin script modal -->
