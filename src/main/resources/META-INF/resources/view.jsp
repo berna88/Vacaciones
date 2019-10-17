@@ -11,13 +11,7 @@
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/modal.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/banner.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/general.css"%>'>
-<%String ma = (String) request.getAttribute("email");
-String d = "";
-if(!ma.isEmpty() && ma!= null){
-	 d = ma;
-}
-%>
-<h1>Email:  <%= d %> </h1>
+ 
 <!-- Banner General de Vacaciones -->
 <%@ include file="section/header/banner.jsp" %>
 <body id="vacaciones" class="container">

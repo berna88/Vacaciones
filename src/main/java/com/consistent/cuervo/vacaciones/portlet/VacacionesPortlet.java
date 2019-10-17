@@ -1,6 +1,7 @@
 package com.consistent.cuervo.vacaciones.portlet;
 
 import com.consistent.cuervo.vacaciones.constants.VacacionesPortletKeys;
+import com.consistent.cuervo.vacaciones.models.UserVacaciones;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -38,9 +39,13 @@ public class VacacionesPortlet extends MVCPortlet {
 			throws IOException, PortletException {
 		try {
 			User user = PortalUtil.getUser(renderRequest);
-			renderRequest.setAttribute("email", user.getEmailAddress());
+			System.out.println("1");
+			UserVacaciones vacaciones = new UserVacaciones(user);
+			System.out.println("2");
+			renderRequest.setAttribute("NoEmpleado", vacaciones.getNoEmpleado());
 		} catch (PortalException e) {
 			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 		
