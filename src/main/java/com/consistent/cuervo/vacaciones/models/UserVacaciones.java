@@ -16,6 +16,7 @@ public class UserVacaciones {
 	
 	public String getNoEmpleado() {
 		try {
+			noEmpleado = (String) user.getExpandoBridge().getAttribute("No_Empleado");
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
