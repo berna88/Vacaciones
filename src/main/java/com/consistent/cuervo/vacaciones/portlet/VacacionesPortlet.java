@@ -3,9 +3,10 @@ package com.consistent.cuervo.vacaciones.portlet;
 import com.consistent.cuervo.vacaciones.constants.VacacionesPortletKeys;
 import com.consistent.cuervo.vacaciones.models.UserVacaciones;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
@@ -34,15 +35,23 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class VacacionesPortlet extends MVCPortlet {
+	
+	private static Log log = LogFactoryUtil.getLog(VacacionesPortlet.class.getName());
+	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		try {
 			User user = PortalUtil.getUser(renderRequest);
-			System.out.println("1");
 			UserVacaciones vacaciones = new UserVacaciones(user);
-			System.out.println("2");
-			renderRequest.setAttribute("NoEmpleado", vacaciones.getNoEmpleado());
+			if(vacaciones.getUser() != null) {
+				renderRequest.setAttribute("Empleado", vacaciones);
+			}else {
+				log.info("El usuario no ha iniciado sesion");
+				UserVacaciones userSinConexion = new UserVacaciones();
+				renderRequest.setAttribute("Empleado", userSinConexion);
+			}
+			
 		} catch (PortalException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());

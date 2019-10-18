@@ -12,8 +12,10 @@ public class UserVacaciones {
 	private String centrotrabajo;
 	private String aniversario;
 	private String diasDisponibles;
+	private User user;
 	
 	public String getNoEmpleado() {
+		noEmpleado = (String) user.getExpandoBridge().getAttribute("No_Empleado");
 		return noEmpleado;
 	}
 	public void setNoEmpleado(String noEmpleado) {
@@ -62,6 +64,12 @@ public class UserVacaciones {
 		this.diasDisponibles = diasDisponibles;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public UserVacaciones(String noEmpleado, String fechaIngreso, String puesto, String departamento,
 			String centroCostos, String centrotrabajo, String aniversario, String diasDisponibles) {
 		super();
@@ -76,18 +84,12 @@ public class UserVacaciones {
 	}
 	
 	public UserVacaciones(User user) {
-		try {
-			noEmpleado = (String) user.getExpandoBridge().getAttribute("No_Empleado");
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
-		}
-		
+			this.user = user;
 	}
 	
 	public UserVacaciones() {
 		super();
-		this.noEmpleado = "";
+		this.noEmpleado = "-";
 		this.fechaIngreso = "";
 		this.puesto = "";
 		this.departamento = "";

@@ -1,3 +1,4 @@
+<%@page import="com.consistent.cuervo.vacaciones.models.UserVacaciones"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="init.jsp" %>
@@ -11,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/modal.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/banner.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/general.css"%>'>
- 
+<%UserVacaciones usuario = (UserVacaciones) request.getAttribute("Empleado");%>
 <!-- Banner General de Vacaciones -->
 <%@ include file="section/header/banner.jsp" %>
 <body id="vacaciones" class="container">
@@ -24,7 +25,7 @@
 					<h5>N&uacute;mero de Empleado:</h5>
 				</article>
 				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5 class="fw-g">01007809</h5>
+					<h5 class="fw-g"><%=usuario.getNoEmpleado() %></h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
