@@ -1,3 +1,4 @@
+<%@page import="com.consistent.cuervo.vacaciones.models.UserVacaciones"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
@@ -10,3 +11,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+<%
+UserVacaciones usuario = (UserVacaciones) request.getAttribute("Empleado");
+System.out.println(usuario.getUser().getFullName());
+%>

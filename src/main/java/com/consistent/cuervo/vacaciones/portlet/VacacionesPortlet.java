@@ -54,7 +54,6 @@ public class VacacionesPortlet extends MVCPortlet {
 			
 		} catch (PortalException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 		

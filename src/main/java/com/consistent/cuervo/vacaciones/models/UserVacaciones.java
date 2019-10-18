@@ -15,7 +15,10 @@ public class UserVacaciones {
 	private User user;
 	
 	public String getNoEmpleado() {
-		noEmpleado = (String) user.getExpandoBridge().getAttribute("No_Empleado");
+		try {
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return noEmpleado;
 	}
 	public void setNoEmpleado(String noEmpleado) {

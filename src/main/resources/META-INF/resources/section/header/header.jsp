@@ -1,7 +1,8 @@
+
 <header class="row align-items-center">
 		<div class="offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
 			<hgroup>
-				<h3 class="fw-g">Gonzalez Marin</h3>
+				<h3 class="fw-g"><%=usuario.getUser().getFullName()%></h3>
 				<h1 class="fw-t l-h">Jose Antonio</h1>
 			</hgroup>
 		</div>
