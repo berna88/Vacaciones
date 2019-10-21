@@ -1,4 +1,13 @@
 @charset "UTF-8";
+body{
+	font-family: "Source Sans Pro";
+}
+.bolder{
+	font-weight: bold;
+}
+.conceptos{
+font-size: 1.125em;
+}
 .inLine{
 	display: inline-block;
 }
@@ -17,12 +26,23 @@
 }
 
 .button-cuervo-marcas{
-  width: 50px;
-  height: auto;
-  background: transparent;
-  border: none;
-  color: transparent;
+  	height: 20px;
+    width: 20px;
+    background-image: url(/o/com.consistent.cuervo.vacaciones/img/doc-white.svg);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
 }
+.button-cuervo-marcas:hover{
+  	height: 20px;
+    width: 20px;
+    background-image: url(/o/com.consistent.cuervo.vacaciones/img/doc.cuervo.svg);
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+}
+
+
 .fw-g{
 	font-weight: 300;
 }
@@ -30,7 +50,7 @@
 	font-weight: 500;
 }
 .l-h{
-	line-height: 20px;
+	line-height: 15px;
 }
 .yellow{
 	color: #cbb874;
@@ -43,4 +63,10 @@
     width: 94%;
     display: block;
     margin: 1.1rem auto;
+}
+.m-b{
+	margin-bottom: 2rem;
+}
+.sin-line-h{
+	line-height: 0px;
 }

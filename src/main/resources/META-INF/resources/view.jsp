@@ -21,78 +21,78 @@
 	<section class="row">
 		<article class="col-md-12">
 			<section class="row align-items-center">
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>N&uacute;mero de Empleado:</h5>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
+					<h5 class="conceptos">N&uacute;mero de Empleado:</h5>
 				</article>
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5 class="fw-g"><%=usuario.getNoEmpleado()%></h5>
-				</article>
-			</section>
-		</article><!-- Fin articulo -->
-		<article class="col-md-12">
-			<section class="row align-items-center">
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Fecha de Ingreso:</h5>
-				</article>
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5 class="fw-g">Miercoles, Noviembre 23, 2005</h5>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
+					<h5 class="fw-g conceptos"><%=usuario.getNoEmpleado()%></h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 		<article class="col-md-12">
 			<section class="row align-items-center">
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Puesto:</h5>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
+					<h5 class="conceptos">Fecha de Ingreso:</h5>
 				</article>
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5 class="fw-g">Coordinadora Gral RH</h5>
-				</article>
-			</section>
-		</article><!-- Fin articulo -->
-		<article class="col-md-12">
-			<section class="row align-items-center">
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Departamento:</h5>
-				</article>
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5 class="fw-g">RH Domestico</h5>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
+					<h5 class="fw-g conceptos">Miercoles, Noviembre 23, 2005</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 		<article class="col-md-12">
 			<section class="row align-items-center">
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Centro de Costos:</h5>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
+					<h5 class="conceptos">Puesto:</h5>
 				</article>
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5 class="fw-g">202G100122</h5>
-				</article>
-			</section>
-		</article><!-- Fin articulo -->
-		<article class="col-md-12">
-			<section class="row align-items-center">
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Centro de Trabajo:</h5>
-				</article>
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5 class="fw-g">Churubusco</h5>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
+					<h5 class="fw-g conceptos">Coordinadora Gral RH</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 		<article class="col-md-12">
 			<section class="row align-items-center">
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>Aniversario:</h5>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
+					<h5 class="conceptos">Departamento:</h5>
 				</article>
-				<article class="col-6 offset-md-1 col-md-5 offset-lg-1 col-lg-5">
-					<h5>1</h5>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
+					<h5 class="fw-g conceptos">RH Domestico</h5>
+				</article>
+			</section>
+		</article><!-- Fin articulo -->
+		<article class="col-md-12">
+			<section class="row align-items-center">
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
+					<h5 class="conceptos">Centro de Costos:</h5>
+				</article>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
+					<h5 class="fw-g conceptos">202G100122</h5>
+				</article>
+			</section>
+		</article><!-- Fin articulo -->
+		<article class="col-md-12">
+			<section class="row align-items-center">
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
+					<h5 class="conceptos">Centro de Trabajo:</h5>
+				</article>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
+					<h5 class="fw-g conceptos">Churubusco</h5>
+				</article>
+			</section>
+		</article><!-- Fin articulo -->
+		<article class="col-md-12">
+			<section class="row align-items-center">
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
+					<h5 class="conceptos">Aniversario:</h5>
+				</article>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
+					<h5 class="fw-g conceptos">1</h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
 	</section><!-- Fin seccion -->
 	<aside class="row">
 		<blockquote class="offset-md-1 col-md-10 colapsable-remuneracion">
-				<button type="button" class="collapsible">D&iacute;as disfrutados <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
+				<button type="button" class="collapsible bolder">D&iacute;as disfrutados <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
 					<div class="content">
 						<div class="table-responsive">
 						  <table class="table-vacaciones" cellpadding="5">
@@ -111,8 +111,8 @@
 							      <td>12/30/2006</td>
 							      <td>4</td>
 							      <td>
-							      	<button id="myBtn" class="button-cuervo-marcas">
-							      		<img class="button-img-cuervo-marcas" src='<%=request.getContextPath()+"/img/doc.cuervo.svg"%>' alt="">
+							      	<button id="myBtn" class="button-cuervo-marcas" >
+							      		
 							      	</button>
 							      </td>
 							    </tr>
@@ -122,7 +122,7 @@
 							      <td>4</td>
 							      <td>
 							      	<button id="myBtn" class="button-cuervo-marcas">
-							      		<img class="button-img-cuervo-marcas" src='<%=request.getContextPath()+"/img/doc.cuervo.svg"%>' alt="">
+							
 							      	</button>
 							      </td>
 							    </tr>
@@ -141,33 +141,39 @@
 					<div class="content" style="background: black;border-radius: 20px;margin: 22px 5px;padding: 18px;">
 						<section class="row" style="padding: 15px">
 							<article class="col-md-12">
-								<h4>Aviso de vacaciones</h4>
+								<h5 class="m-b yellow">Aviso de vacaciones</h5>
 							</article>
-							<article class="col-sm-12 col-md-4" style="border: solid 1px white;
+							<article class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+								<section class="row align-items-center" style="    border: solid 1px white;
     border-radius: 20px;
-    padding: 20px;">
-								<section class="row align-items-center">
-									<article class="col-2 col-sm-2 col-md-12 col-lg-2"><h1 class="yellow number">1</h1></article>
-									<article class="col-10 col-sm-10 col-md-12 col-lg-10"><h3 style="margin-left: 1rem">D&iacute;a</h3><h3 style="margin-left: 1rem">a disfrutar</h3></article>
+    padding-bottom: 15px;">
+									<article class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+										<h1 style="text-align: center;" class="yellow number-modal inLine">14</h1>
+										<hgroup class="inLine m-l">
+											<h3 class="fw-g">D&iacute;a(s)</h3>
+											<h3 class="fw-g l-h">a disfrutar</h3>
+										</hgroup>
+									</article>
+									
 		
-									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
-									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">05/12/2007</h6></article>
-									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Regreso a laborar:</h6></article>
-									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">05/14/2007</h6></article>
-									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Saldo anterior:</h6></article>
-									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">8 días</h6></article>
-									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Dias disponibles:</h6></article>
-									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">7 días</h6></article>
+									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">05/12/2007</h6></article>
+									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Regreso a laborar:</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">05/14/2007</h6></article>
+									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Saldo anterior:</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">8 días</h6></article>
+									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Dias disponibles:</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">7 días</h6></article>
 								
 									<hr class="hr-v">
 								
-									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Registro:</h6></article>
-									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">139</h6></article>
-									<article class="col-8 col-sm-8 col-md-12 col-lg-8"><h6>Fecha de registro:</h6></article>
-									<article class="col-4 col-sm-4 col-md-12 col-lg-4"><h6 class="fw-g">05/10/2017</h6></article>
+									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Registro:</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">139</h6></article>
+									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Fecha de registro:</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">05/10/2017</h6></article>
 								</section>
 							</article>
-							<article class="col-sm-12 col-md-8">
+							<article class="col-sm-12 col-md-12 col-lg-8 col-xl-8">
 								<div class="table-responsive">
 									  <table class="table-vacaciones2" cellpadding="5">
 										  <thead>
@@ -179,22 +185,22 @@
 										  </thead> 
 										  <tbody>
 										  	<tr>
-										      <td><h3>Robles Marin Marian</h3><h3>Empleado</h3></td>
+										      <td><h6>Robles Marin Marian</h6><h6 class="sin-line-h fw-g">Empleado</h6></td>
 										      <td>-</td>
 										      <td>-</td>
 										    </tr>
 										    <tr>
-										      <td>Abad Jonathan Leonel</td>
+										      <td><h6>Robles Marin Marian</h6><h6 class="sin-line-h fw-g">Empleado</h6></td>
 										      <td>-</td>
 										      <td>-</td>
 										    </tr>
 										    <tr>
-										      <td>Acevedo Pesado Veronica</td>
+										      <td><h6>Robles Marin Marian</h6><h6 class="sin-line-h fw-g">Empleado</h6></td>
 										      <td>-</td>
 										      <td>-</td>
 										    </tr>
 										    <tr>
-										      <td>Sergio Aguilar</td>
+										      <td><h6>Robles Marin Marian</h6><h6 class="sin-line-h fw-g">Empleado</h6></td>
 										      <td>-</td>
 										      <td>-</td>
 										    </tr>
@@ -211,7 +217,16 @@
 	</aside>
 	<aside class="row">
 		<blockquote class="offset-md-1 col-md-10 offset-lg-1 col-lg-10 offset-xl-1 col-xl-10">
-			<a href="${renderSolicitud}" style="float: right;border: none;background: #CCB874;padding: 5px 34px;text-decoration: none;color: black;font-weight: 400;">Solicitar d&iacute;as</a>
+			<a href="${renderSolicitud}" style="float: right;
+    text-align: center;
+    border: none;
+    background: #CCB874;
+    padding: 5px 34px;
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+    width: 188px;
+    margin-right: 2.4rem;">Solicitar d&iacute;as</a>
 		</blockquote>
 	</aside>
 	<%@ include file="section/modal/modal.jsp" %>

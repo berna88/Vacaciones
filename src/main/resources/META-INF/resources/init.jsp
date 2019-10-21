@@ -13,5 +13,4 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <portlet:defineObjects />
 <%
 UserVacaciones usuario = (UserVacaciones) request.getAttribute("Empleado");
-System.out.println(usuario.getUser().getFullName());
 %>
