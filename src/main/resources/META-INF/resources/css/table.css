@@ -12,7 +12,7 @@
 }
 
 .tablehead-remuneracion, th{
-	border-bottom: solid 1px #838383;
+	
 	text-align: center;
     font-weight: 800;
     padding-top: .8rem;
@@ -25,11 +25,15 @@
 }
 .tablehead-remuneracion, td:nth-last-child(-n+4){
 	text-align: center;
+	padding: .5rem;
 }
 
 .ulti td[colspan="2"]{
 	font-weight: 800;
 	text-align: left;
+}
+.table-vacaciones tr:nth-last-of-type(){
+	background: blue;
 }
 
 .table-vacaciones2 tbody tr td{

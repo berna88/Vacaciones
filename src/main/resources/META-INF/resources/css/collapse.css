@@ -13,7 +13,10 @@
 .active, .collapsible:hover {
   background-color: #555;
 }
-
+.active {
+  border: solid 1px #838383 !important;
+  color: #838383 !important;
+}
 .content {
   padding: 0px;
   display: block;

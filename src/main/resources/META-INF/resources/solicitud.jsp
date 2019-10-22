@@ -17,7 +17,7 @@
 		<%@ include file="section/header/header.jsp" %>
 		<section class="row">
 			<article class="col-12">
-				<h2>Solicitud de vacaciones</h2>
+				<h3 class="fw-f" style="text-align: center;">Solicitud de vacaciones</h3>
 			</article>
 			
 		</section>

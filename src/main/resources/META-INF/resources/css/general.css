@@ -1,4 +1,23 @@
 @charset "UTF-8";
+
+.button-cancelar{
+	float: right;
+	border: none;
+	background: #CCB874;
+	padding: 5px 34px;
+}
+.button-solicitar{
+	float: right;
+    text-align: center;
+    border: none;
+    background: #CCB874;
+    padding: 5px 34px;
+    text-decoration: none;
+    color: black !important;
+    font-weight: 400;
+    width: 188px;
+    margin-right: 2.4rem;
+}
 body{
 	font-family: "Source Sans Pro";
 }
@@ -48,6 +67,9 @@ font-size: 1.125em;
 }
 .fw-t{
 	font-weight: 500;
+}
+.fw-f{
+	font-weight: 600;
 }
 .l-h{
 	line-height: 15px;
