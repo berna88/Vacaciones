@@ -68,7 +68,7 @@ public class UserVacaciones {
 	}
 	public String getCentroCostos() {
 		try {
-			centroCostos = (String) user.getExpandoBridge().getAttribute("Desc_Centro_Costos");
+			centroCostos = (String) user.getExpandoBridge().getAttribute("Clave_Centro_Costos");
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error("Method: getCentroCostos");
@@ -81,7 +81,7 @@ public class UserVacaciones {
 	}
 	public String getCentrotrabajo() {
 		try {
-			centrotrabajo = (String) user.getExpandoBridge().getAttribute("Lugar_de_Trabajo");
+			centrotrabajo = (String) user.getExpandoBridge().getAttribute("Desc_Lugar_de_Trabajo");
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error("Method: getCentrotrabajo");
