@@ -42,7 +42,9 @@ public class VacacionesPortlet extends MVCPortlet {
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		try {
-			User user = PortalUtil.getUser(renderRequest);
+			
+			User user = PortalUtil.getUser(renderRequest);//Obtiene el usuario en sesion
+			
 			UserVacaciones vacaciones = new UserVacaciones(user);
 			if(vacaciones.getUser() != null) {
 				renderRequest.setAttribute("Empleado", vacaciones);

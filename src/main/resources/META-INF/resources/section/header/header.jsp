@@ -2,8 +2,8 @@
 <header style="margin-top: 3.5rem" class="row align-items-center">
 		<div class="offset-1 col-11 offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
 			<hgroup>
-				<h4 class="fw-g">Hernández Ramírez</h4>
-				<h2 class="bolder l-h">Bernardo</h2>
+				<h4 class="fw-g"><%=usuario.getApellidos()%></h4>
+				<h2 class="bolder l-h"><%=usuario.getNombre()%></h2>
 			</hgroup>
 		</div>
 		<div class="offset-1 col-11 offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">

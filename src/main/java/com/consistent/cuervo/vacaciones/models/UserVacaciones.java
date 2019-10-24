@@ -1,8 +1,12 @@
 package com.consistent.cuervo.vacaciones.models;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 
 public class UserVacaciones {
+	
+	private static Log log = LogFactoryUtil.getLog(UserVacaciones.class.getName());
 	
 	private String noEmpleado;
 	private String fechaIngreso;
@@ -12,6 +16,9 @@ public class UserVacaciones {
 	private String centrotrabajo;
 	private String aniversario;
 	private String diasDisponibles;
+	private String nombre;
+	private String apellidos;
+
 	private User user;
 	
 	public String getNoEmpleado() {
@@ -19,6 +26,8 @@ public class UserVacaciones {
 			noEmpleado = (String) user.getExpandoBridge().getAttribute("No_Empleado");
 		} catch (Exception e) {
 			// TODO: handle exception
+			log.error("Method: getNoEmpleado");
+			noEmpleado = "";
 		}
 		return noEmpleado;
 	}
@@ -32,24 +41,52 @@ public class UserVacaciones {
 		this.fechaIngreso = fechaIngreso;
 	}
 	public String getPuesto() {
+		try {
+			puesto = (String) user.getExpandoBridge().getAttribute("Desc_Puesto_Trabajo");
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("Method: getPuesto");
+			puesto = "";
+		}
 		return puesto;
 	}
 	public void setPuesto(String puesto) {
 		this.puesto = puesto;
 	}
 	public String getDepartamento() {
+		try {
+			departamento = (String) user.getExpandoBridge().getAttribute("Desc_Depto");
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("Method: getDepartamento");
+			departamento = "";
+		}
 		return departamento;
 	}
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
 	public String getCentroCostos() {
+		try {
+			centroCostos = (String) user.getExpandoBridge().getAttribute("Desc_Centro_Costos");
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("Method: getCentroCostos");
+			centroCostos = "";
+		}
 		return centroCostos;
 	}
 	public void setCentroCostos(String centroCostos) {
 		this.centroCostos = centroCostos;
 	}
 	public String getCentrotrabajo() {
+		try {
+			centrotrabajo = (String) user.getExpandoBridge().getAttribute("Lugar_de_Trabajo");
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("Method: getCentrotrabajo");
+			centrotrabajo = "";
+		}
 		return centrotrabajo;
 	}
 	public void setCentrotrabajo(String centrotrabajo) {
@@ -66,6 +103,34 @@ public class UserVacaciones {
 	}
 	public void setDiasDisponibles(String diasDisponibles) {
 		this.diasDisponibles = diasDisponibles;
+	}
+	
+	public String getNombre() {
+		try {
+			nombre = (String) user.getExpandoBridge().getAttribute("Nombres");
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("Method: getNombre");
+			nombre = "";
+		}
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public String getApellidos() {
+		try {
+			apellidos = (String) user.getExpandoBridge().getAttribute("Apellido_Paterno");
+			apellidos = apellidos + " " + (String) user.getExpandoBridge().getAttribute("Apellido_Materno");;
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("Method: getApellidos");
+			apellidos = "";
+		}
+		return apellidos;
+	}
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
 	}
 	
 	public User getUser() {

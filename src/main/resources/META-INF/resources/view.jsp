@@ -45,7 +45,7 @@
 					<h5 class="conceptos">Puesto:</h5>
 				</article>
 				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
-					<h5 class="fw-g conceptos">Coordinadora Gral RH</h5>
+					<h5 class="fw-g conceptos"><%=usuario.getPuesto()%></h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -55,7 +55,7 @@
 					<h5 class="conceptos">Departamento:</h5>
 				</article>
 				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
-					<h5 class="fw-g conceptos">RH Domestico</h5>
+					<h5 class="fw-g conceptos"><%=usuario.getDepartamento()%></h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -65,7 +65,7 @@
 					<h5 class="conceptos">Centro de Costos:</h5>
 				</article>
 				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
-					<h5 class="fw-g conceptos">202G100122</h5>
+					<h5 class="fw-g conceptos"><%=usuario.getCentroCostos()%></h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -75,7 +75,7 @@
 					<h5 class="conceptos">Centro de Trabajo:</h5>
 				</article>
 				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
-					<h5 class="fw-g conceptos">Churubusco</h5>
+					<h5 class="fw-g conceptos"><%=usuario.getCentrotrabajo()%></h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
