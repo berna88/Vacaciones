@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ServiceVacations {
+public class ServiceVacations{
 	
 	private static Log log = LogFactoryUtil.getLog(ServiceVacations.class.getName());
 	
@@ -56,6 +56,7 @@ public class ServiceVacations {
 	 */
 	public String getJSON() {
 		log.info("Entrando al metodo GET");
+		String output = "";
 		try {
 			URL url = new URL(path+param);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -68,11 +69,8 @@ public class ServiceVacations {
 			
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			
-			String output;
-			log.info("Salida del servidor");
 			while((output = bufferedReader.readLine())!= null) {
-				log.info(output);
-				result = output;
+				log.info("JSON: "+output);
 			}
 			
 			connection.disconnect();
@@ -85,8 +83,9 @@ public class ServiceVacations {
 			log.error("Method: getJSON, Exeption: Exception "+e.getMessage());
 			e.getStackTrace();
 		}
-		return "";
+		return output;
 	}
+	
 	
 	
 	

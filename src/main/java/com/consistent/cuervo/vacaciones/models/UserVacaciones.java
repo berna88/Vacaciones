@@ -1,5 +1,7 @@
 package com.consistent.cuervo.vacaciones.models;
 
+import com.consistent.cuervo.vacaciones.constants.VacacionesPortletKeys;
+import com.google.gson.Gson;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -18,7 +20,7 @@ public class UserVacaciones {
 	private String diasDisponibles;
 	private String nombre;
 	private String apellidos;
-
+	private String Saldo;
 	private User user;
 	
 	public String getNoEmpleado() {
@@ -31,15 +33,19 @@ public class UserVacaciones {
 		}
 		return noEmpleado;
 	}
+	
 	public void setNoEmpleado(String noEmpleado) {
 		this.noEmpleado = noEmpleado;
 	}
+	
 	public String getFechaIngreso() {
 		return fechaIngreso;
 	}
+	
 	public void setFechaIngreso(String fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
+	
 	public String getPuesto() {
 		try {
 			puesto = (String) user.getExpandoBridge().getAttribute("Desc_Puesto_Trabajo");
@@ -50,9 +56,11 @@ public class UserVacaciones {
 		}
 		return puesto;
 	}
+	
 	public void setPuesto(String puesto) {
 		this.puesto = puesto;
 	}
+	
 	public String getDepartamento() {
 		try {
 			departamento = (String) user.getExpandoBridge().getAttribute("Desc_Depto");
@@ -63,9 +71,11 @@ public class UserVacaciones {
 		}
 		return departamento;
 	}
+	
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
+	
 	public String getCentroCostos() {
 		try {
 			centroCostos = (String) user.getExpandoBridge().getAttribute("Clave_Centro_Costos");
@@ -76,9 +86,11 @@ public class UserVacaciones {
 		}
 		return centroCostos;
 	}
+	
 	public void setCentroCostos(String centroCostos) {
 		this.centroCostos = centroCostos;
 	}
+	
 	public String getCentrotrabajo() {
 		try {
 			centrotrabajo = (String) user.getExpandoBridge().getAttribute("Desc_Lugar_de_Trabajo");
@@ -89,18 +101,23 @@ public class UserVacaciones {
 		}
 		return centrotrabajo;
 	}
+	
 	public void setCentrotrabajo(String centrotrabajo) {
 		this.centrotrabajo = centrotrabajo;
 	}
+	
 	public String getAniversario() {
 		return aniversario;
 	}
+	
 	public void setAniversario(String aniversario) {
 		this.aniversario = aniversario;
 	}
+	
 	public String getDiasDisponibles() {
 		return diasDisponibles;
 	}
+	
 	public void setDiasDisponibles(String diasDisponibles) {
 		this.diasDisponibles = diasDisponibles;
 	}
@@ -115,9 +132,11 @@ public class UserVacaciones {
 		}
 		return nombre;
 	}
+	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
 	public String getApellidos() {
 		try {
 			apellidos = (String) user.getExpandoBridge().getAttribute("Apellido_Paterno");
@@ -129,6 +148,7 @@ public class UserVacaciones {
 		}
 		return apellidos;
 	}
+	
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
@@ -136,9 +156,19 @@ public class UserVacaciones {
 	public User getUser() {
 		return user;
 	}
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public String getSaldo() {
+		return Saldo;
+	}
+	
+	public void setSaldo(String saldo) {
+		this.Saldo = saldo;
+	}
+
 	public UserVacaciones(String noEmpleado, String fechaIngreso, String puesto, String departamento,
 			String centroCostos, String centrotrabajo, String aniversario, String diasDisponibles) {
 		super();
@@ -154,6 +184,7 @@ public class UserVacaciones {
 	
 	public UserVacaciones(User user) {
 			this.user = user;
+			getJSONHistory();
 	}
 	
 	public UserVacaciones() {
@@ -166,8 +197,13 @@ public class UserVacaciones {
 		this.centrotrabajo = "";
 		this.aniversario = "";
 		this.diasDisponibles = "";
+		this.Saldo = "";
 	}
 	
-	
-	
+	private String getJSONHistory() {
+		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
+		HistoryVacations history = new Gson().fromJson(vacations.getJSON(), HistoryVacations.class);
+		log.info("history: "+history.getSaldo());
+		return vacations.getJSON();
+	}
 }

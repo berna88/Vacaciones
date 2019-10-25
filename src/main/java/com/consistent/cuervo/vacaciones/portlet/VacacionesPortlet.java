@@ -46,6 +46,7 @@ public class VacacionesPortlet extends MVCPortlet {
 			User user = PortalUtil.getUser(renderRequest);//Obtiene el usuario en sesion
 			
 			UserVacaciones vacaciones = new UserVacaciones(user);
+			
 			if(vacaciones.getUser() != null) {
 				renderRequest.setAttribute("Empleado", vacaciones);
 			}else {
