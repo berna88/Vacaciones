@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+#vacaciones-formulario{
+justify-content: center;
+}
+#vacaciones-formulario svg.lexicon-icon.lexicon-icon-calendar {
+    display: inline-block;
+    fill: #ccb874;
+    height: 1em;
+    margin-top: -3px;
+    vertical-align: middle;
+    width: 1em;
+}
+
+#vacaciones-formulario .reference-mark {
+    color: #ccb874;
+}
+
+#vacaciones-formulario .input-group-inset-item {
+    align-items: center;
+    border-bottom: 1px solid #ccb874;
+    border-right: 1px solid #ccb874;
+    border-top: 1px solid #ccb874;
+    background-color: black;
+    /* border-bottom-width: .0625rem; */
+    /* border-color: #ced4da; */
+    /* border-left-width: .0625rem; */
+    /* border-right-width: .0625rem; */
+    /* border-style: solid; */
+    /* border-top-width: .0625rem; */
+    display: flex;
+    margin-bottom: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+#vacaciones-formulario .form-builder-select-field .select-field-trigger:focus {
+    height: inherit;
+    background: black;
+    border: 1px solid #ccb874;
+    border-radius: 0px;
+    color: white;
+    box-shadow: none;
+}
+
+#vacaciones-formulario .form-builder-select-field .select-field-trigger {
+    height: inherit;
+    background: black;
+    border: 1px solid #ccb874;
+    border-radius: 0px;
+    color: white;
+}
+#vacaciones-formulario input,select{
+    border: 1px solid #ccb874;
+    border-radius: 0px;
+    background: #181818;
+    color: white;
+  }
+  
+ #vacaciones-formulario label{
+    color: white;
+  }
+   #vacaciones-formulario input:focus,
+   #vacaciones-formulario input:active,
+    #vacaciones-formulario select:focus,
+   #vacaciones-formulario select:active{
+    border: 1px solid #ccb874;
+    border-radius: 0px;
+    background: #181818;
+    color: white;
+    box-shadow: none;
+
+  }
+ #vacaciones-formulario .ddm-form-builder-app .lfr-ddm-form-page>.row {
+    justify-content: center;
+}
+ #vacaciones-formulario .has-error .form-control {
+    border-color: #ccb874;
+}
+ #vacaciones-formulario .has-error .help-block {
+    color: #ccb874;
+}
+ #vacaciones-formulario .portlet-forms .ddm-form-basic-info .ddm-form-name {
+    text-align: center;
+    color: white;
+}
+  #vacaciones-formulario btn d-none d-md-inline-block {
+    /* border: 2px solid #ccb874;
+    color: #ccb874;
+    border-radius:0px;
+    background: #181818;
+    margin-left: 15%; */
+    border: 1px solid #ccb874;
+    border-radius: 0;
+    background: black;
+    }
+   
+ #vacaciones-formulario .toggle-switch-check:checked ~ .toggle-switch-bar:after, label:not(.toggle-switch) .toggle-switch:checked ~ .toggle-switch-bar:after {
+    background-color: #FFF;
+    border-color: #ccb874;
+    border-radius: 0 3px 3px 0;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #ccb874;
+    }  
+ #vacaciones-formulario .toggle-switch-check:empty ~ .toggle-switch-bar:before, label:not(.toggle-switch) .toggle-switch:empty ~ .toggle-switch-bar:before {
+    background-color: black;
+    border-color: #ccb874;
+    }
+    
+ #vacaciones-formulario .toggle-switch-check:checked ~ .toggle-switch-bar:before, label:not(.toggle-switch) .toggle-switch:checked ~ .toggle-switch-bar:before {
+    background-color: black;
+    border-color: #ccb874;
+
+}
+#vacaciones-formulario .toggle-switch-check:empty ~ .toggle-switch-bar:after, label:not(.toggle-switch) .toggle-switch:empty ~ .toggle-switch-bar:after {
+    background-color: #ccb874; 
+}
+
+#vacaciones-formulario .toggle-switch-check:focus ~ .toggle-switch-bar:before, label:not(.toggle-switch) .toggle-switch:focus ~ .toggle-switch-bar:before {
+    box-shadow: none;
+}
+#vacaciones-formulario .btn:focus, .btn.focus {
+    outline: 0;
+    box-shadow: none;
+}
+
+
+#vacaciones-formulario .lfr-ddm-form-container .lfr-ddm-form-pagination-controls button {
+    margin-bottom: 20px;
+    background: black;
+    border: 1px solid #ccb874;
+    border-radius: 0px;
+    color: #ccb874;
+    margin-right: 19%;
+}

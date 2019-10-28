@@ -2,9 +2,14 @@ package com.consistent.cuervo.vacaciones.models;
 
 import com.consistent.cuervo.vacaciones.constants.VacacionesPortletKeys;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+
+import java.util.List;
 
 public class UserVacaciones {
 	
@@ -20,7 +25,10 @@ public class UserVacaciones {
 	private String diasDisponibles;
 	private String nombre;
 	private String apellidos;
-	private String Saldo;
+	private String saldo;
+	private String diasDisfrutados;
+	private String periodo;
+	private List<History> histories;
 	private User user;
 	
 	public String getNoEmpleado() {
@@ -162,11 +170,28 @@ public class UserVacaciones {
 	}
 	
 	public String getSaldo() {
-		return Saldo;
+		return saldo;
 	}
 	
 	public void setSaldo(String saldo) {
-		this.Saldo = saldo;
+		this.saldo = saldo;
+	}
+	
+	
+	public String getDiasDisfrutados() {
+		return diasDisfrutados;
+	}
+
+	public void setDiasDisfrutados(String diasDisfrutados) {
+		this.diasDisfrutados = diasDisfrutados;
+	}
+
+	public String getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(String periodo) {
+		this.periodo = periodo;
 	}
 
 	public UserVacaciones(String noEmpleado, String fechaIngreso, String puesto, String departamento,
@@ -184,7 +209,7 @@ public class UserVacaciones {
 	
 	public UserVacaciones(User user) {
 			this.user = user;
-			getJSONHistory();
+			//getJSONHistory();
 	}
 	
 	public UserVacaciones() {
@@ -197,13 +222,23 @@ public class UserVacaciones {
 		this.centrotrabajo = "";
 		this.aniversario = "";
 		this.diasDisponibles = "";
-		this.Saldo = "";
+		this.saldo = "";
 	}
 	
-	private String getJSONHistory() {
-		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
-		HistoryVacations history = new Gson().fromJson(vacations.getJSON(), HistoryVacations.class);
-		log.info("history: "+history.getSaldo());
-		return vacations.getJSON();
-	}
+	
+	  private String getJSONHistory() { 
+		  ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
+		  JsonParser parser = new JsonParser();
+		  JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
+		  try {
+			if(!objectJson.isJsonNull()) {
+				diasDisfrutados = objectJson.get("DiasDisf").getAsString();
+			
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		  return vacations.getJSON(); 
+	  }
+	 
 }

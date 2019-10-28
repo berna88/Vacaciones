@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
+import java.util.spi.LocaleServiceProvider;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -42,7 +43,6 @@ public class VacacionesPortlet extends MVCPortlet {
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 		try {
-			
 			User user = PortalUtil.getUser(renderRequest);//Obtiene el usuario en sesion
 			
 			UserVacaciones vacaciones = new UserVacaciones(user);
