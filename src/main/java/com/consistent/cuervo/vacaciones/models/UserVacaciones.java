@@ -236,10 +236,30 @@ public class UserVacaciones {
 	}
 
 	private String getJSONHistory() {
-		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
+		//		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
+		String json = "{  \n" + 
+				"   \"DiasDisf\":22,\n" + 
+				"   \"Saldo\":21,\n" + 
+				"   \"historico\":[  \n" + 
+				"      {  \n" + 
+				"         \"diasatomar\":1,\n" + 
+				"         \"nomina\":\"01000699\",\n" + 
+				"         \"reg\":\"68061\",\n" + 
+				"         \"periodo\":22,\n" + 
+				"         \"final\":\"2019-10-18\",\n" + 
+				"         \"inicio\":\"2019-10-17\",\n" + 
+				"         \"fechac\":\"2019-10-16\",\n" + 
+				"         \"cveLocalidad\":\"SFE\",\n" + 
+				"         \"jefe\":\"01002515\",\n" + 
+				"         \"nombre\":\"RIEGO LOPEZ DIANA\",\n" + 
+				"         \"gerente\":\"01002515\"\n" + 
+				"      }\n" + 
+				"   ],\n" + 
+				"   \"Periodo\":22\n" + 
+				"}";
 		try {
 			JsonParser parser = new JsonParser();
-			JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
+			JsonObject objectJson = parser.parse(json).getAsJsonObject();
 
 			if (!objectJson.isJsonNull()) {
 				
@@ -269,7 +289,6 @@ public class UserVacaciones {
 					}
 				}
 			}
-			log.info("histori: "+getHistories().get(0).getGerente());
 		}catch (NullPointerException e) {
 			// TODO: handle exception
 			log.error("getJSONHistory: NullPointerException "+ e.getCause());

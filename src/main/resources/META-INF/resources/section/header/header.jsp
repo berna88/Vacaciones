@@ -7,7 +7,7 @@
 			</hgroup>
 		</div>
 		<div class="offset-1 col-11 offset-sm-1 col-sm-11 offset-md-1 col-md-11 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
-			<h1 class="inLine number yellow">8</h1>
+			<h1 class="inLine number yellow"><%=usuario.getSaldo()%></h1>
 			<hgroup class="inLine">
 				<h3 class="fw-g">D&iacute;as</h3>
 				<h3 class="fw-g l-h">h&aacute;biles disponibles</h3>

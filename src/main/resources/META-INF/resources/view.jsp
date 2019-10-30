@@ -1,3 +1,4 @@
+<%@page import="com.consistent.cuervo.vacaciones.models.History"%>
 <%@page import="com.consistent.cuervo.vacaciones.models.UserVacaciones"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -106,13 +107,23 @@
 							    
 							  </thead> 
 							  <tbody>
+							  <% for(History history: usuario.getHistories()) {%>
 							  	<tr>
+							      <td><%= history.getFechaInicio() %></td>
+							      <td>12/30/2006</td>
+							      <td>4</td>
+							      <td>
+							      	<button id="myBtn" class="button-cuervo-marcas" >
+							      	</button>
+							      </td>
+							    </tr>
+							    <%} %>
+							    <tr>
 							      <td>12/26/2006</td>
 							      <td>12/30/2006</td>
 							      <td>4</td>
 							      <td>
 							      	<button id="myBtn" class="button-cuervo-marcas" >
-							      		
 							      	</button>
 							      </td>
 							    </tr>
