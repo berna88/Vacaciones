@@ -194,7 +194,15 @@ public class UserVacaciones {
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
 	}
+	
+	public List<History> getHistories() {
+		return histories;
+	}
 
+	public void setHistories(List<History> histories) {
+		this.histories = histories;
+	}
+	
 	public UserVacaciones(String noEmpleado, String fechaIngreso, String puesto, String departamento,
 			String centroCostos, String centrotrabajo, String aniversario, String diasDisponibles) {
 		super();
@@ -223,21 +231,28 @@ public class UserVacaciones {
 		this.centrotrabajo = "";
 		this.aniversario = "";
 		this.diasDisponibles = "";
+		this.histories = new ArrayList<History>();
 		this.saldo = "";
 	}
 
 	private String getJSONHistory() {
 		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
-		JsonParser parser = new JsonParser();
-		JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
 		try {
-			if (!objectJson.isJsonNull()) {
-				diasDisfrutados = objectJson.get("DiasDisf").getAsString();
+			JsonParser parser = new JsonParser();
+			JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
 
+			if (!objectJson.isJsonNull()) {
+				
+				diasDisfrutados = objectJson.get("DiasDisf").getAsString();
+				saldo = objectJson.get("Saldo").getAsString();
+				periodo = objectJson.get("Periodo").getAsString();
+				histories = new ArrayList<History>();
 				JsonArray array = objectJson.get("historico").getAsJsonArray();
-				List<History> histories = new ArrayList<History>();
-				if (!!array.isJsonNull() && array.size() > 0) {
+				
+				if (!array.isJsonNull() && array.size() > 0) {
+					
 					for (JsonElement element : array) {
+						
 						History history = new History();
 						history.setDiasATomar(element.getAsJsonObject().get("diasatomar").getAsString());
 						history.setNomina(element.getAsJsonObject().get("nomina").getAsString());
@@ -254,11 +269,22 @@ public class UserVacaciones {
 					}
 				}
 			}
-			log.info("Datos historicos: " + histories);
+			log.info("histori: "+getHistories().get(0).getGerente());
+		}catch (NullPointerException e) {
+			// TODO: handle exception
+			log.error("getJSONHistory: NullPointerException "+ e.getCause());
+			e.printStackTrace();
+		}catch (IllegalStateException e) {
+			// TODO: handle exception
+			log.error("El JSON viene vacio");
+			log.error("getJSONHistory: IllegalStateException "+ e.getCause());
+			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO: handle exception
+			log.error("getJSONHistory: Exception "+ e.getCause());
+			e.printStackTrace();
 		}
-		return vacations.getJSON();
+		return "";
 	}
 
 }

@@ -58,7 +58,9 @@ public class ServiceVacations{
 		log.info("Entrando al metodo GET");
 		String output = "";
 		try {
+			
 			URL url = new URL(path+param);
+			
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/json");
@@ -71,17 +73,22 @@ public class ServiceVacations{
 			
 			while((output = bufferedReader.readLine())!= null) {
 				log.info("JSON: "+output);
+				return output;
 			}
 			
 			connection.disconnect();
 		}catch (MalformedURLException e) {
 			// TODO: handle exception
 			log.error("Method: getJSON, Exeption: MalformedURLException "+e.getMessage());
-			e.getStackTrace();
-		} catch (Exception e) {
+			e.printStackTrace();
+		}catch (RuntimeException e) {
+			// TODO: handle exception
+			log.error("No se encontro el id del usuario");
+			e.printStackTrace();
+		}catch (Exception e) {
 			// TODO: handle exception
 			log.error("Method: getJSON, Exeption: Exception "+e.getMessage());
-			e.getStackTrace();
+			e.printStackTrace();
 		}
 		return output;
 	}
