@@ -54,6 +54,7 @@ public class VacacionesPortlet extends MVCPortlet {
 			vacaciones = new UserVacaciones(user);
 			
 			if(vacaciones.getUser() != null) {
+				vacaciones.getFechaIngreso();
 				renderRequest.setAttribute("Empleado", vacaciones);
 				log.info(History.totalDiasDisfrutados);
 			}else {

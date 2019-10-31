@@ -35,7 +35,7 @@ int totalDias = 0;
 					<h5 class="conceptos">Fecha de Ingreso:</h5>
 				</article>
 				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
-					<h5 class="fw-g conceptos">Miercoles, Noviembre 23, 2005</h5>
+					<h5 class="fw-g conceptos"><%=usuario.getFechaIngreso()%></h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -85,7 +85,7 @@ int totalDias = 0;
 					<h5 class="conceptos">Aniversario:</h5>
 				</article>
 				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
-					<h5 class="fw-g conceptos">1</h5>
+					<h5 class="fw-g conceptos"><%=usuario.getAniversario()%></h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->

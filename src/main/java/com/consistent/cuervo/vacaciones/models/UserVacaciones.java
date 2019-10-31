@@ -9,10 +9,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 public class UserVacaciones {
 
@@ -24,7 +28,7 @@ public class UserVacaciones {
 	private String departamento;
 	private String centroCostos;
 	private String centrotrabajo;
-	private String aniversario;
+	private int aniversario;
 	private String diasDisponibles;
 	private String nombre;
 	private String apellidos;
@@ -50,6 +54,34 @@ public class UserVacaciones {
 	}
 
 	public String getFechaIngreso() {
+		try {
+			fechaIngreso = (String) user.getExpandoBridge().getAttribute("Fecha_Antiguedad");
+			if(!fechaIngreso.isEmpty() && fechaIngreso != null) {
+				String ano = "";
+				String mes = "";
+				String dia = "";
+				for (int i=0; i < fechaIngreso.length(); i++) {
+					if(i<=3) {
+						ano += fechaIngreso.charAt(i);
+					}
+					if (i>=4 && i<=5) {
+						mes += fechaIngreso.charAt(i);
+					}
+					if (i>=6 && i<=7) {
+						dia += fechaIngreso.charAt(i);
+					}
+				}
+				String fechaFinal = dia+"/"+mes+"/"+ano;
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
+				Date myDate = sdf.parse(fechaFinal);
+				sdf.applyPattern("EEEE, MMMMM d, yyyy");
+				String sMyDate = sdf.format(myDate);
+				fechaIngreso = sMyDate.substring(0, 1).toUpperCase() + sMyDate.substring(1);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			fechaIngreso = "";
+		}
 		return fechaIngreso;
 	}
 
@@ -117,11 +149,30 @@ public class UserVacaciones {
 		this.centrotrabajo = centrotrabajo;
 	}
 
-	public String getAniversario() {
+	public int getAniversario() {
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		try {
+			fechaIngreso = (String) user.getExpandoBridge().getAttribute("Fecha_Antiguedad");
+			if(!fechaIngreso.isEmpty() && fechaIngreso != null) {
+				String ano = "";
+				
+				for (int i=0; i < fechaIngreso.length(); i++) {
+					if(i<=3) {
+						ano += fechaIngreso.charAt(i);
+					}
+					
+				}
+				aniversario = year - Integer.parseInt(ano);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			aniversario = 0;
+		}
+		
 		return aniversario;
 	}
 
-	public void setAniversario(String aniversario) {
+	public void setAniversario(int aniversario) {
 		this.aniversario = aniversario;
 	}
 
@@ -206,7 +257,7 @@ public class UserVacaciones {
 	}
 	
 	public UserVacaciones(String noEmpleado, String fechaIngreso, String puesto, String departamento,
-			String centroCostos, String centrotrabajo, String aniversario, String diasDisponibles) {
+			String centroCostos, String centrotrabajo, int aniversario, String diasDisponibles) {
 		super();
 		this.noEmpleado = noEmpleado;
 		this.fechaIngreso = fechaIngreso;
@@ -231,7 +282,7 @@ public class UserVacaciones {
 		this.departamento = "";
 		this.centroCostos = "";
 		this.centrotrabajo = "";
-		this.aniversario = "";
+		this.aniversario = 0;
 		this.diasDisponibles = "";
 		this.histories = new ArrayList<History>();
 		this.saldo = "";
