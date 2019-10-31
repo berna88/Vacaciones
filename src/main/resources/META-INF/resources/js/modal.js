@@ -1,7 +1,7 @@
 /**
  * Funcionalidad de modal
  */
-
+alert("hi");
 // Get the modal
     var modal = document.getElementById("myModal-cuervo-marcas");
       
@@ -9,6 +9,8 @@
     	
     	for(var i = 0; i < modalV.length; i++){
     		modalV[i].addEventListener('click', function(){
+    			alert("Hola");
+    			console.log(event);
     			modal.style.display = "block";
     		});
     	}

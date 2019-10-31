@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class UserVacaciones {
@@ -244,7 +246,33 @@ public class UserVacaciones {
 				"      {  \n" + 
 				"         \"diasatomar\":1,\n" + 
 				"         \"nomina\":\"01000699\",\n" + 
-				"         \"reg\":\"68061\",\n" + 
+				"         \"reg\":\"68070\",\n" + 
+				"         \"periodo\":22,\n" + 
+				"         \"final\":\"2019-10-18\",\n" + 
+				"         \"inicio\":\"2019-10-17\",\n" + 
+				"         \"fechac\":\"2019-10-16\",\n" + 
+				"         \"cveLocalidad\":\"SFE\",\n" + 
+				"         \"jefe\":\"01002515\",\n" + 
+				"         \"nombre\":\"RIEGO LOPEZ DIANA\",\n" + 
+				"         \"gerente\":\"01002515\"\n" + 
+				"      },\n" + 
+				"      {  \n" + 
+				"         \"diasatomar\":1,\n" + 
+				"         \"nomina\":\"01000699\",\n" + 
+				"         \"reg\":\"68069\",\n" + 
+				"         \"periodo\":22,\n" + 
+				"         \"final\":\"2019-10-18\",\n" + 
+				"         \"inicio\":\"2019-10-17\",\n" + 
+				"         \"fechac\":\"2019-10-16\",\n" + 
+				"         \"cveLocalidad\":\"SFE\",\n" + 
+				"         \"jefe\":\"01002515\",\n" + 
+				"         \"nombre\":\"RIEGO LOPEZ DIANA\",\n" + 
+				"         \"gerente\":\"01002515\"\n" + 
+				"      },\n" + 
+				"{  \n" + 
+				"         \"diasatomar\":1,\n" + 
+				"         \"nomina\":\"01000699\",\n" + 
+				"         \"reg\":\"68099\",\n" + 
 				"         \"periodo\":22,\n" + 
 				"         \"final\":\"2019-10-18\",\n" + 
 				"         \"inicio\":\"2019-10-17\",\n" + 
@@ -276,7 +304,7 @@ public class UserVacaciones {
 						History history = new History();
 						history.setDiasATomar(element.getAsJsonObject().get("diasatomar").getAsString());
 						history.setNomina(element.getAsJsonObject().get("nomina").getAsString());
-						history.setReg(element.getAsJsonObject().get("reg").getAsString());
+						history.setReg(element.getAsJsonObject().get("reg").getAsInt());
 						history.setPeriodo(element.getAsJsonObject().get("periodo").getAsString());
 						history.setFechaFinal(element.getAsJsonObject().get("final").getAsString());
 						history.setFechaInicio(element.getAsJsonObject().get("inicio").getAsString());
@@ -289,6 +317,7 @@ public class UserVacaciones {
 					}
 				}
 			}
+			Collections.sort(histories);// Ordena la lista por el atributo reg
 		}catch (NullPointerException e) {
 			// TODO: handle exception
 			log.error("getJSONHistory: NullPointerException "+ e.getCause());
@@ -304,6 +333,18 @@ public class UserVacaciones {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	
+	public History findReg(int reg) {
+		Iterator<History> iterator = histories.iterator();
+		while (iterator.hasNext()) {
+			History historyFilter = iterator.next();
+			if(historyFilter.getReg() == reg) {
+				return historyFilter;
+			}
+		}
+		History h = new History();
+		return h;
 	}
 
 }

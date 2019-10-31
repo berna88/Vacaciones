@@ -1,7 +1,4 @@
-<%@page import="com.consistent.cuervo.vacaciones.models.History"%>
-<%@page import="com.consistent.cuervo.vacaciones.models.UserVacaciones"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+
 <%@ include file="init.jsp" %>
    
 <portlet:renderURL var="renderSolicitud">
@@ -107,17 +104,17 @@
 							    
 							  </thead> 
 							  <tbody>
-							  <% for(History history: usuario.getHistories()) {%>
+							  <%for(History history: usuario.getHistories()){%>
 							  	<tr>
 							      <td><%= history.getFechaInicio() %></td>
-							      <td>12/30/2006</td>
-							      <td>4</td>
+							      <td><%= history.getFechaFinal() %></td>
+							      <td><%= history.getDiasATomar() %></td>
 							      <td>
-							      	<button id="myBtn" class="button-cuervo-marcas" >
+							      	<button id="<%=history.getReg()%>" class="button-cuervo-marcas" >
 							      	</button>
 							      </td>
 							    </tr>
-							    <%} %>
+							    <%}%>
 							    <tr>
 							      <td>12/26/2006</td>
 							      <td>12/30/2006</td>
@@ -233,4 +230,61 @@
 </body>
 
 <script src='<%=request.getContextPath()+"/js/collapsable.js"%>'></script>
-<script src='<%=request.getContextPath()+"/js/modal.js"%>'></script>
+<%-- <script src='<%=request.getContextPath()+"/js/modal.js"%>'></script> --%>
+<script>
+/**
+ * Funcionalidad de modal
+ */
+
+// Get the modal
+	
+	
+    var modal = document.getElementById("myModal-cuervo-marcas");
+      
+    	var modalV = document.getElementsByClassName('button-cuervo-marcas');
+    	
+    	for(var i = 0; i < modalV.length; i++){
+    		modalV[i].addEventListener('click', function(){
+    			modal.style.display = "block";
+    			getReg(event.target.id);
+    		});
+    	}
+    	
+    	
+    
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close-cuervo-marcas")[0];
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    
+    function getReg(reg){
+    	$.ajax({
+    		url: '${getRegURL}',
+    		type: 'POST',
+    		cache: false,
+    		data: {
+    			<portlet:namespace/>_id : reg
+    		},
+    		success: function(data){
+    			console.log("result",data);
+    			var _json = JSON.parse(data);
+    			document.getElementById("diasATomar").innerHTML = _json.diasATomar;
+    			document.getElementById("registro").innerHTML = _json.reg;
+    			document.getElementById("fechaInicio").innerHTML = _json.fechaInicio;
+    			console.log(_json.nombre);
+    		},error:function(){
+    			
+    		}
+    	});
+    }
+</script>
