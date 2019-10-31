@@ -18,6 +18,7 @@ public class ServiceVacations{
 	private String param;
 	private String result;
 	
+	
 	public String getPath() {
 		return path;
 	}
@@ -66,7 +67,8 @@ public class ServiceVacations{
 			connection.setRequestProperty("Accept", "application/json");
 			
 			if(connection.getResponseCode() != VacacionesPortletKeys.OK) {
-				throw new RuntimeException("Fallo: codigo de error: "+connection.getResponseCode());
+				log.info("Fallo: codigo de error: "+connection.getResponseCode());
+				return VacacionesPortletKeys.JSON_DEFAULT;
 			}
 			
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -75,7 +77,6 @@ public class ServiceVacations{
 				log.info("JSON: "+output);
 				return output;
 			}
-			
 			connection.disconnect();
 		}catch (MalformedURLException e) {
 			// TODO: handle exception

@@ -45,8 +45,7 @@ public class VacacionesPortlet extends MVCPortlet {
 	private static Log log = LogFactoryUtil.getLog(VacacionesPortlet.class.getName());
 	private UserVacaciones vacaciones;
 	@Override
-	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
-			throws IOException, PortletException {
+	public void render(RenderRequest renderRequest, RenderResponse renderResponse){
 		
 		try {
 			User user = PortalUtil.getUser(renderRequest);//Obtiene el usuario en sesion
@@ -54,21 +53,27 @@ public class VacacionesPortlet extends MVCPortlet {
 			vacaciones = new UserVacaciones(user);
 			
 			if(vacaciones.getUser() != null) {
-				vacaciones.getFechaIngreso();
+				log.info("Saldo: "+vacaciones.getSaldo());
 				renderRequest.setAttribute("Empleado", vacaciones);
-				log.info(History.totalDiasDisfrutados);
 			}else {
 				log.info("El usuario no ha iniciado sesion");
 				UserVacaciones userSinConexion = new UserVacaciones();
 				renderRequest.setAttribute("Empleado", userSinConexion);
 			}
+			super.render(renderRequest, renderResponse);
 			
 		} catch (PortalException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PortletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		super.render(renderRequest, renderResponse);
+		
 	}
 	
 	@Override

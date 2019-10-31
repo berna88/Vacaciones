@@ -1,4 +1,5 @@
 
+<%@page import="com.consistent.cuervo.vacaciones.models.ServiceVacations"%>
 <%@ include file="init.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <portlet:renderURL var="renderSolicitud">
@@ -18,6 +19,7 @@ int totalDias = 0;
 <body id="vacaciones" class="container">
 	<!-- Seccion de nombre y dias habiles -->
 	<%@ include file="section/header/header.jsp" %>
+
 	<section class="row">
 		<article class="col-md-12">
 			<section class="row ">
@@ -266,7 +268,9 @@ int totalDias = 0;
     			document.getElementById("diasATomar").innerHTML = _json.diasATomar;
     			document.getElementById("registro").innerHTML = _json.reg;
     			document.getElementById("fechaInicio").innerHTML = _json.fechaInicio;
-    			console.log(_json.nombre);
+    			document.getElementById("claveLocalidad").innerHTML = _json.claveLocalidad;
+    			document.getElementById("regresoALaborar").innerHTML = _json.fechaFinal;
+    			document.getElementById("fechaDeRegistro").innerHTML = _json.fechaC;
     		},error:function(){
     			
     		}

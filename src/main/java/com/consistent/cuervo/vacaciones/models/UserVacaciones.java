@@ -36,6 +36,7 @@ public class UserVacaciones {
 	private String diasDisfrutados;
 	private String periodo;
 	private List<History> histories;
+	public int CODE = 0;
 	private User user;
 
 	public String getNoEmpleado() {
@@ -289,57 +290,10 @@ public class UserVacaciones {
 	}
 
 	private String getJSONHistory() {
-		//		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
-		String json = "{  \n" + 
-				"   \"DiasDisf\":22,\n" + 
-				"   \"Saldo\":21,\n" + 
-				"   \"historico\":[  \n" + 
-				"      {  \n" + 
-				"         \"diasatomar\":1,\n" + 
-				"         \"nomina\":\"01000699\",\n" + 
-				"         \"reg\":\"68070\",\n" + 
-				"         \"periodo\":22,\n" + 
-				"         \"final\":\"2019-10-18\",\n" + 
-				"         \"inicio\":\"2019-10-17\",\n" + 
-				"         \"fechac\":\"2019-10-16\",\n" + 
-				"         \"cveLocalidad\":\"SFE\",\n" + 
-				"         \"jefe\":\"01002515\",\n" + 
-				"         \"nombre\":\"RIEGO LOPEZ DIANA\",\n" + 
-				"         \"gerente\":\"01002515\"\n" + 
-				"      },\n" + 
-				"      {  \n" + 
-				"         \"diasatomar\":1,\n" + 
-				"         \"nomina\":\"01000699\",\n" + 
-				"         \"reg\":\"68069\",\n" + 
-				"         \"periodo\":22,\n" + 
-				"         \"final\":\"2019-10-18\",\n" + 
-				"         \"inicio\":\"2019-10-17\",\n" + 
-				"         \"fechac\":\"2019-10-16\",\n" + 
-				"         \"cveLocalidad\":\"SFE\",\n" + 
-				"         \"jefe\":\"01002515\",\n" + 
-				"         \"nombre\":\"RIEGO LOPEZ DIANA\",\n" + 
-				"         \"gerente\":\"01002515\"\n" + 
-				"      },\n" + 
-				"{  \n" + 
-				"         \"diasatomar\":1,\n" + 
-				"         \"nomina\":\"01000699\",\n" + 
-				"         \"reg\":\"68099\",\n" + 
-				"         \"periodo\":22,\n" + 
-				"         \"final\":\"2019-10-18\",\n" + 
-				"         \"inicio\":\"2019-10-17\",\n" + 
-				"         \"fechac\":\"2019-10-16\",\n" + 
-				"         \"cveLocalidad\":\"SFE\",\n" + 
-				"         \"jefe\":\"01002515\",\n" + 
-				"         \"nombre\":\"RIEGO LOPEZ DIANA\",\n" + 
-				"         \"gerente\":\"01002515\"\n" + 
-				"      }\n" + 
-				"   ],\n" + 
-				"   \"Periodo\":22\n" + 
-				"}";
+		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
 		try {
 			JsonParser parser = new JsonParser();
-			JsonObject objectJson = parser.parse(json).getAsJsonObject();
-
+			JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
 			if (!objectJson.isJsonNull()) {
 				
 				diasDisfrutados = objectJson.get("DiasDisf").getAsString();
