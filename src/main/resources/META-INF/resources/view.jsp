@@ -1,6 +1,6 @@
 
 <%@ include file="init.jsp" %>
-   
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <portlet:renderURL var="renderSolicitud">
 	<portlet:param name="mvcPath" value="/solicitud.jsp"/>
 </portlet:renderURL>
@@ -10,7 +10,9 @@
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/modal.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/banner.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/general.css"%>'>
-
+<%
+int totalDias = 0;
+%>
 <!-- Banner General de Vacaciones -->
 <%@ include file="section/header/banner.jsp" %>
 <body id="vacaciones" class="container">
@@ -109,34 +111,17 @@
 							      <td><%= history.getFechaInicio() %></td>
 							      <td><%= history.getFechaFinal() %></td>
 							      <td><%= history.getDiasATomar() %></td>
+							      <%totalDias += history.getDiasATomar();%>
 							      <td>
 							      	<button id="<%=history.getReg()%>" class="button-cuervo-marcas" >
 							      	</button>
 							      </td>
 							    </tr>
 							    <%}%>
-							    <tr>
-							      <td>12/26/2006</td>
-							      <td>12/30/2006</td>
-							      <td>4</td>
-							      <td>
-							      	<button id="myBtn" class="button-cuervo-marcas" >
-							      	</button>
-							      </td>
-							    </tr>
-							    <tr>
-							      <td>12/26/2006</td>
-							      <td>12/30/2006</td>
-							      <td>4</td>
-							      <td>
-							      	<button id="myBtn" class="button-cuervo-marcas">
-							
-							      	</button>
-							      </td>
-							    </tr>
+							    
 							    <tr class="ulti">
 							      <td colspan="2">Total de d&iacute;as disfrutados</td>
-							      <td>5</td>
+							      <td><%=totalDias %></td>
 							      <td></td>
 							    </tr>
 							  </tbody>

@@ -302,7 +302,7 @@ public class UserVacaciones {
 					for (JsonElement element : array) {
 						
 						History history = new History();
-						history.setDiasATomar(element.getAsJsonObject().get("diasatomar").getAsString());
+						history.setDiasATomar(element.getAsJsonObject().get("diasatomar").getAsInt());
 						history.setNomina(element.getAsJsonObject().get("nomina").getAsString());
 						history.setReg(element.getAsJsonObject().get("reg").getAsInt());
 						history.setPeriodo(element.getAsJsonObject().get("periodo").getAsString());

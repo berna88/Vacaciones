@@ -55,6 +55,7 @@ public class VacacionesPortlet extends MVCPortlet {
 			
 			if(vacaciones.getUser() != null) {
 				renderRequest.setAttribute("Empleado", vacaciones);
+				log.info(History.totalDiasDisfrutados);
 			}else {
 				log.info("El usuario no ha iniciado sesion");
 				UserVacaciones userSinConexion = new UserVacaciones();

@@ -1,7 +1,7 @@
 package com.consistent.cuervo.vacaciones.models;
 
 public class History implements Comparable<History>{
-	private String diasATomar;
+	private int diasATomar;
 	private String nomina;
 	private int reg;
 	private String periodo;
@@ -12,14 +12,15 @@ public class History implements Comparable<History>{
 	private String jefe;
 	private String nombre;
 	private String gerente;
+	public static int totalDiasDisfrutados;
 	
 	
-	public String getDiasATomar() {
+	public int getDiasATomar() {
 		return diasATomar;
 	}
 
 
-	public void setDiasATomar(String diasATomar) {
+	public void setDiasATomar(int diasATomar) {
 		this.diasATomar = diasATomar;
 	}
 
@@ -124,7 +125,7 @@ public class History implements Comparable<History>{
 	}
 
 
-	public History(String diasATomar, String nomina, int reg, String periodo, String fechaFinal, String fechaInicio,
+	public History(int diasATomar, String nomina, int reg, String periodo, String fechaFinal, String fechaInicio,
 			String fechac, String claveLocalidad, String jefe, String nombre, String gerente) {
 		super();
 		this.diasATomar = diasATomar;
@@ -143,7 +144,7 @@ public class History implements Comparable<History>{
 
 	public History() {
 		super();
-		this.diasATomar = "";
+		this.diasATomar = 0;
 		this.nomina = "";
 		this.reg = 0;
 		this.periodo = "";
