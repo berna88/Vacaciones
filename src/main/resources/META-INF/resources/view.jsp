@@ -217,8 +217,8 @@ int totalDias = 0;
 </body>
 
 <script src='<%=request.getContextPath()+"/js/collapsable.js"%>'></script>
-<%-- <script src='<%=request.getContextPath()+"/js/modal.js"%>'></script> --%>
-<script>
+<script src='<%=request.getContextPath()+"/js/modal.js"%>'></script>
+<<script>
 /**
  * Funcionalidad de modal
  */
