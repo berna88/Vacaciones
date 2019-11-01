@@ -53,7 +53,6 @@ public class VacacionesPortlet extends MVCPortlet {
 			vacaciones = new UserVacaciones(user);
 			
 			if(vacaciones.getUser() != null) {
-				log.info("Saldo: "+vacaciones.getSaldo());
 				renderRequest.setAttribute("Empleado", vacaciones);
 			}else {
 				log.info("El usuario no ha iniciado sesion");

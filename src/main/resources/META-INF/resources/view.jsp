@@ -14,6 +14,7 @@
 <%
 int totalDias = 0;
 %>
+<%= usuario.getPendientes() %>
 <!-- Banner General de Vacaciones -->
 <%@ include file="section/header/banner.jsp" %>
 <body id="vacaciones" class="container">
@@ -218,7 +219,7 @@ int totalDias = 0;
 
 <script src='<%=request.getContextPath()+"/js/collapsable.js"%>'></script>
 <script src='<%=request.getContextPath()+"/js/modal.js"%>'></script>
-<<script>
+<script>
 /**
  * Funcionalidad de modal
  */

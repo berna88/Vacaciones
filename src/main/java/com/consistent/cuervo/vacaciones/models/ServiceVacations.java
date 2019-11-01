@@ -65,10 +65,12 @@ public class ServiceVacations{
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/json");
-			
+			log.info("URL"+connection.getURL());
 			if(connection.getResponseCode() != VacacionesPortletKeys.OK) {
 				log.info("Fallo: codigo de error: "+connection.getResponseCode());
-				return VacacionesPortletKeys.JSON_DEFAULT;
+				if(VacacionesPortletKeys.PATH_HISTORY.equals(path)){
+					return VacacionesPortletKeys.JSON_DEFAULT;	
+				}
 			}
 			
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));

@@ -288,7 +288,7 @@ public class UserVacaciones {
 		this.histories = new ArrayList<History>();
 		this.saldo = "";
 	}
-
+	
 	private String getJSONHistory() {
 		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
 		try {
@@ -351,5 +351,10 @@ public class UserVacaciones {
 		History h = new History();
 		return h;
 	}
-
+	
+	public boolean getPendientes() {
+		ServiceVacations vacations= new ServiceVacations(VacacionesPortletKeys.JSON_DEFAULT_PENDIENTES, getNoEmpleado());
+		log.info("vacations.getJSON()"+vacations.getJSON());
+		return false;
+	}
 }
