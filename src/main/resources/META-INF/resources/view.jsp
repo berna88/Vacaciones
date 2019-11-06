@@ -14,7 +14,6 @@
 <%
 int totalDias = 0;
 %>
-<%= usuario.getPendientes() %>
 <!-- Banner General de Vacaciones -->
 <%@ include file="section/header/banner.jsp" %>
 <body id="vacaciones" class="container">
@@ -134,6 +133,8 @@ int totalDias = 0;
 		</blockquote><!-- Fin de dias disfrutados -->
 		<blockquote class="offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10 offset-xl-1 col-xl-10 colapsable-remuneracion">
 				<button type="button" class="collapsible">Vacaciones pendientes por autorizar con RH <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
+				<% if(!usuario.getPendientes().getNumeroRegistro().equals("0")){ %>
+					<!-- Inicio de pendiente -->
 					<div class="content" style="background: black;border-radius: 20px;margin: 22px 5px;padding: 18px;">
 						<section class="row" style="padding: 15px">
 							<article class="col-md-12">
@@ -202,11 +203,13 @@ int totalDias = 0;
 									  </table>
 									</div>
 							</article>
-							<article class="col-md-12">
-								<button class="button-cancelar">Cancelar solicitud </button>
-							</article>
+							
 						</section>
 					</div>
+					<!-- fin de pendiente -->
+					<% }else{%>
+					
+					<% } %>
 		</blockquote><!-- Fin de dias Vacaciones pendientes -->
 	</aside>
 	<aside class="row">

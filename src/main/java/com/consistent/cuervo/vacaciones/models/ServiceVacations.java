@@ -61,15 +61,19 @@ public class ServiceVacations{
 		try {
 			
 			URL url = new URL(path+param);
-			
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/json");
-			log.info("URL"+connection.getURL());
+			log.info("URL: "+connection.getURL());
 			if(connection.getResponseCode() != VacacionesPortletKeys.OK) {
 				log.info("Fallo: codigo de error: "+connection.getResponseCode());
 				if(VacacionesPortletKeys.PATH_HISTORY.equals(path)){
+					log.info("Entro a default");
 					return VacacionesPortletKeys.JSON_DEFAULT;	
+				}
+				if(VacacionesPortletKeys.PATH_PENDIENTES.equals(path)){
+					log.info("Entro a default");
+					return VacacionesPortletKeys.JSON_DEFAULT_PENDIENTES;	
 				}
 			}
 			

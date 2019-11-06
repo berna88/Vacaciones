@@ -36,8 +36,18 @@ public class UserVacaciones {
 	private String diasDisfrutados;
 	private String periodo;
 	private List<History> histories;
+	private Pendientes pendientes;
 	public int CODE = 0;
 	private User user;
+	
+	
+	public Pendientes getPendientes() {
+		return pendientes;
+	}
+
+	public void setPendientes(Pendientes pendientes) {
+		this.pendientes = pendientes;
+	}
 
 	public String getNoEmpleado() {
 		try {
@@ -273,6 +283,7 @@ public class UserVacaciones {
 	public UserVacaciones(User user) {
 		this.user = user;
 		getJSONHistory();
+		getPendientesJSON();
 	}
 
 	public UserVacaciones() {
@@ -352,9 +363,36 @@ public class UserVacaciones {
 		return h;
 	}
 	
-	public boolean getPendientes() {
-		ServiceVacations vacations= new ServiceVacations(VacacionesPortletKeys.JSON_DEFAULT_PENDIENTES, getNoEmpleado());
-		log.info("vacations.getJSON()"+vacations.getJSON());
+	public boolean getPendientesJSON() {
+		log.info("<-- Entrando a pendientes -->");
+		log.info("URL: "+VacacionesPortletKeys.PATH_PENDIENTES+getNoEmpleado());
+		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_PENDIENTES, getNoEmpleado());
+		try {
+			log.info("vacations.getJSON()"+vacations.getJSON());
+			JsonParser parser = new JsonParser();
+			JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
+			if (!objectJson.isJsonNull()) {
+				Pendientes pen = new Pendientes();
+				pendientes.setNumeroRegistro(objectJson.get("NumReg").getAsString());
+				log.info("Numero de registro: "+this.pendientes.getNumeroRegistro());
+				pendientes.setNumeroRepresentanteRH(validNull(objectJson.get("NumReg").getAsString()));
+				log.info("Numero de registro: "+this.pendientes.getNumeroRepresentanteRH());
+				pendientes = pen;
+				
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			log.error("getPendientesJSON"+ e.getCause());
+			pendientes.setNumeroRepresentanteRH("");
+		}
+		
 		return false;
+	}
+	private String validNull(String value) {
+		if(value.equals(null)) {
+			value = "";
+		}
+		return value;
 	}
 }
