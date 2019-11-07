@@ -1,12 +1,12 @@
 package com.consistent.cuervo.vacaciones.models;
 
+import com.liferay.portal.kernel.log.Log;
+
 public class Pendientes extends History{
 	
 	private String numeroRegistro;
 	private String numeroRepresentanteRH;
 	
-	
-
 	public String getNumeroRegistro() {
 		return numeroRegistro;
 	}

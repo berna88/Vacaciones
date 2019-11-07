@@ -133,7 +133,7 @@ int totalDias = 0;
 		</blockquote><!-- Fin de dias disfrutados -->
 		<blockquote class="offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10 offset-xl-1 col-xl-10 colapsable-remuneracion">
 				<button type="button" class="collapsible">Vacaciones pendientes por autorizar con RH <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
-				<% if(!usuario.getPendientes().getNumeroRegistro().equals("0")){ %>
+				<% if(!usuario.getPendientes().getNumeroRegistro().equals("0") && !usuario.getPendientes().getNumeroRegistro().equals("")){ %>
 					<!-- Inicio de pendiente -->
 					<div class="content" style="background: black;border-radius: 20px;margin: 22px 5px;padding: 18px;">
 						<section class="row" style="padding: 15px">
@@ -143,29 +143,26 @@ int totalDias = 0;
 							<article class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
 								<section class="row align-items-center" style="border: solid 1px white;border-radius: 20px;padding-bottom: 15px;">
 									<article class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-										<h1 style="text-align: center;" class="yellow number-modal inLine">14</h1>
+										<h1 style="text-align: center;" class="yellow number-modal inLine"><%= usuario.getPendientes().getDiasATomar()%></h1>
 										<hgroup class="inLine m-l">
 											<h3 class="fw-g">D&iacute;a(s)</h3>
 											<h3 class="fw-g l-h">a disfrutar</h3>
 										</hgroup>
 									</article>
 									
-		
+									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Fecha de registro:</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getFechac() %></h6></article>
 									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">05/12/2007</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getFechaInicio() %></h6></article>
 									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Regreso a laborar:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">05/14/2007</h6></article>
-									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Saldo anterior:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">8 días</h6></article>
-									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Días disponibles:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">7 días</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getFechaFinal() %></h6></article>
 								
 									<hr class="hr-v">
 								
 									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Registro:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">139</h6></article>
-									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Fecha de registro:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g">05/10/2017</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getNumeroRegistro()%></h6></article>
+									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Periodo:</h6></article>
+									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getPeriodo() %></h6></article>
 								</section>
 							</article>
 							<article class="col-sm-12 col-md-12 col-lg-8 col-xl-8">

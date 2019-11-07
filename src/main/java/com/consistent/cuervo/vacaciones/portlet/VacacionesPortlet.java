@@ -53,22 +53,27 @@ public class VacacionesPortlet extends MVCPortlet {
 			vacaciones = new UserVacaciones(user);
 			
 			if(vacaciones.getUser() != null) {
+				log.info("Logeado");
 				renderRequest.setAttribute("Empleado", vacaciones);
 			}else {
 				log.info("El usuario no ha iniciado sesion");
 				UserVacaciones userSinConexion = new UserVacaciones();
 				renderRequest.setAttribute("Empleado", userSinConexion);
 			}
+			
 			super.render(renderRequest, renderResponse);
 			
 		} catch (PortalException e) {
 			// TODO Auto-generated catch block
+			log.error("render PortalException: ");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			log.error("render IOException: ");
 			e.printStackTrace();
 		} catch (PortletException e) {
 			// TODO Auto-generated catch block
+			log.error("render: PortletException");
 			e.printStackTrace();
 		}
 		

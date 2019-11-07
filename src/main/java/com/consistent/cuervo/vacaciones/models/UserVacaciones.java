@@ -37,7 +37,6 @@ public class UserVacaciones {
 	private String periodo;
 	private List<History> histories;
 	private Pendientes pendientes;
-	public int CODE = 0;
 	private User user;
 	
 	
@@ -176,6 +175,7 @@ public class UserVacaciones {
 				aniversario = year - Integer.parseInt(ano);
 			}
 		} catch (Exception e) {
+			log.error("getAniversario"+e.getMessage());
 			// TODO: handle exception
 			aniversario = 0;
 		}
@@ -297,6 +297,7 @@ public class UserVacaciones {
 		this.aniversario = 0;
 		this.diasDisponibles = "";
 		this.histories = new ArrayList<History>();
+		this.pendientes = new Pendientes();
 		this.saldo = "";
 	}
 	
@@ -363,36 +364,33 @@ public class UserVacaciones {
 		return h;
 	}
 	
-	public boolean getPendientesJSON() {
+	public void getPendientesJSON() {
 		log.info("<-- Entrando a pendientes -->");
 		log.info("URL: "+VacacionesPortletKeys.PATH_PENDIENTES+getNoEmpleado());
 		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_PENDIENTES, getNoEmpleado());
 		try {
-			log.info("vacations.getJSON()"+vacations.getJSON());
+			log.info("<-- Entrando a try pendientes -->");
 			JsonParser parser = new JsonParser();
 			JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
 			if (!objectJson.isJsonNull()) {
-				Pendientes pen = new Pendientes();
+				log.info("Objeto JSON"+objectJson);
+				pendientes = new Pendientes();
 				pendientes.setNumeroRegistro(objectJson.get("NumReg").getAsString());
-				log.info("Numero de registro: "+this.pendientes.getNumeroRegistro());
-				pendientes.setNumeroRepresentanteRH(validNull(objectJson.get("NumReg").getAsString()));
-				log.info("Numero de registro: "+this.pendientes.getNumeroRepresentanteRH());
-				pendientes = pen;
-				
-				
+				pendientes.setNumeroRepresentanteRH(objectJson.get("Rhvobo").getAsString());
+				pendientes.setFechaInicio(objectJson.get("Inicio").getAsString());
+				pendientes.setDiasATomar(objectJson.get("Diasatomar").getAsInt());
+				pendientes.setFechac(objectJson.get("Fechac").getAsString());
+				pendientes.setGerente(objectJson.get("Gerente").getAsString());
+				pendientes.setNomina(objectJson.get("Nomina").getAsString());
+				pendientes.setJefe(objectJson.get("Jefe").getAsString());
+				pendientes.setPeriodo(objectJson.get("Periodo").getAsString());
+				pendientes.setFechaFinal(objectJson.get("Final").getAsString());
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			log.error("getPendientesJSON"+ e.getCause());
-			pendientes.setNumeroRepresentanteRH("");
 		}
 		
-		return false;
 	}
-	private String validNull(String value) {
-		if(value.equals(null)) {
-			value = "";
-		}
-		return value;
-	}
+	
 }
