@@ -18,13 +18,15 @@
 	
 	<body id="vacaciones-solicitud" class="container">
 		<%@ include file="section/header/header.jsp" %>
-		<section class="row">
-			<article class="col-12">
+		<section class="row justify-content-center mb-5 mt-5">
+			<article class="col-sm-7 col-md-5 col-lg-4 col-xl-4">
 				<h3 class="fw-f" style="text-align: center;">Solicitud de vacaciones</h3>
 			</article>
 		</section>
-		<div id="vacaciones-formulario">
-			<liferay-portlet:runtime portletName="com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_INSTANCE_w21nMMnj0qLl"></liferay-portlet:runtime>
-		</div>
+		<section class="row justify-content-center">
+			<article class="col-sm-7 col-md-5 col-lg-4 col-xl-4">
+				<%@ include file="section/form/formVacaciones.jsp"%>
+			</article>
+		</section>
 	</body>
 </html>

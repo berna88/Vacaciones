@@ -3,6 +3,7 @@ package com.consistent.cuervo.vacaciones.portlet;
 import com.consistent.cuervo.vacaciones.constants.VacacionesPortletKeys;
 import com.consistent.cuervo.vacaciones.models.History;
 import com.consistent.cuervo.vacaciones.models.UserVacaciones;
+import com.consistent.cuervo.vacaciones.portal.Portal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -55,6 +56,7 @@ public class VacacionesPortlet extends MVCPortlet {
 			if(vacaciones.getUser() != null) {
 				log.info("Logeado");
 				renderRequest.setAttribute("Empleado", vacaciones);
+				renderRequest.setAttribute("users", Portal.getUsers());
 			}else {
 				log.info("El usuario no ha iniciado sesion");
 				UserVacaciones userSinConexion = new UserVacaciones();
