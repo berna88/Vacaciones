@@ -229,9 +229,15 @@ public class UserVacaciones {
 	private String getJSONHistory() {
 		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, getNoEmpleado());
 		JsonParser parser = new JsonParser();
-		JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
+		String strVacacionesObjJSON = vacations.getJSON();
+		JsonObject objectJson = null;
+		
+		if(strVacacionesObjJSON != null)
+			objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
+		
 		try {
 			if (!objectJson.isJsonNull()) {
+				System.out.println(objectJson.toString());
 				diasDisfrutados = objectJson.get("DiasDisf").getAsString();
 
 				JsonArray array = objectJson.get("historico").getAsJsonArray();

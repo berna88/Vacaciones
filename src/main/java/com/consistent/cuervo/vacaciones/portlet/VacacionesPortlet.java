@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
-import java.util.spi.LocaleServiceProvider;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -25,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.display-category=category.sample",
+		"com.liferay.portlet.display-category=Cuervo",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
@@ -40,8 +39,7 @@ public class VacacionesPortlet extends MVCPortlet {
 	private static Log log = LogFactoryUtil.getLog(VacacionesPortlet.class.getName());
 	
 	@Override
-	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
-			throws IOException, PortletException {
+	public void render(RenderRequest renderRequest, RenderResponse renderResponse) {
 		try {
 			User user = PortalUtil.getUser(renderRequest);//Obtiene el usuario en sesion
 			
@@ -60,6 +58,11 @@ public class VacacionesPortlet extends MVCPortlet {
 			e.printStackTrace();
 		}
 		
-		super.render(renderRequest, renderResponse);
+		try {
+			super.render(renderRequest, renderResponse);
+		} catch (IOException | PortletException e) {
+			log.info("Error Render");
+			e.printStackTrace();
+		}
 	}
 }
