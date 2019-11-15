@@ -42,7 +42,7 @@
     		type: 'POST',
     		cache: false,
     		data: {
-    			<portlet:namespace/>_id : reg
+    			_id : reg
     		},
     		success: function(data){
     			console.log("result",data);

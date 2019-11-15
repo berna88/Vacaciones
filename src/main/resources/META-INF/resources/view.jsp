@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/modal.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/banner.css"%>'>
 <link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/general.css"%>'>
+
 <%
 int totalDias = 0;
 %>
@@ -225,7 +226,6 @@ int totalDias = 0;
  */
 
 // Get the modal
-	
 	
     var modal = document.getElementById("myModal-cuervo-marcas");
       

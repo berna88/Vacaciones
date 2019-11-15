@@ -20,3 +20,7 @@
 <%
 UserVacaciones usuario = (UserVacaciones) request.getAttribute("Empleado");
 %>
+
+<script type="text/javascript">
+var _periodo = '<%=usuario.getPendientes().getPeriodo() %>';
+</script>
