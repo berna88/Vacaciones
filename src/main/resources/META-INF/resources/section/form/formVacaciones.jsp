@@ -11,10 +11,8 @@
 				Fecha de inicio
 			</label>
 			<div class="input-group mb-3 ">
-		        <div class="input-group-prepend">
-		          <div class="input-group-text" style="background-image: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>');"></div>
-		        </div>
-			<input type="date" class="form-control form-control-sm" placeholder="Fecha de inicio" id="fechaInicio" >
+		       
+			<input type="date" class="form-control form-control-sm calendar" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;padding-left:38px;background-size: 18px;" placeholder="Fecha de inicio" id="fechaInicio" >
 			</div>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
@@ -22,10 +20,8 @@
 				Regresa a laborar
 			</label>
 			<div class="input-group mb-3 ">
-		        <div class="input-group-prepend">
-		          <div class="input-group-text" style="background-image: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>');"></div>
-		        </div>
-			<input type="date" class="form-control form-control-sm"  id="fechaRegreso" >
+		        
+			<input type="date" class="form-control form-control-sm" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;padding-left:38px;background-size: 18px;" id="fechaRegreso" >
 			</div>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -34,16 +30,16 @@
 			</label>
 			<input type="number" class="form-control form-control-sm" placeholder="Días solicitados" id="diasSolicitados" min="0" max="50" >
 		</div>
-		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
 			<label for="exampleFormControlSelect2">
 				Suplente
 			</label>
 		    <!-- <input type="text" class="form-control form-control-sm"  id="Suplente" list="informacion2"> -->
-		    <select id="Select-Suplente" class="form-control form-control-sm" name="Suplente">
+		    <select id="Select-Suplente" class="form-control form-control-sm" name="Suplente" style="margin-bottom: 0px;">
 		    </select>
 		    <small id="emailHelp" class="form-text text-muted">Nombre y firma.</small>
 		</div>
-		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
 			<label for="exampleFormControlSelect2">
 				Jefe Inmediato
 			</label>
@@ -52,7 +48,7 @@
 		    </select>
 		    <small id="emailHelp" class="form-text text-muted">Nombre y firma.</small>
 		</div>
-		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
 			<label for="exampleFormControlSelect2">
 				Gerente o Director de área
 			</label>
@@ -61,7 +57,7 @@
 		    </select>
 		    <small id="emailHelp" class="form-text text-muted">Nombre y firma.</small>
 		</div>
-		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-5">
+		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-5 select">
 			<label for="exampleFormControlSelect2">
 				Responsable de Recursos Humanos
 			</label>
@@ -72,10 +68,11 @@
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-6">
 		    <div class="form-check">
-		      <input class="form-check-input" type="radio" value="" id="CheckPoliticas" required>
-			      <label class="form-check-label" for="invalidCheck3">
-			        He leido y acepto la <a href="">politica de vacaciones vigente</a> en CASA CUERVO MÉXICO.
-			      </label>
+				<label class="terminosVacaciones">
+				  <input type="radio" name="radio" required="required">
+				  <span class="checkmark"></span>
+				  He leido y acepto la <a href="">politica de vacaciones vigente</a> en CASA CUERVO MÉXICO.
+				</label>
 		    </div>
 		</div>
 		
