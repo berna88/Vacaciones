@@ -8,7 +8,7 @@
 	<div class="form-row">
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
 			<label for="fechaInicio" >
-				Fecha de inicio
+				Fecha de inicio*
 			</label>
 			<div class="input-group mb-3 ">
 		       
@@ -17,7 +17,7 @@
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
 			<label for="fechaRegreso" >
-				Regresa a laborar
+				Regresa a laborar*
 			</label>
 			<div class="input-group mb-3 ">
 		        
@@ -26,13 +26,13 @@
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 			<label for="fechaInicio" >
-				Días solicitados
+				Días solicitados*
 			</label>
 			<input type="number" class="form-control form-control-sm" placeholder="Días solicitados" id="diasSolicitados" min="0" max="50" >
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
 			<label for="exampleFormControlSelect2">
-				Suplente
+				Suplente*
 			</label>
 		    <!-- <input type="text" class="form-control form-control-sm"  id="Suplente" list="informacion2"> -->
 		    <select id="Select-Suplente" class="form-control form-control-sm" name="Suplente" style="margin-bottom: 0px;">
@@ -41,7 +41,7 @@
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
 			<label for="exampleFormControlSelect2">
-				Jefe Inmediato
+				Jefe Inmediato*
 			</label>
 			<!-- <input type="text" class="form-control form-control-sm"  id="JefeInmediato" list="informacion2"> -->
 		    <select id="JefeInmediato" class="form-control form-control-sm" name="Jefe Inmediato">
@@ -50,7 +50,7 @@
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
 			<label for="exampleFormControlSelect2">
-				Gerente o Director de área
+				Gerente o Director de área*
 			</label>
 			<!-- <input type="text" class="form-control form-control-sm"  id="Gerente_Director" list="informacion2"> -->
 		    <select id="Gerente_Director" class="form-control form-control-sm" name="Gerente Director">
@@ -59,7 +59,7 @@
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-5 select">
 			<label for="exampleFormControlSelect2">
-				Responsable de Recursos Humanos
+				Responsable de Recursos Humanos*
 			</label>
 			<!-- <input type="text" class="form-control form-control-sm"  id="RecursosHumanos" list="informacion2"> -->
 		    <select id="RecursosHumanos" class="form-control form-control-sm" name="Recursos Humanos">
@@ -69,17 +69,18 @@
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-6">
 		    <div class="form-check">
 				<label class="terminosVacaciones">
-				  <input type="radio" name="radio" required="required">
+				  <input id="CheckPoliticas" type="radio" name="radio" required="required">
 				  <span class="checkmark"></span>
 				  He leido y acepto la <a href="">politica de vacaciones vigente</a> en CASA CUERVO MÉXICO.
 				</label>
+				<label id="mensajeError" style="color:red;padding-left: 2rem;"></label>
 		    </div>
 		</div>
 		
 			<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-				<button id="Send" class="btn btn-primary">Enviar</button>
+				<button id="Send" class="btn btn-primary" onclick="validInput()">Enviar</button>
 			</div>
-		
+			
 	</div>
 </div>
 <!-- </form> -->
@@ -157,7 +158,19 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			var _Gerente_DirectorId = $('#Gerente_Director').val();
 			var _RecursosHumanos = $('#RecursosHumanos').val();
 			var _RecursosHumanosId = $('#RecursosHumanos').val();
+			var error = document.getElementById('mensajeError');
+			
+			if(_fechaInicio.trim() == '' && _fechaRegreso.trim() == '' && _diasSolicitados.trim() == '' && _suplenteId.trim() == '' && _JefeInmediatoId.trim() == '' && _Gerente_DirectorId.trim() == '' && _RecursosHumanosId.trim() == ''){
+				console.log("Esta vacio");
+				error.innerHTML = "*Todos los campos son requeridos";
+				return "";
+			}
+			
 			var _CheckPoliticas = document.getElementById("CheckPoliticas").checked;
+			if(_CheckPoliticas != true){
+				error.innerHTML = "*Debes aceptar los terminos y condiciones";
+				return "";
+			}
 			console.log("Periodo ", _periodo);
 			
 			console.log(_fechaInicio, ' ', _fechaRegreso, ' ', _diasSolicitados, ' ', _suplenteId, ' '
