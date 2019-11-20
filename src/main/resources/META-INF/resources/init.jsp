@@ -10,17 +10,18 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib prefix="liferay-util" uri="http://liferay.com/tld/util" %>
-<liferay-theme:defineObjects />
 
+<liferay-theme:defineObjects />
 <portlet:defineObjects />
 
 <portlet:resourceURL var="getRegURL">
 	<portlet:param name="mvcPath" value="getReg"/>
 </portlet:resourceURL>
+
+<portlet:resourceURL var="addRequestVacationURL">
+	<portlet:param name="mvcPath" value="addRequestVacation"/>
+</portlet:resourceURL>
+
 <%
 UserVacaciones usuario = (UserVacaciones) request.getAttribute("Empleado");
 %>
-
-<script type="text/javascript">
-var _periodo = '<%=usuario.getPendientes().getPeriodo() %>';
-</script>

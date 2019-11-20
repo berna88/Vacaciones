@@ -30,3 +30,9 @@
 		</section>
 	</body>
 </html>
+<%
+usuario = (UserVacaciones) request.getAttribute("Empleado");
+%>
+<script>
+console.log("usuario ", '<%=usuario.getPendientes().getPeriodo()%>');
+</script>

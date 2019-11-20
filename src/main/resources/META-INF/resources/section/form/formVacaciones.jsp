@@ -161,7 +161,7 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			var _RecursosHumanos = $('#RecursosHumanos').val();
 			var _RecursosHumanosId = $('#RecursosHumanos').val();
 			var _CheckPoliticas = document.getElementById("CheckPoliticas").checked;
-			console.log("Periodo ", _periodo);
+			var _periodo = '<%=usuario.getPendientes().getPeriodo() %>';
 			
 			console.log(_fechaInicio, ' ', _fechaRegreso, ' ', _diasSolicitados, ' ', _suplenteId, ' '
 					, _JefeInmediato, ' ', _Gerente_Director, ' ', _RecursosHumanos, ' ', _CheckPoliticas  );
@@ -170,7 +170,38 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 				+_Gerente_DirectorId+"\",\"Nomina\":\""+_suplenteId+"\",\"Jefe\":\""+_JefeInmediatoId+"\",\"Periodo\":\""+_periodo+"\",\"Final\":\""
 				+_fechaRegreso+"\", \"Rhvobo\":\""+_RecursosHumanosId+"\"}";
 				
-			console.log(_SolicitudJSON);							
+			console.log(_SolicitudJSON);	
+			var _objSolicitudJSON = JSON.parse(_SolicitudJSON);
+			
+			$.ajax({
+				url: '${addRequestVacationURL}',
+			    type: 'POST',
+			    datatype:'json',
+			    cache:false,
+			    data: {
+			    	<portlet:namespace/>Inicio : _fechaInicio,
+			    	<portlet:namespace/>Diasatomar : _diasSolicitados,
+			    	<portlet:namespace/>Gerente : _Gerente_DirectorId,
+			    	<portlet:namespace/>Nomina : _suplenteId,
+			    	<portlet:namespace/>Jefe : _JefeInmediatoId,
+			    	<portlet:namespace/>Periodo : _periodo,
+			    	<portlet:namespace/>Final : _fechaRegreso,
+			    	<portlet:namespace/>Rhvobo : _RecursosHumanosId
+			    },
+			    success: function(data){
+			    	console.log(data);
+			    },
+			    error : function(XMLHttpRequest, textStatus, errorThrown){
+			    	console.log('XMLHttpRequest', XMLHttpRequest);
+			        console.log("errorThrown ", errorThrown);
+			        console.log("textStatus ", textStatus);
+			    }
+			    //beforeSend: setHeader
+			});
+			
+			function setHeader(xhr) {
+				xhr.setRequestHeader('Authorization', 'Basic Zm9vOmJhcg==');
+			}
 				
 		});
 	});

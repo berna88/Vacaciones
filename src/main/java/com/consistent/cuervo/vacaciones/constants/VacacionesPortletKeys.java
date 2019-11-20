@@ -18,4 +18,5 @@ public class VacacionesPortletKeys {
 			"   \"Periodo\":0\n" + 
 			"}\n" + 
 			"";
+	public static final String ADD_REQUEST = "http://192.168.70.220:88/WSVacaciones/jservicios/setsolicitudservice";
 }
