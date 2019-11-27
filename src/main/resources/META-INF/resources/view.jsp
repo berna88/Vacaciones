@@ -226,6 +226,8 @@ int totalDias = 0;
  */
 
 // Get the modal
+var path = '<%=request.getContextPath()+"/img/logo-cuervo.png"%>'>
+console.log(path);
 	
     var modal = document.getElementById("myModal-cuervo-marcas");
       

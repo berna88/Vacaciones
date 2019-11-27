@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.portlet.Portlet;
@@ -53,6 +54,11 @@ public class VacacionesPortlet extends MVCPortlet {
 		String nameParam = ParamUtil.getString(renderRequest, "mvcPath");
 		System.out.println("mvc "+ nameParam);
 		
+		String PATH = renderRequest.getContextPath();
+		File f1 = new File(PATH+"/img/logo-cuervo.png");
+		System.out.println(f1.exists());
+		File f = new File(PATH+"/SourceSansPro-Regular.ttf");
+		System.out.println(f.exists());
 		try {
 			User user = PortalUtil.getUser(renderRequest);//Obtiene el usuario en sesion
 			
@@ -88,8 +94,7 @@ public class VacacionesPortlet extends MVCPortlet {
 	}
 	
 	@Override
-	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-			throws IOException, PortletException {
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
 		log.info("<------ Resource ------->");
 		String idReg = ParamUtil.getString(resourceRequest, "_id");
 		String nameParam = ParamUtil.getString(resourceRequest, "mvcPath");
@@ -118,7 +123,18 @@ public class VacacionesPortlet extends MVCPortlet {
 			String strPeriodo = ParamUtil.getString(resourceRequest, "Periodo");
 			String strRhVoBo = ParamUtil.getString(resourceRequest, "Rhvobo");
 			
-			String strResponse = AddRequestVacation.addRequestVacation(strInicio, strFinal, strDiasTomar, strGerente, strNomina, strJefe, strPeriodo, strRhVoBo);
+			ThemeDisplay td  =(ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+			User user = td.getUser();		
+			
+			System.out.println("invoca addRequestVacation");
+			//https://itextpdf.com/en/resources/faq/technical-support/itext-7/how-can-i-load-font-web-infresourcesfontsfoobarttf
+			String strResponse = AddRequestVacation.addRequestVacation(strInicio, strFinal, strDiasTomar, strGerente, strNomina, strJefe, strPeriodo, strRhVoBo, user);
+			
+			if(strResponse.equalsIgnoreCase("OK")) {
+				jsonHistory = JSONFactoryUtil.createJSONObject();
+				jsonHistory.put("Response", "200");
+				jsonHistory.put("Mensaje", "Se envío correo");
+			}
 		}
 		
 		if(resourceResponse.getStatus() == 200) {

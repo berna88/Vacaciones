@@ -101,8 +101,18 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 		if(!userLiferay.isDefaultUser()){
 			if(userLiferay.isActive() && userLiferay.getExpandoBridge().hasAttribute("No_Empleado")){	
 				String strNo_Empleado = (String)userLiferay.getExpandoBridge().getAttribute("No_Empleado");
-				if( strNo_Empleado != null && !strNo_Empleado.equalsIgnoreCase(""))
-					strObjJSON += "{ \"id\": \""+strNo_Empleado+"\", \"text\": \""+userLiferay.getFullName()+"\"},";				                           
+				if( strNo_Empleado != null && !strNo_Empleado.equalsIgnoreCase("")){
+					String nombre = userLiferay.getFirstName();
+					String apellidoMaterno = "";
+					String apellidoPaterno = "";
+					if(userLiferay.getExpandoBridge().hasAttribute("Apellido_Materno"))
+						apellidoMaterno = (String)userLiferay.getExpandoBridge().getAttribute("Apellido_Materno");
+					if(userLiferay.getExpandoBridge().hasAttribute("Apellido_Paterno"))
+						apellidoPaterno = (String)userLiferay.getExpandoBridge().getAttribute("Apellido_Paterno");
+					
+					String fullName = nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+					strObjJSON += "{ \"id\": \""+strNo_Empleado+"\", \"text\": \""+fullName+"\"},";
+				}				                           
 				                         
 %>				<option id=<%=strNo_Empleado %> value=<%=userLiferay.getFullName() %> >
 <%			} 
@@ -203,7 +213,7 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			    	<portlet:namespace/>Rhvobo : _RecursosHumanosId
 			    },
 			    success: function(data){
-			    	console.log(data);
+			    	console.log("Response "+data);
 			    },
 			    error : function(XMLHttpRequest, textStatus, errorThrown){
 			    	console.log('XMLHttpRequest', XMLHttpRequest);
