@@ -301,7 +301,36 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			
 			console.log('pathname ' , pathname , ' url ', url , ' origin ', origin);
 			
-			window.location.href = origin + pathname
+			//window.location.href = origin + pathname;
+			
+			$.ajax({
+				url: '${addRequestVacationURL}',
+			    type: 'POST',
+			    datatype:'json',
+			    cache:false,
+			    data: {
+			    	<portlet:namespace/>Inicio : _fechaInicio,
+			    	<portlet:namespace/>Diasatomar : _diasSolicitados,
+			    	<portlet:namespace/>Gerente : _Gerente_DirectorId,
+			    	<portlet:namespace/>Nomina : _suplenteId,
+			    	<portlet:namespace/>Jefe : _JefeInmediatoId,
+			    	<portlet:namespace/>Periodo : _periodo,
+			    	<portlet:namespace/>Final : _fechaRegreso,
+			    	<portlet:namespace/>Rhvobo : _RecursosHumanosId
+			    },
+			    success: function(data){
+			    	console.log("Response "+data);
+			    	window.location.href = origin + pathname;
+			    },
+			    error : function(XMLHttpRequest, textStatus, errorThrown){
+			    	console.log('XMLHttpRequest', XMLHttpRequest);
+			        console.log("errorThrown ", errorThrown);
+			        console.log("textStatus ", textStatus);
+			    }
+			    //beforeSend: setHeader
+			});
+			
+			
 				
 		});
 	});
