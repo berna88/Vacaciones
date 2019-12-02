@@ -153,10 +153,30 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			  language: "es"
 		});
 		
-		var inputFecha = $( "#fechaRegreso" );
-		var changeCloseButton = function() {
+		$.datepicker.regional['es'] = {
+				closeText: 'Cerrar',
+				prevText: '< Ant',
+				nextText: 'Sig >',
+				currentText: 'Hoy',
+				monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+				monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+				dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+				dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+				dayNamesMin: ['D','L','M','M','J','V','S'],
+				weekHeader: 'Sm',
+				dateFormat: 'dd/mm/yy',
+				firstDay: 1,
+				isRTL: false,
+				showMonthAfterYear: false,
+				yearSuffix: ''
+		};
+		
+		var inputFecha = $( "#fechaInicio" );
+		var changeCloseButton = function(input) {
+			console.log('fechaInicio');
 			setTimeout(function() {
-		        var headerPanel = inputFecha.datepicker( "widget" ).find( ".ui-datepicker-header" );
+				console.log('changeCloseButton ', input);
+		        var headerPanel = inputFecha.datepicker( "widget" ).find( ".ui-datepicker-title" );
 		        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
 		        
 		        closeBtn.bind("click", function() {
@@ -164,58 +184,77 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 		        });
 		        
 		        closeBtn.prependTo(headerPanel);
-		    }, 1 );
+		    }, 1000 );
 		};
 		
 		$( "#fechaInicio" ).datepicker({
-			beforeShow: function(input, inst) {
-				console.log(input, inst);
-				setTimeout(function() {
-			        var headerPanel = inputFecha.datepicker( "widget" ).find( ".ui-datepicker-header" );
-			        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
-			        
-			        closeBtn.bind("click", function() {
-			        	$( "#fechaInicio" ).datepicker( "hide" );
-			        });
-			        
-			        closeBtn.prependTo(headerPanel);
-			    }, 1 );
-            },
 			changeMonth: true,
             changeYear: true,
             hideIfNoPrevNext: true,
             minDate: 0,
-			
-			onChangeMonthYear: function(){
-				setTimeout(function() {
-			        var headerPanel = inputFecha.datepicker( "widget" ).find( ".ui-datepicker-header" );
-			        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
-			        
-			        closeBtn.bind("click", function() {
-			        	$( "#fechaInicio" ).datepicker( "hide" );
-			        });
-			        
-			        closeBtn.prependTo(headerPanel);
-			    }, 1 );
-			},
-			dateFormat: "yy-mm-dd"
+            dateFormat: "yy-mm-dd",
+			beforeShow: changeCloseButton,			
+			onChangeMonthYear: changeCloseButton
 		}).focus(function () {
 	        $(".ui-datepicker-next").hide();
 	        $(".ui-datepicker-prev").hide();
 	    });
 		
-	//	$( "#fechaRegreso" ).datepicker({
-	//		changeMonth: true,
-    //        changeYear: true,
-    //        hideIfNoPrevNext: true,
-    //        minDate: 0,
-    //        beforeShow: changeCloseButton,
-	//		onChangeMonthYear: changeCloseButton,
-	//		dateFormat: "yy-mm-dd"
-	//	}).focus(function () {
-	//        $(".ui-datepicker-next").hide();
-	//        $(".ui-datepicker-prev").hide();
-	//    });		
+		$("#datepicker2").datepicker({
+			 showButtonPanel: true,
+			 beforeShow: function( input ) {
+			 	setTimeout(function() {
+			   		var buttonPane = $( input ).datepicker( "widget" ).find( ".ui-datepicker-buttonpane" );
+
+			   		var btn = $('Clear');
+			   		btn.unbind("click").bind("click", function () { 
+			   			$.datepicker._clearDate( input );
+			  		});
+
+			   		btn.appendTo( buttonPane );
+
+			 }, 1 );
+			      }
+			});
+		
+		$( "#fechaRegreso" ).datepicker({
+			changeMonth: true,
+            changeYear: true,
+            hideIfNoPrevNext: true,
+            minDate: 0,
+            dateFormat: "yy-mm-dd",
+            beforeShow: function( input ) {
+            	console.log('fechaRegreso beforeShow');
+            	setTimeout(function() {
+    		        var headerPanel = $(input).datepicker( "widget" ).find( ".ui-datepicker-title" );
+    		        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
+    		        
+    		        closeBtn.bind("click", function() {
+    		        	$( "#fechaRegreso" ).datepicker( "hide" );
+    		        });
+    		        
+    		        closeBtn.prependTo(headerPanel);
+    		    }, 300 );
+            },
+			onChangeMonthYear: function( input ) {
+				console.log('fechaRegreso onChangeMonthYear');
+				setTimeout(function() {
+			        var headerPanel = $(input).datepicker( "widget" ).find( ".ui-datepicker-title" );
+			        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
+			        
+			        closeBtn.bind("click", function() {
+			        	$( "#fechaRegreso" ).datepicker( "hide" );
+			        });
+			        
+			        closeBtn.prependTo(headerPanel);
+			    }, 200 );
+            },
+		}).focus(function () {
+	        $(".ui-datepicker-next").hide();
+	        $(".ui-datepicker-prev").hide();
+	    });		
+		
+		$.datepicker.setDefaults($.datepicker.regional['es']);
 				
 		$("#Send").on('click', function(){
 			var _fechaInicio = document.getElementById("fechaInicio").value;
@@ -256,36 +295,13 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			console.log(_SolicitudJSON);	
 			var _objSolicitudJSON = JSON.parse(_SolicitudJSON);
 			
-			$.ajax({
-				url: '${addRequestVacationURL}',
-			    type: 'POST',
-			    datatype:'json',
-			    cache:false,
-			    data: {
-			    	<portlet:namespace/>Inicio : _fechaInicio,
-			    	<portlet:namespace/>Diasatomar : _diasSolicitados,
-			    	<portlet:namespace/>Gerente : _Gerente_DirectorId,
-			    	<portlet:namespace/>Nomina : _suplenteId,
-			    	<portlet:namespace/>Jefe : _JefeInmediatoId,
-			    	<portlet:namespace/>Periodo : _periodo,
-			    	<portlet:namespace/>Final : _fechaRegreso,
-			    	<portlet:namespace/>Rhvobo : _RecursosHumanosId
-			    },
-			    success: function(data){
-			    	console.log("Response "+data);
-			    },
-			    error : function(XMLHttpRequest, textStatus, errorThrown){
-			    	console.log('XMLHttpRequest', XMLHttpRequest);
-			        console.log("errorThrown ", errorThrown);
-			        console.log("textStatus ", textStatus);
-			    }
-			    //beforeSend: setHeader
-			});
+			var pathname = window.location.pathname; // Returns path only (/path/example.html)
+			var url      = window.location.href;     // Returns full URL (https://example.com/path/example.html)
+			var origin   = window.location.origin;   // Returns base URL (https://example.com)
 			
+			console.log('pathname ' , pathname , ' url ', url , ' origin ', origin);
 			
-			function setHeader(xhr) {
-				xhr.setRequestHeader('Authorization', 'Basic Zm9vOmJhcg==');
-			}
+			window.location.href = origin + pathname
 				
 		});
 	});

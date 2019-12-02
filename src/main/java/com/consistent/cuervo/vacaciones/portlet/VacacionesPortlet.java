@@ -128,8 +128,6 @@ public class VacacionesPortlet extends MVCPortlet {
 			ThemeDisplay td  =(ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
 			User user = td.getUser();		
 			
-			System.out.println("invoca addRequestVacation");
-			//https://itextpdf.com/en/resources/faq/technical-support/itext-7/how-can-i-load-font-web-infresourcesfontsfoobarttf
 			String strResponse = AddRequestVacation.addRequestVacation(strInicio, strFinal, strDiasTomar, strGerente, strNomina, strJefe, strPeriodo, strRhVoBo, user);
 			
 			if(strResponse.equalsIgnoreCase("OK")) {
