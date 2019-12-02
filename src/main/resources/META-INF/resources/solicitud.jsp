@@ -1,7 +1,7 @@
 <%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="init.jsp" %>
+<%@ include file="/init.jsp" %>
 <portlet:renderURL var="homeSolicitud">
 	<portlet:param name="mvcPath" value="/view.jsp"/>
 </portlet:renderURL>

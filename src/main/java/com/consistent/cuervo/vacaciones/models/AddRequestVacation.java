@@ -62,9 +62,12 @@ public class AddRequestVacation {
 				
 		//sendMail(strInicio, strFinal, strDiasTomar, objUser, strGerente, strNomina, strJefe, strPeriodo, strRHVoBo);
 		try {
+				String strNo_Empleado = "";
+				if(objUser.getExpandoBridge().hasAttribute("No_Empleado"))
+					strNo_Empleado = (String) objUser.getExpandoBridge().getAttribute("No_Empleado");
 				String URL = VacacionesPortletKeys.ADD_REQUEST;							
 				String strJSON = "{\"Inicio\":\""+strInicio+"\",\"Diasatomar\": \""+strDiasTomar+"\",\"Gerente\":\""
-								+strGerente+"\",\"Nomina\":\""+strNomina+"\",\"Jefe\":\""+strJefe+"\",\"Periodo\":\""+strPeriodo+"\",\"Final\":\""
+								+strGerente+"\",\"Nomina\":\""+strNo_Empleado+"\",\"Jefe\":\""+strJefe+"\",\"Periodo\":\""+strPeriodo+"\",\"Final\":\""
 								+strFinal+"\", \"Rhvobo\":\""+strRHVoBo+"\"}";
 				
 				//System.out.println("strJSON " + strJSON);

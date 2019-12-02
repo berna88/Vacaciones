@@ -617,3 +617,54 @@
 #form-vacations .select span{
 	margin-bottom: 0px;
 }
+
+/**** CALENDAR ***/
+.ui-datepicker .ui-datepicker-header {
+    background: none;
+    border: none;
+}
+
+.ui-widget.ui-widget-content {
+    border: 1px solid rgb(205, 184, 116);
+    background: black;
+    border-radius: 15px;
+}
+
+.ui-state-default {
+	border: unset !important;
+    background: none !important;
+    color: #FFFFFF !important;
+}
+
+.ui-state-highlight, 
+.ui-widget-content .ui-state-highlight, 
+.ui-widget-header .ui-state-highlight {
+    border: unset !important;
+    background: #CDB874 !important;
+    color: black !important;
+}
+
+.ui-datepicker td span,
+.ui-datepicker td a {
+    text-align: center;
+}
+
+.ui-datepicker .ui-datepicker-title {
+    margin: unset;
+}
+
+.ui-datepicker select.ui-datepicker-month{
+	margin-right: 10px;
+}
+
+.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year {
+    width: 47%;
+    background: black;
+    color: white;
+    border: 1px solid #CDB874;
+}
+
+.ui-datepicker-calendar thead {
+	border-top: 1px solid #CDB874;
+}

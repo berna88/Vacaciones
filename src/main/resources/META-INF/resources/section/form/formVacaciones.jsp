@@ -11,10 +11,7 @@
 				Fecha de inicio*
 			</label>
 			<div class="input-group mb-3 ">
-		        <div class="input-group-prepend">
-		          <div class="input-group-text" style="background-image: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>');"></div>
-		        </div>
-			<input type="date" class="form-control form-control-sm calendar" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;padding-left:38px;background-size: 18px;" placeholder="Fecha de inicio" id="fechaInicio" >
+				<input type="text" class="form-control form-control-sm calendar" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px;background-position: 99%; " placeholder="Fecha de inicio" id="fechaInicio" >
 			</div>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
@@ -22,10 +19,7 @@
 				Regresa a laborar*
 			</label>
 			<div class="input-group mb-3 ">
-		        <div class="input-group-prepend">
-		          <div class="input-group-text" style="background-image: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>');"></div>
-		        </div>
-			<input type="date" class="form-control form-control-sm" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;padding-left:38px;background-size: 18px;" id="fechaRegreso" >
+				<input type="text" class="form-control form-control-sm" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px; background-position: 99%;" placeholder="Regresa a laborar" id="fechaRegreso" >
 			</div>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -126,13 +120,14 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 </datalist>
 
 <script>
+
 	$(function(){
 		var _ojbUser = '<%=strObjJSON%>';
-		console.log(_ojbUser);
+		var _usuario = '<%=usuario%>';
+		console.log(_usuario);
 		
 		var _UsersJSON = JSON.parse(_ojbUser);
 		//_UsersJSON.results.splice(-1,1);
-		console.log(_UsersJSON);
 		
 		$('#Select-Suplente').select2({
 			  data: _UsersJSON.results,
@@ -157,6 +152,70 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			  placeholder: 'Selecciona una opción',
 			  language: "es"
 		});
+		
+		var inputFecha = $( "#fechaRegreso" );
+		var changeCloseButton = function() {
+			setTimeout(function() {
+		        var headerPanel = inputFecha.datepicker( "widget" ).find( ".ui-datepicker-header" );
+		        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
+		        
+		        closeBtn.bind("click", function() {
+		        	$( "#fechaRegreso" ).datepicker( "hide" );
+		        });
+		        
+		        closeBtn.prependTo(headerPanel);
+		    }, 1 );
+		};
+		
+		$( "#fechaInicio" ).datepicker({
+			beforeShow: function(input, inst) {
+				console.log(input, inst);
+				setTimeout(function() {
+			        var headerPanel = inputFecha.datepicker( "widget" ).find( ".ui-datepicker-header" );
+			        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
+			        
+			        closeBtn.bind("click", function() {
+			        	$( "#fechaInicio" ).datepicker( "hide" );
+			        });
+			        
+			        closeBtn.prependTo(headerPanel);
+			    }, 1 );
+            },
+			changeMonth: true,
+            changeYear: true,
+            hideIfNoPrevNext: true,
+            minDate: 0,
+			
+			onChangeMonthYear: function(){
+				setTimeout(function() {
+			        var headerPanel = inputFecha.datepicker( "widget" ).find( ".ui-datepicker-header" );
+			        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
+			        
+			        closeBtn.bind("click", function() {
+			        	$( "#fechaInicio" ).datepicker( "hide" );
+			        });
+			        
+			        closeBtn.prependTo(headerPanel);
+			    }, 1 );
+			},
+			dateFormat: "yy-mm-dd"
+		}).focus(function () {
+	        $(".ui-datepicker-next").hide();
+	        $(".ui-datepicker-prev").hide();
+	    });
+		
+	//	$( "#fechaRegreso" ).datepicker({
+	//		changeMonth: true,
+    //        changeYear: true,
+    //        hideIfNoPrevNext: true,
+    //        minDate: 0,
+    //        beforeShow: changeCloseButton,
+	//		onChangeMonthYear: changeCloseButton,
+	//		dateFormat: "yy-mm-dd"
+	//	}).focus(function () {
+	//        $(".ui-datepicker-next").hide();
+	//        $(".ui-datepicker-prev").hide();
+	//    });		
 				
 		$("#Send").on('click', function(){
 			var _fechaInicio = document.getElementById("fechaInicio").value;
@@ -185,10 +244,10 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 				error.innerHTML = "*Debes aceptar los terminos y condiciones";
 				return "";
 			}
-			var _periodo = '<%=usuario.getPendientes().getPeriodo() %>';
+			var _periodo = '<%=usuario.getPeriodo() %>';
 			
 			console.log(_fechaInicio, ' ', _fechaRegreso, ' ', _diasSolicitados, ' ', _suplenteId, ' '
-					, _JefeInmediato, ' ', _Gerente_Director, ' ', _RecursosHumanos, ' ', _CheckPoliticas  );
+					, _JefeInmediato, ' ', _Gerente_Director, ' ', _RecursosHumanos, ' ', _CheckPoliticas, ' ', _periodo  );
 			
 			var _SolicitudJSON = "{\"Inicio\":\""+_fechaInicio+"\",\"Diasatomar\": \""+_diasSolicitados+"\",\"Gerente\":\""
 				+_Gerente_DirectorId+"\",\"Nomina\":\""+_suplenteId+"\",\"Jefe\":\""+_JefeInmediatoId+"\",\"Periodo\":\""+_periodo+"\",\"Final\":\""
@@ -222,6 +281,7 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			    }
 			    //beforeSend: setHeader
 			});
+			
 			
 			function setHeader(xhr) {
 				xhr.setRequestHeader('Authorization', 'Basic Zm9vOmJhcg==');
