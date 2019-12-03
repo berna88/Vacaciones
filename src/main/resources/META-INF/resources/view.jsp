@@ -141,7 +141,7 @@ int totalDias = 0;
 						<section class="row justify-content-center">
 							<article class="col-md-11">
 								<section class="row align-items-center">
-									<article class="col-md-6">
+									<article class="col-md-6" style="margin-top: 20px;">
 										<hgroup>
 											<h4 class="fw-g"><%=usuario.getApellidos()%></h4>
 											<h2 class="bolder l-h"><%=usuario.getNombre()%></h2>
