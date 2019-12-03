@@ -138,7 +138,7 @@ int totalDias = 0;
 					<button type="button" class="collapsible">(1) Vacaciones pendientes por autorizar con RH <i alt="" class="fas fa-angle-down img-colap" style="transition: transform .8s;"></i></button>
 					<!-- Inicio de pendiente -->
 					<div class="content" style="background: black;border-radius: 20px;margin: 22px 5px;padding: 18px;">
-						<section class="row justify-content-center " style="padding: 15px">
+						<section class="row justify-content-center">
 							<article class="col-md-11">
 								<section class="row align-items-center">
 									<article class="col-md-6">
@@ -155,7 +155,7 @@ int totalDias = 0;
 										</hgroup>
 									</article>
 								</section>
-								<hr style="color: blue;">
+								<hr class="hr-y">
 								<section class="row align-items-center">
 									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Fecha de registro:</h6></article>
 									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getFechac() %></h6></article>
@@ -163,9 +163,9 @@ int totalDias = 0;
 									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getFechaInicio() %></h6></article>
 									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Regreso a laborar:</h6></article>
 									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getFechaFinal() %></h6></article>
-								
+								</section>
 									<hr class="hr-v">
-								
+								<section class="row align-items-center">
 									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Registro:</h6></article>
 									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getNumeroRegistro()%></h6></article>
 									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Periodo:</h6></article>

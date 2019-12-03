@@ -13,66 +13,42 @@
 						<!-- Contenido -->
 							<section id="result" class="row" style="padding: 15px">
 							
-							<article class="col-sm-12 col-md-12 col-lg-5 col-xl-4">
-								<section class="row align-items-center" style="border: solid 1px white;border-radius: 20px;padding-bottom: 15px;">
-									<article class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-										<h1 id="diasATomar" style="text-align: center;" class="yellow number-modal inLine">14</h1>
-										<hgroup class="inLine m-l">
-											<h3 class="fw-g">D&iacute;a(s)</h3>
-											<h3 class="fw-g l-h">disfrutados</h3>
-										</hgroup>
-									</article>
-									
-									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Fecha de registro:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="fechaDeRegistro" class="fw-g">8 días</h6></article>
-									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="fechaInicio" class="fw-g">05/12/2007</h6></article>
-									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Regreso a laborar:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="regresoALaborar" class="fw-g">05/14/2007</h6></article>
-									
-								
+							<article class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+								<section class="row justify-content-center" >
+									<article class="col-sm-11 col-md-11 col-lg-11 col-xl-11">
+									<section class="row align-items-center">
+										<article class="col-md-6">
+											<hgroup>
+												<h4 class="fw-g"><%=usuario.getApellidos()%></h4>
+												<h2 class="bolder l-h"><%=usuario.getNombre()%></h2>
+											</hgroup>
+										</article>
+										<article class="col-sm-12 offset-md-1 col-md-5 offset-lg-2 col-lg-4">
+											<h1 id="diasATomar" class="inLine number yellow"></h1>
+											<hgroup class="inLine">
+												<h3 class="fw-g">D&iacute;a(s)</h3>
+												<h3 class="fw-g l-h">disfrutados</h3>
+											</hgroup>
+										</article>
+									</section>
+									<hr class="hr-y">
+									<section class="row align-items-center">
+										<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Fecha de registro:</h6></article>
+										<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="fechaDeRegistro" class="fw-g"></h6></article>
+										<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Inicio de vacaciones:</h6></article>
+										<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="fechaInicio" class="fw-g"></h6></article>
+										<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Regreso a laborar:</h6></article>
+										<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="regresoALaborar" class="fw-g"></h6></article>
+									</section>
 									<hr class="hr-v">
-								
-									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Registro:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="registro" class="fw-g">139</h6></article>
-									<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Clave de localidad:</h6></article>
-									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="claveLocalidad" class="fw-g">05/10/2017</h6></article>
+									<section class="row align-items-center">
+										<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Registro:</h6></article>
+										<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="registro" class="fw-g"></h6></article>
+										<article class="col-8 col-sm-8 col-md-8 col-lg-8"><h6>Clave de localidad:</h6></article>
+										<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 id="claveLocalidad" class="fw-g"></h6></article>
+									</section>
+									</article>
 								</section>
-							</article>
-							<article class="col-sm-12 col-md-12 col-lg-7 col-xl-8">
-								<div class="table-responsive">
-									  <table class="table-vacaciones2" cellpadding="5">
-										  <thead>
-										  	<tr>
-										      <th class="thead-title">Personal</th>
-										      <th class="thead-title">Autorizaci&oacute;n</th>
-										      <th class="thead-title">Fecha/Hora</th>
-										    </tr> 
-										  </thead> 
-										  <tbody>
-										  	<tr>
-										      <td><h6 class="fw-f">Robles Marin Marian</h6><h6 class="sin-line-h fw-g">Empleado</h6></td>
-										      <td>-</td>
-										      <td>-</td>
-										    </tr>
-										    <tr>
-										      <td><h6 class="fw-f">Robles Marin Marian</h6><h6 class="sin-line-h fw-g">Empleado</h6></td>
-										      <td>-</td>
-										      <td>-</td>
-										    </tr>
-										    <tr>
-										      <td><h6 class="fw-f">Robles Marin Marian</h6><h6 class="sin-line-h fw-g">Empleado</h6></td>
-										      <td>-</td>
-										      <td>-</td>
-										    </tr>
-										    <tr>
-										      <td><h6 class="fw-f">Robles Marin Marian</h6><h6 class="sin-line-h fw-g">Empleado</h6></td>
-										      <td>-</td>
-										      <td>-</td>
-										    </tr>
-										  </tbody>
-									  </table>
-									</div>
 							</article>
 						</section>
 							<!-- Fin de contenido -->
