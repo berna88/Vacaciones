@@ -80,11 +80,21 @@ font-size: 1.125em;
 .m-l{
 	margin-left: 1rem;
 }
-.hr-v{
-	border-top: 1px solid #838383;
-    width: 94%;
+
+.hr-y{
+	border-top: 1px solid #CCB874;
+    width: 100%;
     display: block;
     margin: 1.1rem auto;
+    margin-top: 0px;
+}
+
+.hr-v{
+	border-top: 1px solid #838383;
+    width: 100%;
+    display: block;
+    margin: 1.1rem auto;
+    
 }
 .m-b{
 	margin-bottom: 2rem;
