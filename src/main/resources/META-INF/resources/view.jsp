@@ -220,15 +220,13 @@ int totalDias = 0;
 
 <script src='<%=request.getContextPath()+"/js/collapsable.js"%>'></script>
 <script src='<%=request.getContextPath()+"/js/modal.js"%>'></script>
+<script src='<%=request.getContextPath()+"/js/jquery-ui.js"%>'></script>
 <script>
 /**
  * Funcionalidad de modal
  */
 
-// Get the modal
-var path = '<%=request.getContextPath()+"/img/logo-cuervo.png"%>'>
-console.log(path);
-	
+// Get the modal	
     var modal = document.getElementById("myModal-cuervo-marcas");
       
     	var modalV = document.getElementsByClassName('button-cuervo-marcas');
@@ -266,7 +264,7 @@ console.log(path);
     			<portlet:namespace/>_id : reg
     		},
     		success: function(data){
-    			console.log("result",data);
+    			//console.log("result",data);
     			var _json = JSON.parse(data);
     			document.getElementById("diasATomar").innerHTML = _json.diasATomar;
     			document.getElementById("registro").innerHTML = _json.reg;

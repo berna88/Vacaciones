@@ -11,7 +11,7 @@
 				Fecha de inicio*
 			</label>
 			<div class="input-group mb-3 ">
-				<input type="text" class="form-control form-control-sm calendar" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px;background-position: 99%; " placeholder="Fecha de inicio" id="fechaInicio" >
+				<input type="text" class="form-control form-control-sm calendar" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px; background-position: 99%;" placeholder="Fecha de inicio" id="fechaInicio" />
 			</div>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
@@ -19,17 +19,17 @@
 				Regresa a laborar*
 			</label>
 			<div class="input-group mb-3 ">
-				<input type="text" class="form-control form-control-sm" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px; background-position: 99%;" placeholder="Regresa a laborar" id="fechaRegreso" >
+				<input type="text" class="form-control form-control-sm" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px; background-position: 99%;" placeholder="Regresa a laborar" id="fechaRegreso" />
 			</div>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-			<label for="fechaInicio" >
+			<label for="diasSolicitados" >
 				Días solicitados*
 			</label>
 			<input type="number" class="form-control form-control-sm" placeholder="Días solicitados" id="diasSolicitados" min="0" max="50" >
 		</div>
-		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
-			<label for="exampleFormControlSelect2">
+		<div id="div-suplente" class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
+			<label id="label-suplente" for="Select-Suplente">
 				Suplente*
 			</label>
 		    <!-- <input type="text" class="form-control form-control-sm"  id="Suplente" list="informacion2"> -->
@@ -38,7 +38,7 @@
 		    <small id="emailHelp" class="form-text text-muted">Nombre y firma.</small>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
-			<label for="exampleFormControlSelect2">
+			<label for="JefeInmediato">
 				Jefe Inmediato*
 			</label>
 			<!-- <input type="text" class="form-control form-control-sm"  id="JefeInmediato" list="informacion2"> -->
@@ -47,7 +47,7 @@
 		    <small id="emailHelp" class="form-text text-muted">Nombre y firma.</small>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 select">
-			<label for="exampleFormControlSelect2">
+			<label for="Gerente_Director">
 				Gerente o Director de área*
 			</label>
 			<!-- <input type="text" class="form-control form-control-sm"  id="Gerente_Director" list="informacion2"> -->
@@ -56,7 +56,7 @@
 		    <small id="emailHelp" class="form-text text-muted">Nombre y firma.</small>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-5 select">
-			<label for="exampleFormControlSelect2">
+			<label for="RecursosHumanos">
 				Responsable de Recursos Humanos*
 			</label>
 			<!-- <input type="text" class="form-control form-control-sm"  id="RecursosHumanos" list="informacion2"> -->
@@ -120,11 +120,10 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 </datalist>
 
 <script>
-
-	$(function(){
+$(document).ready(function(){
 		var _ojbUser = '<%=strObjJSON%>';
 		var _usuario = '<%=usuario%>';
-		console.log(_usuario);
+		var _convenio = '<%=strConvenio%>';
 		
 		var _UsersJSON = JSON.parse(_ojbUser);
 		//_UsersJSON.results.splice(-1,1);
@@ -153,108 +152,35 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			  language: "es"
 		});
 		
-		$.datepicker.regional['es'] = {
-				closeText: 'Cerrar',
-				prevText: '< Ant',
-				nextText: 'Sig >',
-				currentText: 'Hoy',
-				monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-				monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-				dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-				dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-				dayNamesMin: ['D','L','M','M','J','V','S'],
-				weekHeader: 'Sm',
-				dateFormat: 'dd/mm/yy',
-				firstDay: 1,
-				isRTL: false,
-				showMonthAfterYear: false,
-				yearSuffix: ''
-		};
+		//Convenio 
+		//2 No sindicalizados
+		//12 no sindicalizados b
 		
-		var inputFecha = $( "#fechaInicio" );
-		var changeCloseButton = function(input) {
-			console.log('fechaInicio');
-			setTimeout(function() {
-				console.log('changeCloseButton ', input);
-		        var headerPanel = inputFecha.datepicker( "widget" ).find( ".ui-datepicker-title" );
-		        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
-		        
-		        closeBtn.bind("click", function() {
-		        	$( "#fechaRegreso" ).datepicker( "hide" );
-		        });
-		        
-		        closeBtn.prependTo(headerPanel);
-		    }, 1000 );
-		};
+		//1 ejecutivos
+		//3 promotores
+		//9 jubilados la rojeña
+		//11 ejecutivos B
+		//13 seguridad corporativa
 		
-		$( "#fechaInicio" ).datepicker({
-			changeMonth: true,
-            changeYear: true,
-            hideIfNoPrevNext: true,
-            minDate: 0,
-            dateFormat: "yy-mm-dd",
-			beforeShow: changeCloseButton,			
-			onChangeMonthYear: changeCloseButton
-		}).focus(function () {
-	        $(".ui-datepicker-next").hide();
-	        $(".ui-datepicker-prev").hide();
-	    });
+		//5 sindicalizados la laja
+		//6 sindicalizados eventuales edisa
+		//7 sindicalizados planta edisa
+		//8 sindicalizados la rojeña
 		
-		$("#datepicker2").datepicker({
-			 showButtonPanel: true,
-			 beforeShow: function( input ) {
-			 	setTimeout(function() {
-			   		var buttonPane = $( input ).datepicker( "widget" ).find( ".ui-datepicker-buttonpane" );
-
-			   		var btn = $('Clear');
-			   		btn.unbind("click").bind("click", function () { 
-			   			$.datepicker._clearDate( input );
-			  		});
-
-			   		btn.appendTo( buttonPane );
-
-			 }, 1 );
-			      }
-			});
+		//no sindicalizados no tiene suplente  2,12
+		//sindicalizados tienen suplente 5,6,7,8
 		
-		$( "#fechaRegreso" ).datepicker({
-			changeMonth: true,
-            changeYear: true,
-            hideIfNoPrevNext: true,
-            minDate: 0,
-            dateFormat: "yy-mm-dd",
-            beforeShow: function( input ) {
-            	console.log('fechaRegreso beforeShow');
-            	setTimeout(function() {
-    		        var headerPanel = $(input).datepicker( "widget" ).find( ".ui-datepicker-title" );
-    		        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
-    		        
-    		        closeBtn.bind("click", function() {
-    		        	$( "#fechaRegreso" ).datepicker( "hide" );
-    		        });
-    		        
-    		        closeBtn.prependTo(headerPanel);
-    		    }, 300 );
-            },
-			onChangeMonthYear: function( input ) {
-				console.log('fechaRegreso onChangeMonthYear');
-				setTimeout(function() {
-			        var headerPanel = $(input).datepicker( "widget" ).find( ".ui-datepicker-title" );
-			        var closeBtn = $('<button style=\"position:relative; left: 90%;border: none;background: none; color: #CDB874;outline: none;padding: 10px;\">X</button>');
-			        
-			        closeBtn.bind("click", function() {
-			        	$( "#fechaRegreso" ).datepicker( "hide" );
-			        });
-			        
-			        closeBtn.prependTo(headerPanel);
-			    }, 200 );
-            },
-		}).focus(function () {
-	        $(".ui-datepicker-next").hide();
-	        $(".ui-datepicker-prev").hide();
-	    });		
-		
-		$.datepicker.setDefaults($.datepicker.regional['es']);
+		var _suplente_requerido = "NO";
+		if( _convenio >= 5 && _convenio <= 8){
+			document.getElementById('Select-Suplente').disabled= false;
+			document.getElementById('label-suplente').innerHTML = 'Suplente*';
+			_suplente_requerido = "SI";
+		}else if( _convenio >= 1 && _convenio <= 3 || _convenio >= 9 ){
+			document.getElementById('Select-Suplente').disabled= true;
+			document.getElementById('label-suplente').innerHTML = 'Suplente';
+			$('#div-suplente .select2-container').css('opacity', 0.5);
+			_suplente_requerido = "NO";
+		}	
 				
 		$("#Send").on('click', function(){
 			var _fechaInicio = document.getElementById("fechaInicio").value;
@@ -272,8 +198,9 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			var _RecursosHumanosId = $('#RecursosHumanos').val();
 			var error = document.getElementById('mensajeError');
 			
-			if(_fechaInicio.trim() == '' && _fechaRegreso.trim() == '' && _diasSolicitados.trim() == '' && _suplenteId.trim() == '' && _JefeInmediatoId.trim() == '' && _Gerente_DirectorId.trim() == '' && _RecursosHumanosId.trim() == ''){
-				console.log("Esta vacio");
+			//&& _suplenteId.trim() == 'SI'
+			
+			if(_fechaInicio.trim() == '' || _fechaRegreso.trim() == '' || _diasSolicitados.trim() == '' || _suplente_requerido.trim() == "SI" || _JefeInmediatoId.trim() == '' || _Gerente_DirectorId.trim() == '' || _RecursosHumanosId.trim() == ''){
 				error.innerHTML = "*Todos los campos son requeridos";
 				return "";
 			}
@@ -320,7 +247,6 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			    },
 			    success: function(data){
 			    	console.log("Response "+data);
-			    	window.location.href = origin + pathname;
 			    },
 			    error : function(XMLHttpRequest, textStatus, errorThrown){
 			    	console.log('XMLHttpRequest', XMLHttpRequest);
@@ -329,9 +255,7 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 			    }
 			    //beforeSend: setHeader
 			});
-			
-			
-				
+							
 		});
 	});
 </script>

@@ -24,4 +24,8 @@
 
 <%
 UserVacaciones usuario = (UserVacaciones) request.getAttribute("Empleado");
+
+String strConvenio = "";
+if(user.getExpandoBridge().hasAttribute("Clave_Convenio"))
+	strConvenio = (String) user.getExpandoBridge().getAttribute("Clave_Convenio");
 %>
