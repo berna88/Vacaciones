@@ -84,7 +84,7 @@
 <!-- </form> -->
 <script src='<%=request.getContextPath()+"/js/select2.min.js"%>'></script>
 <script src='<%=request.getContextPath()+"/js/i18n/es.js"%>'></script>
-
+<script src='<%=request.getContextPath()+"/js/jquery-ui.js"%>'></script>
 <datalist id="informacion2">
 <%
 List<User> usuarios = (List<User>) request.getAttribute("users");
@@ -124,6 +124,7 @@ $(document).ready(function(){
 		var _ojbUser = '<%=strObjJSON%>';
 		var _usuario = '<%=usuario%>';
 		var _convenio = '<%=strConvenio%>';
+		var _no_empleado = '<%=strNo_Empleado_Active%>';
 		
 		var _UsersJSON = JSON.parse(_ojbUser);
 		//_UsersJSON.results.splice(-1,1);
@@ -199,8 +200,8 @@ $(document).ready(function(){
 			var error = document.getElementById('mensajeError');
 			
 			//&& _suplenteId.trim() == 'SI'
-			
-			if(_fechaInicio.trim() == '' || _fechaRegreso.trim() == '' || _diasSolicitados.trim() == '' || _suplente_requerido.trim() == "SI" || _JefeInmediatoId.trim() == '' || _Gerente_DirectorId.trim() == '' || _RecursosHumanosId.trim() == ''){
+			console.log(_suplente_requerido);
+			if(_fechaInicio.trim() == '' || _fechaRegreso.trim() == '' || _diasSolicitados.trim() == '' || _suplente_requerido.trim() == "SI" && _suplenteId.trim() == '' || _JefeInmediatoId.trim() == '' || _Gerente_DirectorId.trim() == '' || _RecursosHumanosId.trim() == ''){
 				error.innerHTML = "*Todos los campos son requeridos";
 				return "";
 			}
@@ -215,18 +216,29 @@ $(document).ready(function(){
 			console.log(_fechaInicio, ' ', _fechaRegreso, ' ', _diasSolicitados, ' ', _suplenteId, ' '
 					, _JefeInmediato, ' ', _Gerente_Director, ' ', _RecursosHumanos, ' ', _CheckPoliticas, ' ', _periodo  );
 			
-			var _SolicitudJSON = "{\"Inicio\":\""+_fechaInicio+"\",\"Diasatomar\": \""+_diasSolicitados+"\",\"Gerente\":\""
+			var _SolicitudJSON = "";
+			
+			if(_suplente_requerido.trim() == "SI"){
+				
+				_SolicitudJSON = "{\"Inicio\":\""+_fechaInicio+"\",\"Diasatomar\": \""+_diasSolicitados+"\",\"Gerente\":\""
 				+_Gerente_DirectorId+"\",\"Nomina\":\""+_suplenteId+"\",\"Jefe\":\""+_JefeInmediatoId+"\",\"Periodo\":\""+_periodo+"\",\"Final\":\""
 				+_fechaRegreso+"\", \"Rhvobo\":\""+_RecursosHumanosId+"\"}";
+			}
+			else{
+				_suplenteId = _suplente_requerido;
+				_SolicitudJSON = "{\"Inicio\":\""+_fechaInicio+"\",\"Diasatomar\": \""+_diasSolicitados+"\",\"Gerente\":\""
+				+_Gerente_DirectorId+"\",\"Nomina\":\""+_suplenteId+"\",\"Jefe\":\""+_JefeInmediatoId+"\",\"Periodo\":\""+_periodo+"\",\"Final\":\""
+				+_fechaRegreso+"\", \"Rhvobo\":\""+_RecursosHumanosId+"\"}";
+			}
 				
 			console.log(_SolicitudJSON);	
-			var _objSolicitudJSON = JSON.parse(_SolicitudJSON);
+			//var _objSolicitudJSON = JSON.parse(_SolicitudJSON);
 			
 			var pathname = window.location.pathname; // Returns path only (/path/example.html)
 			var url      = window.location.href;     // Returns full URL (https://example.com/path/example.html)
 			var origin   = window.location.origin;   // Returns base URL (https://example.com)
 			
-			console.log('pathname ' , pathname , ' url ', url , ' origin ', origin);
+			//console.log('pathname ' , pathname , ' url ', url , ' origin ', origin);
 			
 			//window.location.href = origin + pathname;
 			
@@ -247,6 +259,7 @@ $(document).ready(function(){
 			    },
 			    success: function(data){
 			    	console.log("Response "+data);
+			    	window.location.href = origin + pathname;
 			    },
 			    error : function(XMLHttpRequest, textStatus, errorThrown){
 			    	console.log('XMLHttpRequest', XMLHttpRequest);

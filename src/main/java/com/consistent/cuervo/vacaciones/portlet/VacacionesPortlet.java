@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.header-portlet-css=/css/jquery-ui.css",
+		"com.liferay.portlet.header-portlet-css=/css/loader.css",
 		//"com.liferay.portlet.footer-portlet-javascript=/js/jquery-ui.js",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.init-param.template-path=/",

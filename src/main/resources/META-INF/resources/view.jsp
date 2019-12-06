@@ -186,7 +186,7 @@ int totalDias = 0;
 		<% if(!usuario.getPendientes().getNumeroRegistro().equals("0") && !usuario.getPendientes().getNumeroRegistro().equals("")){ %>
 			
 		<% }else{%>
-			<a href="${renderSolicitud}" class="button-solicitar">Solicitar d&iacute;as</a>		
+			<a class="button-solicitar">Solicitar d&iacute;as</a>		
 		<% } %>
 		</blockquote>
 	</aside>
@@ -228,6 +228,13 @@ int totalDias = 0;
       if (event.target == modal) {
         modal.style.display = "none";
       }
+    }
+    
+    var divSolicitud = document.getElementsByClassName("button-solicitar")[0];
+    console.log(divSolicitud);
+    divSolicitud.onclick = function (){
+    	Loader();
+    	window.location.href = '${renderSolicitud}';
     }
     
     function getReg(reg){

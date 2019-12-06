@@ -26,6 +26,34 @@
 UserVacaciones usuario = (UserVacaciones) request.getAttribute("Empleado");
 
 String strConvenio = "";
+String strNo_Empleado_Active = "";
 if(user.getExpandoBridge().hasAttribute("Clave_Convenio"))
 	strConvenio = (String) user.getExpandoBridge().getAttribute("Clave_Convenio");
+if(user.getExpandoBridge().hasAttribute("No_Empleado"))
+	strNo_Empleado_Active = (String) user.getExpandoBridge().getAttribute("No_Empleado");
 %>
+
+<div id="Loader-element" class="loader-wrapper hide-loader">
+	<div class="loader">
+		<div class="roller"></div>
+		<div class="roller"></div>
+	</div>
+	<div class="loader loader-2">
+		<div class="roller"></div>
+		<div class="roller"></div>
+	</div>
+	<div class="loader loader-3">
+		<div class="roller"></div>
+		<div class="roller"></div>
+	</div>
+</div>
+<script>
+	function Loader(){
+		if($('#Loader-element').hasClass('show-loader')){
+			$('#Loader-element').removeClass('show-loader');
+		}else{
+			$('#Loader-element').addClass('show-loader');
+		}
+		return this;
+	};
+</script>

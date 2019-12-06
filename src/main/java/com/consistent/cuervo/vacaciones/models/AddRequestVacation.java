@@ -62,15 +62,15 @@ public class AddRequestVacation {
 				
 		//sendMail(strInicio, strFinal, strDiasTomar, objUser, strGerente, strNomina, strJefe, strPeriodo, strRHVoBo);
 		try {
-				String strNo_Empleado = "";
+				/*String strNo_Empleado = "";
 				if(objUser.getExpandoBridge().hasAttribute("No_Empleado"))
-					strNo_Empleado = (String) objUser.getExpandoBridge().getAttribute("No_Empleado");
+					strNo_Empleado = (String) objUser.getExpandoBridge().getAttribute("No_Empleado");*/
 				String URL = VacacionesPortletKeys.ADD_REQUEST;							
 				String strJSON = "{\"Inicio\":\""+strInicio+"\",\"Diasatomar\": \""+strDiasTomar+"\",\"Gerente\":\""
-								+strGerente+"\",\"Nomina\":\""+strNo_Empleado+"\",\"Jefe\":\""+strJefe+"\",\"Periodo\":\""+strPeriodo+"\",\"Final\":\""
+								+strGerente+"\",\"Nomina\":\""+strNomina+"\",\"Jefe\":\""+strJefe+"\",\"Periodo\":\""+strPeriodo+"\",\"Final\":\""
 								+strFinal+"\", \"Rhvobo\":\""+strRHVoBo+"\"}";
 				
-				//System.out.println("strJSON " + strJSON);
+				System.out.println("strJSON " + strJSON);
 				
 				byte[] postData = strJSON.getBytes(StandardCharsets.UTF_8);
 				//int    postDataLength = postData.length;
@@ -164,7 +164,7 @@ public class AddRequestVacation {
 		
 		
 		
-		String fullName = strNombre + " " + strApellidoPaterno + " " + strApellidoMaterno;
+		String fullName = convert(strNombre) + " " + convert(strApellidoPaterno) + " " + convert(strApellidoMaterno);
 						
 		//System.out.println("Comienza creacion de pdf");
 		try {
@@ -252,7 +252,7 @@ public class AddRequestVacation {
 					new Cell().setBorder(Border.NO_BORDER).setPadding(0).add(paragraphCellThreeL)
 					.setTextAlignment(TextAlignment.LEFT));
 			tableHeader.addCell(
-					new Cell().setBorder(Border.NO_BORDER).setPadding(0).add(paragraphCellThreeR)
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).add(strNomina.equalsIgnoreCase("SI")?paragraphCellThreeR:new Paragraph(""))
 					.setTextAlignment(TextAlignment.RIGHT));
 			
 			tableHeader.addCell(
@@ -292,7 +292,7 @@ public class AddRequestVacation {
 			paragraphDiaAviso.setFontSize(52);
 			document.add(paragraphDiaAviso);
 			
-			Text textDiaTAviso = new Text("Día").setFont(textRegular);	
+			Text textDiaTAviso = new Text("Día(s)").setFont(textRegular);	
 			Paragraph paragraphDiaTAviso = new Paragraph(textDiaTAviso);
 			paragraphDiaTAviso.setFixedPosition(80, 600, 100);
 			//paragraphDiaTAviso.setBorder(new SolidBorder(Border.SOLID));
@@ -448,7 +448,7 @@ public class AddRequestVacation {
 		    
 			document.close();
 			//System.out.println("Send Mail");
-			SendMail.mail(objUser.getEmailAddress(), "tienda@cuervo.com", "Su boleta de pago", tempFile);
+			SendMail.mail(objUser.getEmailAddress(), "intranet@cuervo.com.mx", "Solicitud vacaciones", tempFile);
 		} catch (FileNotFoundException efne) {
 			efne.printStackTrace();
 		} catch (MalformedURLException emue) {
@@ -480,11 +480,22 @@ public class AddRequestVacation {
 				if(listUser.get(0).getExpandoBridge().hasAttribute("Apellido_Paterno"))
 					apellidoPaterno = (String)listUser.get(0).getExpandoBridge().getAttribute("Apellido_Paterno");
 				
-				nombreEmpleado = nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+				nombreEmpleado = convert(nombre) + " " + convert(apellidoPaterno) + " " + convert(apellidoMaterno);
 			}
 		}
 				
 		return nombreEmpleado;
+	}
+	
+	private static String convert(String str){
+		
+		String[] cadenas = str.split(" ");
+		String result = "";
+		for(int i = 0; i < cadenas.length; i++) {
+			result += cadenas[i].substring(0, 1).toUpperCase() + cadenas[i].substring(1).toLowerCase() + " ";
+		}
+		
+		return result.trim();		
 	}
 	
 }
