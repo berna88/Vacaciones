@@ -17,6 +17,7 @@
     font-weight: 400;
     width: 188px;
     margin-right: 2.4rem;
+    cursor: pointer;
 }
 body{
 	font-family: "Source Sans Pro";

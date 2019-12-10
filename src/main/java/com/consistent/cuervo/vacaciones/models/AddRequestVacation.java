@@ -65,12 +65,18 @@ public class AddRequestVacation {
 				/*String strNo_Empleado = "";
 				if(objUser.getExpandoBridge().hasAttribute("No_Empleado"))
 					strNo_Empleado = (String) objUser.getExpandoBridge().getAttribute("No_Empleado");*/
-				String URL = VacacionesPortletKeys.ADD_REQUEST;							
-				String strJSON = "{\"Inicio\":\""+strInicio+"\",\"Diasatomar\": \""+strDiasTomar+"\",\"Gerente\":\""
+				String URL = VacacionesPortletKeys.ADD_REQUEST;	
+				String strJSON = "{}";
+				if(!strNomina.equalsIgnoreCase("NO"))
+					strJSON = "{\"Inicio\":\""+strInicio+"\",\"Diasatomar\": \""+strDiasTomar+"\",\"Gerente\":\""
 								+strGerente+"\",\"Nomina\":\""+strNomina+"\",\"Jefe\":\""+strJefe+"\",\"Periodo\":\""+strPeriodo+"\",\"Final\":\""
 								+strFinal+"\", \"Rhvobo\":\""+strRHVoBo+"\"}";
+				else
+					strJSON = "{\"Inicio\":\""+strInicio+"\",\"Diasatomar\": \""+strDiasTomar+"\",\"Gerente\":\""
+							+strGerente+"\",\"Nomina\":\""+(String) objUser.getExpandoBridge().getAttribute("No_Empleado")+"\",\"Jefe\":\""+strJefe+"\",\"Periodo\":\""+strPeriodo+"\",\"Final\":\""
+							+strFinal+"\", \"Rhvobo\":\""+strRHVoBo+"\"}";
 				
-				System.out.println("strJSON " + strJSON);
+				System.out.println("strJSON -------------" + strJSON);
 				
 				byte[] postData = strJSON.getBytes(StandardCharsets.UTF_8);
 				//int    postDataLength = postData.length;
@@ -103,7 +109,7 @@ public class AddRequestVacation {
 					
 					inputReader.close();
 					
-					//System.out.println(response.toString());
+					System.out.println("------------------------------"+response.toString());
 				}
 				
 				sendMail(strInicio, strFinal, strDiasTomar, objUser, strGerente, strNomina, strJefe, strPeriodo, strRHVoBo);
@@ -164,7 +170,7 @@ public class AddRequestVacation {
 		
 		
 		
-		String fullName = convert(strNombre) + " " + convert(strApellidoPaterno) + " " + convert(strApellidoMaterno);
+		String fullName = strNombre + " " + strApellidoPaterno + " " + strApellidoMaterno;
 						
 		//System.out.println("Comienza creacion de pdf");
 		try {
@@ -252,7 +258,7 @@ public class AddRequestVacation {
 					new Cell().setBorder(Border.NO_BORDER).setPadding(0).add(paragraphCellThreeL)
 					.setTextAlignment(TextAlignment.LEFT));
 			tableHeader.addCell(
-					new Cell().setBorder(Border.NO_BORDER).setPadding(0).add(strNomina.equalsIgnoreCase("SI")?paragraphCellThreeR:new Paragraph(""))
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).add(strNomina.equalsIgnoreCase("NO")?new Paragraph(""):paragraphCellThreeR)
 					.setTextAlignment(TextAlignment.RIGHT));
 			
 			tableHeader.addCell(
@@ -475,12 +481,14 @@ public class AddRequestVacation {
 				String nombre = listUser.get(0).getFirstName();
 				String apellidoMaterno = "";
 				String apellidoPaterno = "";
+				if(listUser.get(0).getExpandoBridge().hasAttribute("Nombres"))
+					nombre = (String)listUser.get(0).getExpandoBridge().getAttribute("Nombres");
 				if(listUser.get(0).getExpandoBridge().hasAttribute("Apellido_Materno"))
 					apellidoMaterno = (String)listUser.get(0).getExpandoBridge().getAttribute("Apellido_Materno");
 				if(listUser.get(0).getExpandoBridge().hasAttribute("Apellido_Paterno"))
 					apellidoPaterno = (String)listUser.get(0).getExpandoBridge().getAttribute("Apellido_Paterno");
 				
-				nombreEmpleado = convert(nombre) + " " + convert(apellidoPaterno) + " " + convert(apellidoMaterno);
+				nombreEmpleado = nombre + " " + apellidoPaterno + " " + apellidoMaterno;
 			}
 		}
 				

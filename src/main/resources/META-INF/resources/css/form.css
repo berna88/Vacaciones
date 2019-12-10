@@ -3,6 +3,17 @@
 #form-vacations input{
 	background: black;
     border-color: #ccb874;
+    color: #ccb874;
+    font-family: 'Work Sans';
+    font-weight: 100;
+}
+
+#form-vacations input::placeholder {
+  color: #ccb874 !important;
+  font-size: 16px !important;
+  opacity: 1 !important;
+  font-family: "Work Sans" !important;
+  font-weight: 100 !important;
 }
 
 #form-vacations .input-group-text{
@@ -667,4 +678,13 @@
 
 .ui-datepicker-calendar thead {
 	border-top: 1px solid #CDB874;
+}
+
+#ui-datepicker-div {
+	width: 320px;
+    padding: 0 20px;	
+}
+
+table.ui-datepicker-calendar th{
+	color: white;
 }

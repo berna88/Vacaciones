@@ -10,16 +10,16 @@
 			<label for="fechaInicio" >
 				Fecha de inicio*
 			</label>
-			<div class="input-group mb-3 ">
-				<input type="text" class="form-control form-control-sm calendar" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px; background-position: 99%;" placeholder="Fecha de inicio" id="fechaInicio" />
+			<div class="input-group mb-3 " style="background-color: black;">
+				<input type="text" class="form-control form-control-sm calendar" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px; background-position: 99%; color: #ccb874; font-family: 'Work Sans' !important;font-weight: 100 !important;" placeholder="Fecha de inicio" id="fechaInicio" />
 			</div>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
 			<label for="fechaRegreso" >
 				Regresa a laborar*
 			</label>
-			<div class="input-group mb-3 ">
-				<input type="text" class="form-control form-control-sm" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px; background-position: 99%;" placeholder="Regresa a laborar" id="fechaRegreso" />
+			<div class="input-group mb-3 " style="background-color: black;">
+				<input type="text" class="form-control form-control-sm" style="background: url('<%=request.getContextPath()+"/img/calendar-cuervo.svg"%>') no-repeat scroll 5px 4px;background-size: 18px; background-position: 99%; color: #ccb874; font-family: 'Work Sans' !important;font-weight: 100 !important;" placeholder="Regresa a laborar" id="fechaRegreso" />
 			</div>
 		</div>
 		<div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -99,6 +99,8 @@ if(!usuarios.isEmpty()  && usuarios.size() > 0){
 					String nombre = userLiferay.getFirstName();
 					String apellidoMaterno = "";
 					String apellidoPaterno = "";
+					if(userLiferay.getExpandoBridge().hasAttribute("Nombres"))
+						nombre = (String)userLiferay.getExpandoBridge().getAttribute("Nombres");
 					if(userLiferay.getExpandoBridge().hasAttribute("Apellido_Materno"))
 						apellidoMaterno = (String)userLiferay.getExpandoBridge().getAttribute("Apellido_Materno");
 					if(userLiferay.getExpandoBridge().hasAttribute("Apellido_Paterno"))
@@ -179,7 +181,8 @@ $(document).ready(function(){
 		}else if( _convenio >= 1 && _convenio <= 3 || _convenio >= 9 ){
 			document.getElementById('Select-Suplente').disabled= true;
 			document.getElementById('label-suplente').innerHTML = 'Suplente';
-			$('#div-suplente .select2-container').css('opacity', 0.5);
+			//$('#div-suplente .select2-container').css('opacity', 0.5);
+			$('#div-suplente').css('display', 'none');
 			_suplente_requerido = "NO";
 		}	
 				
