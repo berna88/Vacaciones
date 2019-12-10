@@ -172,7 +172,6 @@ int totalDias = 0;
 									<article class="col-4 col-sm-4 col-md-4 col-lg-4"><h6 class="fw-g"><%=usuario.getPendientes().getPeriodo() %></h6></article>
 								</section>
 							</article>
-							
 						</section>
 					</div>
 					<!-- fin de pendiente -->
