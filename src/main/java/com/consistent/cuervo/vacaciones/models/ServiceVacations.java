@@ -56,7 +56,7 @@ public class ServiceVacations{
 	 * @return devuelve el JSON de un GET
 	 */
 	public String getJSON() {
-		log.info("Entrando al metodo GET");
+		//log.info("Entrando al metodo GET");
 		String output = "";
 		try {
 			
@@ -64,7 +64,7 @@ public class ServiceVacations{
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/json");
-			log.info("URL: "+connection.getURL());
+			//log.info("URL: "+connection.getURL());
 			if(connection.getResponseCode() != VacacionesPortletKeys.OK) {
 				log.info("Fallo: codigo de error: "+connection.getResponseCode());
 				if(VacacionesPortletKeys.PATH_HISTORY.equals(path)){
@@ -80,7 +80,7 @@ public class ServiceVacations{
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			
 			while((output = bufferedReader.readLine())!= null) {
-				log.info("JSON: "+output);
+				log.info("getJSON: "+output);
 				return output;
 			}
 			connection.disconnect();

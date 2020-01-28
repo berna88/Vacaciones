@@ -1,16 +1,10 @@
+<%@ include file="/init.jsp" %>
 
-<%@page import="com.consistent.cuervo.vacaciones.models.ServiceVacations"%>
-<%@ include file="init.jsp" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<portlet:renderURL var="renderSolicitud">
-	<portlet:param name="mvcPath" value="/solicitud.jsp"/>
-</portlet:renderURL>
-
-<link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/table.css"%>'>
-<link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/collapse.css"%>'>
-<link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/modal.css"%>'>
-<link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/banner.css"%>'>
-<link rel="stylesheet" type="text/css" href='<%=request.getContextPath()+"/css/general.css"%>'>
+<link rel="stylesheet" type="text/css" href="/o/Vacaciones-portlet/css/table.css">
+<link rel="stylesheet" type="text/css" href="/o/Vacaciones-portlet/css/collapse.css">
+<link rel="stylesheet" type="text/css" href="/o/Vacaciones-portlet/css/modal.css">
+<link rel="stylesheet" type="text/css" href="/o/Vacaciones-portlet/css/banner.css">
+<link rel="stylesheet" type="text/css" href="/o/Vacaciones-portlet/css/general.css">
 
 <%
 int totalDias = 0;
@@ -85,10 +79,20 @@ int totalDias = 0;
 		<article class="col-md-12">
 			<section class="row ">
 				<article class="offset-1 col-5 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
-					<h5 class="conceptos">Aniversario:</h5>
+					<h5 class="conceptos">Aniversario Cumplido:</h5>
 				</article>
 				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
-					<h5 class="fw-g conceptos"><%=usuario.getAniversario()%></h5>
+					<h5 class="fw-g conceptos"><%=usuario.getPeriodo()%></h5>
+				</article>
+			</section>
+		</article><!-- Fin articulo -->
+		<article class="col-md-12">
+			<section class="row ">
+				<article class="offset-1 col-5 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-1 col-xl-5">
+					<h5 class="conceptos">D&iacute;as Disfrutables:</h5>
+				</article>
+				<article class="col-6 offset-sm-1 col-sm-5 offset-md-1 col-md-5 offset-lg-1 col-lg-5 offset-xl-2 col-xl-4">
+					<h5 class="fw-g conceptos"><%=usuario.getDiasDisfrutados()%></h5>
 				</article>
 			</section>
 		</article><!-- Fin articulo -->
@@ -101,8 +105,8 @@ int totalDias = 0;
 						  <table class="table-vacaciones" cellpadding="5">
 							  <thead>
 							  	<tr>
-							      <th class="thead-title">Inicio (mm/dd/aaaa)</th>
-							      <th class="thead-title">Fin (mm/dd/aaaa)</th>
+							      <th class="thead-title">Inicio (dd/mm/aaaa)</th>
+							      <th class="thead-title">Fin (dd/mm/aaaa)</th>
 							      <th class="thead-title">D&iacute;as disfrutados</th>
 							      <th class="thead-title">Registro</th>
 							    </tr>
@@ -192,27 +196,23 @@ int totalDias = 0;
 	<%@ include file="section/modal/modal.jsp" %>
 </body>
 
-<script src='<%=request.getContextPath()+"/js/collapsable.js"%>'></script>
-<script src='<%=request.getContextPath()+"/js/modal.js"%>'></script>
-<script src='<%=request.getContextPath()+"/js/jquery-ui.js"%>'></script>
+<script src="/o/Vacaciones-portlet/js/collapsable.js"></script>
 <script>
-/**
- * Funcionalidad de modal
- */
+	/**
+	 * Funcionalidad de modal
+	 */
 
-// Get the modal	
+	// Get the modal	
     var modal = document.getElementById("myModal-cuervo-marcas");
       
-    	var modalV = document.getElementsByClassName('button-cuervo-marcas');
+    var modalV = document.getElementsByClassName('button-cuervo-marcas');
     	
-    	for(var i = 0; i < modalV.length; i++){
-    		modalV[i].addEventListener('click', function(){
-    			modal.style.display = "block";
-    			getReg(event.target.id);
-    		});
-    	}
-    	
-    	
+    for(var i = 0; i < modalV.length; i++){
+    	modalV[i].addEventListener('click', function(){
+    		modal.style.display = "block";
+    		getReg(event.target.id);
+    	});
+    }
     
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close-cuervo-marcas")[0];
@@ -230,22 +230,21 @@ int totalDias = 0;
     }
     
     var divSolicitud = document.getElementsByClassName("button-solicitar")[0];
-    console.log(divSolicitud);
     divSolicitud.onclick = function (){
     	Loader();
     	window.location.href = '${renderSolicitud}';
     }
     
     function getReg(reg){
+		var urlGetReg = "<%=getRegURL%>";
     	$.ajax({
-    		url: '${getRegURL}',
+    		url: urlGetReg,
     		type: 'POST',
     		cache: false,
     		data: {
     			<portlet:namespace/>_id : reg
     		},
     		success: function(data){
-    			//console.log("result",data);
     			var _json = JSON.parse(data);
     			document.getElementById("diasATomar").innerHTML = _json.diasATomar;
     			document.getElementById("registro").innerHTML = _json.reg;
@@ -253,8 +252,10 @@ int totalDias = 0;
     			document.getElementById("claveLocalidad").innerHTML = _json.claveLocalidad;
     			document.getElementById("regresoALaborar").innerHTML = _json.fechaFinal;
     			document.getElementById("fechaDeRegistro").innerHTML = _json.fechaC;
-    		},error:function(){
-    			
+    		},error:function(jqXHR, textStatus, errorThrown){
+    			console.log('jqXHR', jqXHR , jqXHR.responseText);
+		        console.log("errorThrown ", errorThrown);
+		        console.log("textStatus ", textStatus);
     		}
     	});
     }

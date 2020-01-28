@@ -1,6 +1,3 @@
-<%@page import="com.consistent.cuervo.vacaciones.models.History"%>
-<%@page import="com.consistent.cuervo.vacaciones.models.UserVacaciones"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
@@ -10,6 +7,13 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib prefix="liferay-util" uri="http://liferay.com/tld/util" %>
+<%@page import="com.consistent.cuervo.vacaciones.models.History"%>
+<%@page import="com.consistent.cuervo.vacaciones.models.UserVacaciones"%>
+<%@page import="com.consistent.cuervo.vacaciones.models.ServiceVacations"%>
+<%@page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@page import="com.liferay.portal.kernel.model.User"%>
+<%@page import="java.util.List"%>
+
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
@@ -22,9 +26,17 @@
 	<portlet:param name="mvcPath" value="addRequestVacation"/>
 </portlet:resourceURL>
 
+<portlet:renderURL var="renderSolicitud">
+	<portlet:param name="mvcPath" value="/solicitud.jsp"/>
+</portlet:renderURL>
+
+<portlet:renderURL var="homeSolicitud">
+	<portlet:param name="mvcPath" value="/view.jsp"/>
+</portlet:renderURL>
+
 <%
 UserVacaciones usuario = (UserVacaciones) request.getAttribute("Empleado");
-
+String portalURL = themeDisplay.getURLPortal();
 String strConvenio = "";
 String strNo_Empleado_Active = "";
 if(user.getExpandoBridge().hasAttribute("Clave_Convenio"))

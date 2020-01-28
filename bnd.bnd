@@ -1,6 +1,7 @@
 Bundle-Name: Vacaciones
 Bundle-SymbolicName: com.consistent.cuervo.vacaciones
 Bundle-Version: 1.0.0
+Web-ContextPath: /Vacaciones-portlet
 Export-Package: com.consistent.cuervo.vacaciones.constants
 Import-Package:*;resolution:=optional
 Bundle-ClassPath:\
@@ -19,7 +20,8 @@ lib/sign.jar,\
 lib/styled-xml-parser.jar,\
 lib/svg.jar,\
 lib/slf4j-api.jar,\
-lib/slf4j-log4j12.jar
+lib/slf4j-log4j12.jar,\
+lib/commons-io.jar
 -includeresource:\
 lib/gson.jar=gson-2.8.5.jar,\
 lib/barcodes.jar=barcodes-7.1.4.jar,\
@@ -35,7 +37,8 @@ lib/sign.jar=sign-7.1.4.jar,\
 lib/styled-xml-parser.jar=styled-xml-parser-7.1.4.jar,\
 lib/svg.jar=svg-7.1.4.jar,\
 lib/slf4j-api.jar=slf4j-api-1.7.13.jar,\
-lib/slf4j-log4j12.jar=slf4j-log4j12-1.7.13.jar
+lib/slf4j-log4j12.jar=slf4j-log4j12-1.7.13.jar,\
+lib/commons-io.jar=commons-io-2.6.jar
 
 -contract: JavaPortlet,JavaServlet
 -jsp: *.jsp,*.jspf

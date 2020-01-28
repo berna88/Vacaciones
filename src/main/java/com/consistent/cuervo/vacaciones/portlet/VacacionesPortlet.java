@@ -3,8 +3,11 @@ package com.consistent.cuervo.vacaciones.portlet;
 import com.consistent.cuervo.vacaciones.constants.VacacionesPortletKeys;
 import com.consistent.cuervo.vacaciones.models.AddRequestVacation;
 import com.consistent.cuervo.vacaciones.models.History;
+import com.consistent.cuervo.vacaciones.models.ServiceVacations;
 import com.consistent.cuervo.vacaciones.models.UserVacaciones;
 import com.consistent.cuervo.vacaciones.portal.Portal;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -15,10 +18,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -26,7 +33,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -36,9 +45,10 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
-		"com.liferay.portlet.header-portlet-css=/css/jquery-ui.css",
+		"com.liferay.portlet.header-portlet-css=/css/bootstrap-datepicker.css",
 		"com.liferay.portlet.header-portlet-css=/css/loader.css",
-		//"com.liferay.portlet.footer-portlet-javascript=/js/jquery-ui.js",
+		"com.liferay.portlet.header-portlet-css=/css/calendar.css",
+		"com.liferay.portlet.footer-portlet-javascript=/js/bootstrap-datepicker.min.js",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
@@ -54,14 +64,7 @@ public class VacacionesPortlet extends MVCPortlet {
 	private UserVacaciones vacaciones;
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse){
-		String nameParam = ParamUtil.getString(renderRequest, "mvcPath");
-		System.out.println("mvc "+ nameParam);
 		
-		String PATH = renderRequest.getContextPath();
-		File f1 = new File(PATH+"/img/logo-cuervo.png");
-		System.out.println(f1.exists());
-		File f = new File(PATH+"/SourceSansPro-Regular.ttf");
-		System.out.println(f.exists());
 		try {
 			User user = PortalUtil.getUser(renderRequest);//Obtiene el usuario en sesion
 			
@@ -98,12 +101,12 @@ public class VacacionesPortlet extends MVCPortlet {
 	
 	@Override
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
-		log.info("<------ Resource ------->");
 		String idReg = ParamUtil.getString(resourceRequest, "_id");
 		String nameParam = ParamUtil.getString(resourceRequest, "mvcPath");
-		System.out.println("nameParam " + nameParam);
 		JSONObject jsonHistory = null;
+		File tempFile = null;
 		History historyFilter = new History();
+		String strAjaxErrorResponse = null;
 		if(nameParam != null && nameParam.equalsIgnoreCase("getReg")) {
 			historyFilter = vacaciones.findReg(Integer.parseInt(idReg));
 			jsonHistory = JSONFactoryUtil.createJSONObject();
@@ -124,22 +127,80 @@ public class VacacionesPortlet extends MVCPortlet {
 			String strNomina = ParamUtil.getString(resourceRequest, "Nomina");
 			String strJefe = ParamUtil.getString(resourceRequest, "Jefe");
 			String strPeriodo = ParamUtil.getString(resourceRequest, "Periodo");
-			String strRhVoBo = ParamUtil.getString(resourceRequest, "Rhvobo");
+			String strRh = ParamUtil.getString(resourceRequest, "Rhvobo");
+			String strPortalURL = ParamUtil.getString(resourceRequest, "portalURL");
 			
-			ThemeDisplay td  =(ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
-			User user = td.getUser();		
-			
-			String strResponse = AddRequestVacation.addRequestVacation(strInicio, strFinal, strDiasTomar, strGerente, strNomina, strJefe, strPeriodo, strRhVoBo, user);
-			
-			if(strResponse.equalsIgnoreCase("OK")) {
-				jsonHistory = JSONFactoryUtil.createJSONObject();
-				jsonHistory.put("Response", "200");
-				jsonHistory.put("Mensaje", "Se envío correo");
+			User user = null;;
+			try {
+				user = PortalUtil.getUser(resourceRequest);
+			} catch (PortalException e) {
+				e.printStackTrace();
 			}
+			
+			String strNoEmpleado = "";
+			if(user != null)
+				strNoEmpleado = user.getExpandoBridge().hasAttribute("No_Empleado")? user.getExpandoBridge().getAttribute("No_Empleado").toString(): "";
+				
+			ServiceVacations vacations = null;
+			if(!strNoEmpleado.equalsIgnoreCase("")) {
+				vacations = new ServiceVacations(VacacionesPortletKeys.PATH_HISTORY, strNoEmpleado);
+				JsonParser parser = new JsonParser();
+				JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
+				String saldo = null;
+				if (!objectJson.isJsonNull()) {
+					
+					saldo = objectJson.get("Saldo").getAsString();
+				}
+				
+				if(saldo != null && !saldo.equalsIgnoreCase("")) {
+					if(Integer.parseInt(saldo) < Integer.parseInt(strDiasTomar)) {
+						strAjaxErrorResponse = "No puede solicitar mas días de los que tiene disponibles";
+					}else {
+						ThemeDisplay td = (ThemeDisplay)resourceRequest.getAttribute(WebKeys.THEME_DISPLAY);
+						tempFile = AddRequestVacation.addRequestVacation(strInicio, strFinal, strDiasTomar, strGerente, strNomina, strJefe, strPeriodo, strRh, user, td, strPortalURL);
+					}
+				}
+			}
+			
 		}
 		
 		if(resourceResponse.getStatus() == 200) {
-			resourceResponse.getWriter().write(jsonHistory.toJSONString());
+			if(tempFile == null) {
+				if(strAjaxErrorResponse != null) {
+					jsonHistory = JSONFactoryUtil.createJSONObject();
+					jsonHistory.put("Error", "500");
+					jsonHistory.put("Message", "No puede solicitar mas días de los que tiene disponibles");
+					resourceResponse.setStatus(700);
+				}
+				resourceResponse.getWriter().write(jsonHistory.toJSONString());
+			}
+			else {
+				resourceResponse.setContentType("application/pdf");
+				resourceResponse.addProperty("Content-disposition", "atachment; filename=Solicitud_Vacaciones.pdf");
+				OutputStream out = null;
+				InputStream in = null;
+				try {
+					out = resourceResponse.getPortletOutputStream();
+					in = new FileInputStream(tempFile);
+					IOUtils.copy(in, out);		
+				} catch (final IOException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if (Validator.isNotNull(out)) {
+							out.flush();
+							out.close();
+						}
+						if (Validator.isNotNull(in)) {
+							in.close();
+						}
+
+					} catch (final IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+				
 		}
 		
 	}

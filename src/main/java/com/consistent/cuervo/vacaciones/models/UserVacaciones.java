@@ -81,12 +81,14 @@ public class UserVacaciones {
 						dia += fechaIngreso.charAt(i);
 					}
 				}
-				String fechaFinal = dia+"/"+mes+"/"+ano;
+				
+				fechaIngreso = dia+"/"+mes+"/"+ano;
+				/*String fechaFinal = dia+"/"+mes+"/"+ano;
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES"));
 				Date myDate = sdf.parse(fechaFinal);
 				sdf.applyPattern("EEEE, MMMMM d, yyyy");
 				String sMyDate = sdf.format(myDate);
-				fechaIngreso = sMyDate.substring(0, 1).toUpperCase() + sMyDate.substring(1);
+				fechaIngreso = sMyDate.substring(0, 1).toUpperCase() + sMyDate.substring(1);*/
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -314,6 +316,20 @@ public class UserVacaciones {
 				histories = new ArrayList<History>();
 				JsonArray array = objectJson.get("historico").getAsJsonArray();
 				
+				java.text.DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date dateStart = null;
+				java.util.Date dateEnd = null;
+				java.util.Date dateReg = null;
+				
+				java.util.Calendar calendarFTS = new java.util.GregorianCalendar(java.util.TimeZone.getTimeZone("America/Mexico_City"));
+				java.util.Calendar calendarFTE = new java.util.GregorianCalendar(java.util.TimeZone.getTimeZone("America/Mexico_City"));
+				java.util.Calendar calendarFTC = new java.util.GregorianCalendar(java.util.TimeZone.getTimeZone("America/Mexico_City"));
+				int intDay = 0;
+				int intMonth = 0;
+			    int intYear = 0;
+			    String strDay = "";
+			    String strMonth = "";
+				
 				if (!array.isJsonNull() && array.size() > 0) {
 					
 					for (JsonElement element : array) {
@@ -323,9 +339,75 @@ public class UserVacaciones {
 						history.setNomina(element.getAsJsonObject().get("nomina").getAsString());
 						history.setReg(element.getAsJsonObject().get("reg").getAsInt());
 						history.setPeriodo(element.getAsJsonObject().get("periodo").getAsString());
-						history.setFechaFinal(element.getAsJsonObject().get("final").getAsString());
-						history.setFechaInicio(element.getAsJsonObject().get("inicio").getAsString());
-						history.setFechac(element.getAsJsonObject().get("fechac").getAsString());
+						
+						//Formateamos la fecha y la convertimos en un Date
+					 
+					    try {
+					      dateStart = format.parse(element.getAsJsonObject().get("inicio").getAsString());
+					    } catch (java.text.ParseException e) {
+					      e.printStackTrace();
+					    }
+					    
+					    try {
+					      dateEnd = format.parse(element.getAsJsonObject().get("final").getAsString());
+					    } catch (java.text.ParseException e) {
+					      e.printStackTrace();
+					    }
+					    
+					    try {
+					      dateReg = format.parse(element.getAsJsonObject().get("fechac").getAsString());
+						} catch (java.text.ParseException e) {
+						  e.printStackTrace();
+						}					    
+					    
+					    calendarFTS.setTime(dateStart);					   
+					    calendarFTE.setTime(dateEnd);
+					    calendarFTC.setTime(dateReg);
+					    
+					    intDay = calendarFTS.get(Calendar.DATE);
+					    intMonth = calendarFTS.get(Calendar.MONTH) + 1;
+					    intYear = calendarFTS.get(Calendar.YEAR);
+					    
+					    strDay = String.valueOf(intDay);
+					    if(strDay.length() < 2)
+					    	strDay = "0"+strDay;
+					    
+					    strMonth = String.valueOf(intMonth);
+					    
+					    if(strMonth.length() < 2)
+					    	strMonth = "0"+strMonth;
+					    	
+					    history.setFechaInicio(strDay + "/" + strMonth + "/" + intYear);
+						
+						intDay = calendarFTE.get(Calendar.DATE);
+					    intMonth = calendarFTE.get(Calendar.MONTH) + 1;
+					    intYear = calendarFTE.get(Calendar.YEAR);
+					    
+					    strDay = String.valueOf(intDay);
+					    if(strDay.length() < 2)
+					    	strDay = "0"+strDay;
+					    
+					    strMonth = String.valueOf(intMonth);					    
+					    if(strMonth.length() < 2)
+					    	strMonth = "0"+strMonth;
+					    
+					    history.setFechaFinal(strDay + "/" + strMonth + "/" + intYear);
+					    
+					    intDay = calendarFTC.get(Calendar.DATE);
+					    intMonth = calendarFTC.get(Calendar.MONTH) + 1;
+					    intYear = calendarFTC.get(Calendar.YEAR);
+					    
+					    strDay = String.valueOf(intDay);
+					    if(strDay.length() < 2)
+					    	strDay = "0"+strDay;
+					    
+					    strMonth = String.valueOf(intMonth);					    
+					    if(strMonth.length() < 2)
+					    	strMonth = "0"+strMonth;
+					    
+					    history.setFechac(strDay + "/" + strMonth + "/" + intYear);
+					    
+						//history.setFechac(element.getAsJsonObject().get("fechac").getAsString());
 						history.setClaveLocalidad(element.getAsJsonObject().get("cveLocalidad").getAsString());
 						history.setJefe(element.getAsJsonObject().get("jefe").getAsString());
 						history.setNombre(element.getAsJsonObject().get("nombre").getAsString());
@@ -366,25 +448,113 @@ public class UserVacaciones {
 	
 	public void getPendientesJSON() {
 		log.info("<-- Entrando a pendientes -->");
-		log.info("URL: "+VacacionesPortletKeys.PATH_PENDIENTES+getNoEmpleado());
+		//log.info("URL: "+VacacionesPortletKeys.PATH_PENDIENTES+getNoEmpleado());
 		ServiceVacations vacations = new ServiceVacations(VacacionesPortletKeys.PATH_PENDIENTES, getNoEmpleado());
 		try {
-			log.info("<-- Entrando a try pendientes -->");
+			//log.info("<-- Entrando a try pendientes -->");
 			JsonParser parser = new JsonParser();
 			JsonObject objectJson = parser.parse(vacations.getJSON()).getAsJsonObject();
+			java.text.DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date dateStart = null;
+			java.util.Date dateEnd = null;
+			java.util.Date dateReg = null;
+			java.util.Calendar calendarFTS = new java.util.GregorianCalendar(java.util.TimeZone.getTimeZone("America/Mexico_City"));
+			java.util.Calendar calendarFTE = new java.util.GregorianCalendar(java.util.TimeZone.getTimeZone("America/Mexico_City"));
+			java.util.Calendar calendarFTC = new java.util.GregorianCalendar(java.util.TimeZone.getTimeZone("America/Mexico_City"));
+			int intDay = 0;
+			int intMonth = 0;
+		    int intYear = 0;
+		    String strDay = "";
+		    String strMonth = "";
+		    
 			if (!objectJson.isJsonNull()) {
 				log.info("Objeto JSON"+objectJson);
+				
+				//if(!objectJson.get("NumReg").getAsString().equalsIgnoreCase("0")) {
+				
 				pendientes = new Pendientes();
 				pendientes.setNumeroRegistro(objectJson.get("NumReg").getAsString());
 				pendientes.setNumeroRepresentanteRH(objectJson.get("Rhvobo").getAsString());
-				pendientes.setFechaInicio(objectJson.get("Inicio").getAsString());
-				pendientes.setDiasATomar(objectJson.get("Diasatomar").getAsInt());
-				pendientes.setFechac(objectJson.get("Fechac").getAsString());
-				pendientes.setGerente(objectJson.get("Gerente").getAsString());
-				pendientes.setNomina(objectJson.get("Nomina").getAsString());
-				pendientes.setJefe(objectJson.get("Jefe").getAsString());
-				pendientes.setPeriodo(objectJson.get("Periodo").getAsString());
-				pendientes.setFechaFinal(objectJson.get("Final").getAsString());
+					//Formateamos la fecha y la convertimos en un Date
+					 
+				    try {
+				      dateStart = format.parse(objectJson.get("Inicio").getAsString());
+				    } catch (java.text.ParseException e) {
+				      e.printStackTrace();
+				    }
+				    
+				    try {
+				      dateEnd = format.parse(objectJson.get("Final").getAsString());
+				    } catch (java.text.ParseException e) {
+				      e.printStackTrace();
+				    }
+				    
+				    try {
+					  dateReg = format.parse(objectJson.get("Fechac").getAsString());
+					} catch (java.text.ParseException e) {
+					  e.printStackTrace();
+					}
+
+				    
+				    calendarFTS.setTime(dateStart);					   
+				    calendarFTE.setTime(dateEnd);
+				    calendarFTC.setTime(dateReg);
+				    
+				    intDay = calendarFTS.get(Calendar.DATE);
+				    intMonth = calendarFTS.get(Calendar.MONTH) + 1;
+				    intYear = calendarFTS.get(Calendar.YEAR);
+									
+					strDay = String.valueOf(intDay);
+				    if(strDay.length() < 2)
+				    	strDay = "0"+strDay;
+				    
+				    strMonth = String.valueOf(intMonth);			    
+				    if(strMonth.length() < 2)
+				    	strMonth = "0"+strMonth;			    
+					
+				    pendientes.setFechaInicio(strDay + "/" + strMonth + "/" + intYear);
+				    
+					//pendientes.setFechaInicio(objectJson.get("Inicio").getAsString());
+					pendientes.setDiasATomar(objectJson.get("Diasatomar").getAsInt());
+					
+					intDay = calendarFTC.get(Calendar.DATE);
+				    intMonth = calendarFTC.get(Calendar.MONTH) + 1;
+				    intYear = calendarFTC.get(Calendar.YEAR);
+				    
+				    strDay = String.valueOf(intDay);
+				    if(strDay.length() < 2)
+				    	strDay = "0"+strDay;
+				    
+				    strMonth = String.valueOf(intMonth);			    
+				    if(strMonth.length() < 2)
+				    	strMonth = "0"+strMonth;
+				    
+				    pendientes.setFechac(strDay + "/" + strMonth + "/" + intYear);
+					//pendientes.setFechac(objectJson.get("Fechac").getAsString());
+					pendientes.setGerente(objectJson.get("Gerente").getAsString());
+					pendientes.setNomina(objectJson.get("Nomina").getAsString());
+					pendientes.setJefe(objectJson.get("Jefe").getAsString());
+					pendientes.setPeriodo(objectJson.get("Periodo").getAsString());
+					
+					intDay = calendarFTE.get(Calendar.DATE);
+				    intMonth = calendarFTE.get(Calendar.MONTH) + 1;
+				    intYear = calendarFTE.get(Calendar.YEAR);
+				    
+				    strDay = String.valueOf(intDay);
+				    if(strDay.length() < 2)
+				    	strDay = "0"+strDay;
+				    
+				    strMonth = String.valueOf(intMonth);			    
+				    if(strMonth.length() < 2)
+				    	strMonth = "0"+strMonth;
+				    	
+				    pendientes.setFechaFinal(strDay + "/" + strMonth + "/" + intYear);
+				    
+					//pendientes.setFechaFinal(objectJson.get("Final").getAsString());
+
+				//}else {
+				//	log.info("Reg es 0");
+				//}
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

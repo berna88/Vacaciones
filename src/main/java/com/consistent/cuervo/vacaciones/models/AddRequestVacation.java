@@ -1,6 +1,8 @@
 package com.consistent.cuervo.vacaciones.models;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,19 +16,26 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import javax.imageio.ImageIO;
 
 import com.consistent.cuervo.vacaciones.constants.VacacionesPortletKeys;
 import com.itextpdf.io.codec.Base64;
 import com.itextpdf.io.font.FontProgram;
 import com.itextpdf.io.font.FontProgramFactory;
+import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
@@ -42,29 +51,31 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 public class AddRequestVacation {
 	
 	private static final String PATH = "META-INF/resources/fonts";
-	//private static final String PATHIMG = "META-INF/resources/img";
-	public static final String REGULAR = PATH +"/SourceSansPro-Regular.ttf";
-	public static final String BOLD = PATH + "/SourceSansPro-Bold.ttf";
-	public static final String LIGHT = PATH + "/SourceSansPro-Light.ttf";
-	public static final String TAHOMA_BOLD = PATH + "/tahomabd.ttf";
+	private static final String REGULAR = PATH +"/SourceSansPro-Regular.ttf";
+	private static final String BOLD = PATH + "/SourceSansPro-Bold.ttf";
+	private static final String LIGHT = PATH + "/SourceSansPro-Light.ttf";
+	private static final String SEMIBOLD = PATH + "/SourceSansPro-SemiBold.ttf";
+	private static final String LIGHT_ITALIC = PATH + "/SourceSansPro-LightItalic.ttf";
 	
-	public static String addRequestVacation(String strInicio, String strFinal, String strDiasTomar, String strGerente, String strNomina, String strJefe, String strPeriodo, String strRHVoBo, User objUser) {
+	public static File addRequestVacation(String strInicio, String strFinal, String strDiasTomar, String strGerente, String strNomina, String strJefe, String strPeriodo, String strRHVoBo, User objUser, ThemeDisplay td, String strPortalURL) {
 		
-		//System.out.println("addRequestVacationURL "+ strInicio + " " + strFinal + " " + strDiasTomar + " " + strGerente + " " + strNomina + " " + strJefe + " " + strPeriodo + " " + strRHVoBo);
 		HttpURLConnection connection = null;
+		File objFile = null;
 				
-		//sendMail(strInicio, strFinal, strDiasTomar, objUser, strGerente, strNomina, strJefe, strPeriodo, strRHVoBo);
 		try {
-				/*String strNo_Empleado = "";
+				
+				String strNo_Empleado = "";
 				if(objUser.getExpandoBridge().hasAttribute("No_Empleado"))
-					strNo_Empleado = (String) objUser.getExpandoBridge().getAttribute("No_Empleado");*/
+					strNo_Empleado = (String) objUser.getExpandoBridge().getAttribute("No_Empleado");
 				String URL = VacacionesPortletKeys.ADD_REQUEST;	
 				String strJSON = "{}";
 				if(!strNomina.equalsIgnoreCase("NO"))
@@ -73,13 +84,10 @@ public class AddRequestVacation {
 								+strFinal+"\", \"Rhvobo\":\""+strRHVoBo+"\"}";
 				else
 					strJSON = "{\"Inicio\":\""+strInicio+"\",\"Diasatomar\": \""+strDiasTomar+"\",\"Gerente\":\""
-							+strGerente+"\",\"Nomina\":\""+(String) objUser.getExpandoBridge().getAttribute("No_Empleado")+"\",\"Jefe\":\""+strJefe+"\",\"Periodo\":\""+strPeriodo+"\",\"Final\":\""
-							+strFinal+"\", \"Rhvobo\":\""+strRHVoBo+"\"}";
-				
-				System.out.println("strJSON -------------" + strJSON);
-				
+							+strGerente+"\",\"Nomina\":\""+strNo_Empleado+"\",\"Jefe\":\""+strJefe+"\",\"Periodo\":\""+strPeriodo+"\",\"Final\":\""
+							+strFinal+"\", \"Rhvobo\":\""+strRHVoBo+"\"}";				
+								
 				byte[] postData = strJSON.getBytes(StandardCharsets.UTF_8);
-				//int    postDataLength = postData.length;
 				
 				URL UrlObj = new URL(URL);
 				
@@ -92,11 +100,8 @@ public class AddRequestVacation {
 				outputStream.write(postData);
 				outputStream.flush();
 				outputStream.close();
-				
-				System.out.println("Send POST");
-				
+								
 				int responseCode = connection.getResponseCode();
-				System.err.println("Response Code : "+ responseCode);
 				
 				if( responseCode == HttpURLConnection.HTTP_OK) {
 					BufferedReader inputReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -109,10 +114,12 @@ public class AddRequestVacation {
 					
 					inputReader.close();
 					
-					System.out.println("------------------------------"+response.toString());
+					objFile = generatePDF(strInicio, strFinal, strDiasTomar, objUser, td, strGerente, strNomina, strJefe, strPeriodo, strRHVoBo, strPortalURL);
+					return objFile;
 				}
 				
-				sendMail(strInicio, strFinal, strDiasTomar, objUser, strGerente, strNomina, strJefe, strPeriodo, strRHVoBo);
+				//objFile = sendMail(strInicio, strFinal, strDiasTomar, objUser, strGerente, strNomina, strJefe, strPeriodo, strRHVoBo);
+				
 			} catch (MalformedURLException e) {
 				System.out.println("addRequestVacation - MalformedURLException : " + e.getMessage());
 			} catch (IOException e) {
@@ -122,11 +129,399 @@ public class AddRequestVacation {
 					connection.disconnect();
 			}
 		
-		return "OK";
+		return null;
+	}
+	
+	public static File generatePDF(String strInicio, String strFinal, String strDiasTomar, User objUser, ThemeDisplay td, String strGerente, String strNomina, String strJefe, String strPeriodo, String strRH, String strPortalURL) {
+		UserVacaciones userV = new UserVacaciones(objUser);
+		String userSaldo = userV.getSaldo();
+		
+		String strNombre = "";
+		String strApellidoMaterno = "";
+		String strApellidoPaterno = "";
+		String strNo_Empleado = "";
+		String strDepartamento = "";
+		String strPuesto = "";
+		String strLocalidad = "";
+		
+		if(objUser.getExpandoBridge().hasAttribute("Nombres"))
+			strNombre = (String) objUser.getExpandoBridge().getAttribute("Nombres");
+		if(objUser.getExpandoBridge().hasAttribute("Apellido_Materno"))
+			strApellidoMaterno = (String) objUser.getExpandoBridge().getAttribute("Apellido_Materno");
+		if(objUser.getExpandoBridge().hasAttribute("Apellido_Paterno"))
+			strApellidoPaterno = (String) objUser.getExpandoBridge().getAttribute("Apellido_Paterno");		
+		if(objUser.getExpandoBridge().hasAttribute("No_Empleado"))
+			strNo_Empleado = (String) objUser.getExpandoBridge().getAttribute("No_Empleado");
+		if(objUser.getExpandoBridge().hasAttribute("Desc_Depto"))
+			strDepartamento = (String) objUser.getExpandoBridge().getAttribute("Desc_Depto");
+		if(objUser.getExpandoBridge().hasAttribute("Desc_Puesto_Trabajo"))
+			strPuesto = (String) objUser.getExpandoBridge().getAttribute("Desc_Puesto_Trabajo");
+		if(objUser.getExpandoBridge().hasAttribute("Tienda_localidad"))
+			strLocalidad = (String) objUser.getExpandoBridge().getAttribute("Tienda_localidad");
+		
+		String fullName = strNombre + " " + strApellidoPaterno + " " + strApellidoMaterno;
+						
+		//System.out.println("Comienza creacion de pdf");
+		File parent = null;
+		OutputStream os = null;
+		PdfDocument pdf = null;
+		Document document = null;
+		
+		try {
+			FontProgram fontProgramBOLD = FontProgramFactory.createFont(BOLD);
+			FontProgram fontProgramSEMIBOLD = FontProgramFactory.createFont(SEMIBOLD);
+			FontProgram fontProgramLIGHT = FontProgramFactory.createFont(LIGHT);
+			FontProgram fontProgramLIGHT_ITALIC = FontProgramFactory.createFont(LIGHT_ITALIC);
+			
+			PdfFont fontLIGHT = PdfFontFactory.createFont(fontProgramLIGHT, PdfEncodings.WINANSI, true);
+			PdfFont fontLIGHT_ITALIC = PdfFontFactory.createFont(fontProgramLIGHT_ITALIC, PdfEncodings.WINANSI, true);
+		    PdfFont fontBOLD = PdfFontFactory.createFont(fontProgramBOLD, PdfEncodings.WINANSI, true);
+		    PdfFont fontSEMIBOLD = PdfFontFactory.createFont(fontProgramSEMIBOLD, PdfEncodings.WINANSI, true);
+			
+		    parent = new File(System.getProperty("java.io.tmpdir"));
+		    File temp = new File(parent, "Solicitud_vacaciones.pdf");
+		    if (temp.exists()) {
+		        temp.delete();
+		    }
+		    
+		    temp.createNewFile();
+			
+			os = new FileOutputStream(temp);
+			pdf = new PdfDocument(new PdfWriter(os));
+			document = new Document(pdf);
+			document.setMargins(30, 46, 30, 46);
+					    
+		    //Renglon 1
+		    //Columna 1
+		    Text textNoEmpleado = new Text("NO. DE EMPLEADO: ").setFont(fontSEMIBOLD).setFontSize(10);
+		    Text textNoEmpleadoVal = new Text(strNo_Empleado).setFont(fontLIGHT).setFontSize(10);
+		    Paragraph paragraphNoEmpleado = new Paragraph().add(textNoEmpleado).add(textNoEmpleadoVal).setMultipliedLeading(0.9f);
+		    //Columna 2
+		    String[] strMonth = {"ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"};
+		    Calendar objCalendar = new java.util.GregorianCalendar(java.util.TimeZone.getTimeZone("America/Mexico_City"));
+		    int intDay = objCalendar.get(Calendar.DATE);
+		    int intMonth = objCalendar.get(Calendar.MONTH);
+		    int intYear = objCalendar.get(Calendar.YEAR);
+		    Text textFechaElaboracion = new Text("FECHA DE ELABORACIÓN: ").setFont(fontSEMIBOLD).setFontSize(10);
+		    Text textFechaElaboracionVal = new Text(intDay+" - "+strMonth[intMonth]+" - "+intYear).setFont(fontLIGHT).setFontSize(10);
+		    Paragraph paragraphFechaElaboracion = new Paragraph().add(textFechaElaboracion).add(textFechaElaboracionVal).setMultipliedLeading(0.9f);
+		    
+		    //Renglon 2
+		    //Columna 1
+		    Text textDepartamento = new Text("DEPARTAMENTO: ").setFont(fontSEMIBOLD).setFontSize(10);
+		    Text textDepartamentoVal = new Text(strDepartamento).setFont(fontLIGHT).setFontSize(10);
+		    Paragraph paragraphDepartamento = new Paragraph().add(textDepartamento).add(textDepartamentoVal).setMultipliedLeading(0.9f);
+		    //Columna 2
+		    Text textPuesto = new Text("PUESTO: ").setFont(fontSEMIBOLD).setFontSize(10);
+		    Text textPuestoVal = new Text(strPuesto).setFont(fontLIGHT).setFontSize(10);
+		    Paragraph paragraphPuesto = new Paragraph().add(textPuesto).add(textPuestoVal).setMultipliedLeading(0.9f);;
+		    
+		    //Renglon 3
+		    //Columna 1
+		    Text textLocalidad = new Text("LOCALIDAD: ").setFont(fontSEMIBOLD).setFontSize(10);
+		    Text textLocalidadVal = new Text(strLocalidad).setFont(fontLIGHT).setFontSize(10);
+		    Paragraph paragraphLocalidad = new Paragraph().add(textLocalidad).add(textLocalidadVal).setMultipliedLeading(0.9f);
+		    
+			Table tableHeader = new Table(2);
+			tableHeader.setWidth(UnitValue.createPercentValue(100));
+			tableHeader.setBorder(Border.NO_BORDER);
+			tableHeader.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphNoEmpleado)
+					.setTextAlignment(TextAlignment.LEFT).setVerticalAlignment(VerticalAlignment.MIDDLE));
+			tableHeader.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphFechaElaboracion)
+					.setTextAlignment(TextAlignment.RIGHT).setVerticalAlignment(VerticalAlignment.MIDDLE));
+			
+			tableHeader.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphDepartamento)
+					.setTextAlignment(TextAlignment.LEFT));
+			tableHeader.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphLocalidad)
+					.setTextAlignment(TextAlignment.RIGHT));
+			
+			tableHeader.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).add(paragraphPuesto)
+					.setTextAlignment(TextAlignment.LEFT));
+			tableHeader.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).add(new Paragraph(""))
+					.setTextAlignment(TextAlignment.RIGHT));
+			
+			tableHeader.setMarginTop(18);
+			document.add(tableHeader);
+			
+			Text textAviso = new Text("SOLICITUD DE VACACIONES").setFont(fontBOLD).setFontColor(new DeviceRgb(205, 184, 116));
+			Paragraph paragraphAviso = new Paragraph(textAviso).setTextAlignment(TextAlignment.CENTER).setFontSize(15).setMargin(22);
+			document.add(paragraphAviso);
+			
+			Text textArea = new Text("RECURSOS HUMANOS").setFont(fontSEMIBOLD).setFontColor(new DeviceRgb(205, 184, 116));
+			Paragraph paragraphArea = new Paragraph(textArea).setFontSize(11).setMarginTop(-2);
+			document.add(paragraphArea);
+			
+			String linaBase64 = "iVBORw0KGgoAAAANSUhEUgAABZYAAAAvCAYAAABwk58dAAAACXBIWXMAAAsSAAALEgHS3X78AAABx0lEQVR4nO3dMXEDQRAAwX2XgAiDRchMTM0GIGMwkxOAT34SlV7VHe5lu9kkt621BgAAAAAAjvqwKQAAAAAACmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASC5nW9ff/X6dmevuAQAAAADgBX3ebj/vdpfTheWZ+ZqZ790UAAAAAOA1be92lzOG5f+Z+d1NAQAAAAB4im2tZdMAAAAAABzm8z4AAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIDjZuYBohcM3i//cAYAAAAASUVORK5CYII=";
+			byte[] base64DecodeLinea = Base64.decode(linaBase64);
+			ImageData imgDataLinea = ImageDataFactory.create(base64DecodeLinea);
+			Image imgLinea = new Image(imgDataLinea).setWidth(540).setMarginLeft(-18).setMarginTop(-4); 
+			document.add(imgLinea);
+			
+			String imageUser = null;
+			try {
+				imageUser = objUser.getPortraitURL(td);
+			} catch (PortalException e) {
+				imageUser = null;
+			}
+			
+			String usuarioBase64 = null;
+			if(imageUser != null) {
+				URL url = new URL(strPortalURL+imageUser);
+				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				BufferedImage image = ImageIO.read(connection.getInputStream());
+				usuarioBase64 = encodeToString(image, "png");
+			} else				
+				usuarioBase64 = "iVBORw0KGgoAAAANSUhEUgAAADEAAAAxCAYAAABznEEcAAAACXBIWXMAAAsSAAALEgHS3X78AAAD60lEQVRogdVayXHbMBT9yeRudRB1YA0aEHPCMeogTAc6kHfmTB7UQdRBeMUpTAMYdhC5A6UCZyA/UDABLgAha/xmOJaJ9QF/wwc/PD8/03vHpxjzlyJbEVFCRBv8XRPRqVdN1TnjaYmoZrxqrc4CsGgnpMh2RJRi8jURNephvDpbla9t1iCqH9XmsIRQEAkpMjXxIsYEsBB7/FswXjVWpQl4kZAiUyt+hDioAfsiEwwpsgQLo/rcj+1mH7NJSJGpAS7iE0uWXTB2OZ27K5MkoLRHKKTXCoUCelNDVI+LSIBAM7ezyETU2Af1m/EqtSoYGCRxTwK9eaixT4xXhVUIfLTeXKFW4XhPAnTdhQS64oSThBTZHh0crML74GKGYR0tWCSgVKlhu+8OGJM9DIwFiwQqvokV8gHMbaOlxMQrxdYOh/EqiTGwFLnu58R4udgxwtgoH7UxF7m/EwVEaeFg+U6KXA3yG89fKfJGitwp03OBiR/7c+xIQBdoaSghRa4G+EVED72i7Ys45GurkR8OgyTGFMeDQOegBvAwUT4J7EYL0bdI7CL4hI1jB/r4ar3xRw2zeyUBUYoR1EUxCFNgvKrNsfROJJFI3Cy6deAMa9WRWCNOWgrVx7+JPv5Yb8LQQnw7EhvHmdgbjJfnGYprOatAnLD4HYlVrFMa46XyNT+sAqInIvrCeBlL5FpNIkq2ow9FRIr8YGRAGsbLGOLqRFQS8BM7I22jkUiRE3SmZbysrcYLECnv1Dm53YSf2KL+00uMVkY5q5hhx8oqnQHEQ0qfvk0QMPGZiH4ingoaFzt9Nkk02lwFEGg8Jt/HdoFp7xy0JnEOIQERCiWg8ShFPnh+HkGi3ULwTiAa3VoFYdgFtFprt3AhgWSYb9yzNKQ28Wi9GQHO2p0YmlFsY4a3MxDz+PpkvRlHOkSi9jnVwfPGioN8zxiJeWzoSOjw1sfUMl4mCDGmgr4hqB34zng5mwTyT69Cl76zKxCgzbYWiJUKmNvVDN3SlyyhyYOiP4aVxpQiO2G7oqXtYwHpGmWVXkXCrrAjxVn7TU5pcwEx37tcgZU8Q5KqdSWp7ox6KKlnkQAu+SdPk3szSJEdXqLfyhn9OkmArfKix6Ek7hsSSF16YMJJgq5JNEWkvhcRENhP+a9BEnQNR/SOjHYUG7hc2cFSWnpgwjKxLsAy1Mat6WinS2Dc19Vjt0PeJDRgsdJbXIEZJjT1uTmlkMt4rFQBe72YTG/yx7mrbyL4swiQ2Wvlx+cQThM40DZB28tigECQmEb5ygafNuj0zAonrn5+aWWUnxFKR/lI5SafCmGlXYem9hZG4f1/70RE/wFSE8TVhxRmFAAAAABJRU5ErkJggg==";
+			byte[] base64DecodeUsuario = Base64.decode(usuarioBase64);
+			ImageData imgDataUsuario = ImageDataFactory.create(base64DecodeUsuario);
+			PdfFormXObject xObject = new PdfFormXObject(new Rectangle(100, 100));
+		    PdfCanvas xObjectCanvas = new PdfCanvas(xObject, pdf);
+		    xObjectCanvas.roundRectangle(0, 0, 100, 100, 50);
+		    xObjectCanvas.clip();
+		    xObjectCanvas.newPath();
+		    xObjectCanvas.addImage(imgDataUsuario, 100, 0, 0, 100, 0, 0);
+		    com.itextpdf.layout.element.Image clipped = new com.itextpdf.layout.element.Image(xObject);
+		    clipped.scale(0.5f, 0.5f).setMarginLeft(0.5f).setMarginTop(10.5f);
+		    document.add(clipped);
+			
+			Text textNombre = new Text(strNombre).setFont(fontLIGHT).setFontSize(11);
+			Paragraph paragraphNombre = new Paragraph(textNombre).setFixedPosition(100, 613, 200);
+			document.add(paragraphNombre);
+			
+			Text textApellido = new Text(strApellidoPaterno + " " + strApellidoMaterno).setFont(fontBOLD).setFontSize(11);
+			Paragraph paragraphApellido = new Paragraph(textApellido).setFixedPosition(100, 601, 200);
+			document.add(paragraphApellido);			
+			
+			Text textDiaAviso = new Text(strDiasTomar).setFont(fontBOLD).setFontColor(new DeviceRgb(205, 184, 116));
+			Paragraph paragraphDiaAviso = new Paragraph(textDiaAviso).setTextAlignment(TextAlignment.RIGHT)
+			.setMarginTop(-83.5f).setMarginRight(66.5f).setFontSize(67);
+			document.add(paragraphDiaAviso);
+			
+			Text textDiaTAviso = new Text("DÍA (S)").setFont(fontSEMIBOLD);
+			Paragraph paragraphDiaTAviso = new Paragraph(textDiaTAviso).setWidth(80).setTextAlignment(TextAlignment.RIGHT)
+			.setFontSize(11).setFixedPosition(419, 613, 100);
+			document.add(paragraphDiaTAviso);
+			
+			Text textDiaT2Aviso = new Text("A DISFRUTAR").setFont(fontSEMIBOLD);	
+			Paragraph paragraphDiaT2Aviso = new Paragraph(textDiaT2Aviso).setWidth(80).setTextAlignment(TextAlignment.RIGHT)
+			.setFixedPosition(449.5f, 601, 100).setFontSize(11);
+			document.add(paragraphDiaT2Aviso);
+				
+		    
+		    Text textCellInicioVacaciones = new Text("INICIO DE VACACIONES: ").setFont(fontSEMIBOLD).setFontSize(10);
+		    Paragraph paragraphCellVacaciones = new Paragraph().add(textCellInicioVacaciones);	
+		    
+		    java.text.DateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd");
+		    java.util.Date dateStart = null;
+		    try {
+			      dateStart = format.parse(strInicio);
+			    } catch (java.text.ParseException e) {
+			      e.printStackTrace();
+			    }
+		    objCalendar.setTime(dateStart);
+		    intDay = objCalendar.get(Calendar.DATE);
+		    intMonth = objCalendar.get(Calendar.MONTH);
+		    intYear = objCalendar.get(Calendar.YEAR);
+		    
+		    Text textCellVacacionesVal = new Text(intDay+" - "+strMonth[intMonth]+" - "+intYear).setFont(fontLIGHT).setFontSize(10);
+		    Paragraph paragraphCellVacacionesVal = new Paragraph().add(textCellVacacionesVal);
+		    
+		    Text textCellSaldo = new Text("SALDO ANTERIOR: ").setFont(fontSEMIBOLD).setFontSize(10);
+		    Paragraph paragraphCellVal = new Paragraph().add(textCellSaldo);		    
+		    Text textCellSaldoVal = new Text(userSaldo + " DÍAS").setFont(fontLIGHT).setFontSize(10);
+		    Paragraph paragraphCellSaldoVal = new Paragraph().add(textCellSaldoVal);
+		    
+		    Table tableAviso = new Table(4);
+		    tableAviso.setWidth(UnitValue.createPercentValue(80));
+		    tableAviso.setBorder(Border.NO_BORDER);
+		    tableAviso.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(250).add(paragraphCellVacaciones)
+					.setTextAlignment(TextAlignment.LEFT).setVerticalAlignment(VerticalAlignment.TOP));
+		    tableAviso.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setWidth(225).setPadding(0).setMargin(0).add(paragraphCellVacacionesVal)
+					.setTextAlignment(TextAlignment.LEFT).setVerticalAlignment(VerticalAlignment.TOP));
+		    tableAviso.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(250).add(paragraphCellVal)
+					.setTextAlignment(TextAlignment.LEFT).setVerticalAlignment(VerticalAlignment.TOP));
+		    tableAviso.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphCellSaldoVal)
+					.setTextAlignment(TextAlignment.RIGHT).setVerticalAlignment(VerticalAlignment.TOP));
+		    
+		    java.util.Date dateBack = null;
+		    try {
+		    		dateBack = format.parse(strFinal);
+			    } catch (java.text.ParseException e) {
+			      e.printStackTrace();
+			    }
+		    objCalendar.setTime(dateBack);
+		    intDay = objCalendar.get(Calendar.DATE);
+		    intMonth = objCalendar.get(Calendar.MONTH);
+		    intYear = objCalendar.get(Calendar.YEAR);
+		    
+		    Text textCellRegresaLaborar = new Text("REGRESA A LABORAR: ").setFont(fontSEMIBOLD).setFontSize(10);
+		    Paragraph paragraphCellRegresaLaborar= new Paragraph().add(textCellRegresaLaborar);		    
+		    Text textCellRegresaLaborarVal = new Text(intDay+" - "+strMonth[intMonth]+" - "+intYear).setFont(fontLIGHT).setFontSize(10);
+		    Paragraph paragraphCellRegresaLaborarVal = new Paragraph().add(textCellRegresaLaborarVal);
+		    
+		    int saldoFinal = Integer.parseInt(userSaldo) - Integer.parseInt(strDiasTomar);
+		    Text textCellDiasDisponibles = new Text("DÍAS DISPONIBLES: ").setFont(fontSEMIBOLD).setFontSize(10);
+		    Paragraph avisoParagraphCellDiasDisponibles = new Paragraph().add(textCellDiasDisponibles);		    
+		    Text avisoSecondCellDiasDisponiblesVal = new Text(saldoFinal +" DÍAS").setFont(fontLIGHT).setFontSize(10);
+		    Paragraph avisoParagraphCellDiasDisponiblesVal = new Paragraph().add(avisoSecondCellDiasDisponiblesVal);		    
+		    
+		    tableAviso.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphCellRegresaLaborar)
+					.setTextAlignment(TextAlignment.LEFT).setVerticalAlignment(VerticalAlignment.TOP));
+		    tableAviso.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setWidth(0).setPadding(0).setMargin(0).add(paragraphCellRegresaLaborarVal)
+					.setTextAlignment(TextAlignment.LEFT).setVerticalAlignment(VerticalAlignment.TOP));
+		    tableAviso.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(avisoParagraphCellDiasDisponibles)
+					.setTextAlignment(TextAlignment.LEFT).setVerticalAlignment(VerticalAlignment.TOP));
+		    tableAviso.addCell(
+					new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(avisoParagraphCellDiasDisponiblesVal)
+					.setTextAlignment(TextAlignment.RIGHT).setVerticalAlignment(VerticalAlignment.TOP));
+		    
+		    tableAviso.setFontSize(11);
+		    tableAviso.setFixedPosition(45, 541, 504);
+			document.add(tableAviso);	
+			
+			String logoFirmasBase64 = "iVBORw0KGgoAAAANSUhEUgAABZYAAAGOCAYAAAAEpFbiAAAACXBIWXMAAAsSAAALEgHS3X78AAAPVUlEQVR4nO3dQY4U1x3A4UeUZSRzA1hkD+k6AOQE5gbmCNzA+AQhNzAnyPgEnjlAtfA+i/ENQMp+oo5eS4gRmF9kQdX4+yTU6ulqqev1Ynp+/fjXvZubmwEAAAAAAJ/rT1YKAAAAAIBCWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABI/rzX5Tqu6/0xxtMxxuNbDwIAAAAAbMvlGOPNYVne3oX35d7Nzc2tH27ZcV1PMfnlGOPJrl44AAAAAMAYP40xXh2W5XLPa7GbsHxc14djjB8/CMq/zNJ/Jyo/wO/k+RjjwRjj9Rjj2qICfLbv54E/WDKAz3L6O/27Mcav8+91AD7uPH3h0XtHnALz873uYN5FWD6u67P5S+qbMca7U9E/3T8si2AC8IHjul7OL+H+vvdvPwG+pOO6/u+D8WFZ7ll4gN82/0fxz2OMq8OyPLVkAL9tbp59Ob+YG7N1Pj0sy5u9Ld/mL953XNfTzrt/zah8dZqpfFiWl6IyAAAAALAnp6Z5WJZT7/zbnMZwap6Xx3Xd3XXkNh2W54K+mndfn74BFZQBAAAAgD2bO5SffhCX7+/plLa+Y/k8/uJqlnwAAAAAgN2bs5Xfj8sXezqnzYblOQLj0Zwz8uzWAQAAAAAAOzbj8nlD7ZM5v34Xtrxj+eX5dq9XRgQAAAAA+JQ5FuP1POTFJw7dlE2G5Tlb+cHcrfzjrQMAAAAAAO6O8ybbb/cya3mrO5bPoy8u7FYGAAAAAO6yw7Jcz1nLY85d3rythuWH8/bNrUcAAAAAAO6ey3lGj/dwZsIyAAAAAMDXt6vJDVu+eB8AAAAAwB/FeZOtURgAAAAAAHwWO5YBAAAAALi7hGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAEiEZQAAAAAAEmEZAAAAAIBEWAYAAAAAIBGWAQAAAABIhGUAAAAAABJhGQAAAACARFgGAAAAACARlgEAAAAASIRlAAAAAAASYRkAAAAAgERYBgAAAAAgEZYBAAAAAL6+h/MVvN3De7H1sHz/1k8AAAAAAO6ec1h+s4cz22pYPi/e41uPAAAAAADcPQ/3dEZbD8vPbj0CAAAAAHD3PJ1ndLmHM9tqWD4v3qPjuu6q1AMAAAAAFMd1PUXlB2OMd4dlEZb/X4dluR5j/DSf/nKLrxEAAAAA4HdybqAXe1nQLV+879W8/W4WewAAAACAO+W4rs/HGE/mOe1mk+1mw/Lc8v3PeffiuK4u5AcAAAAA3BmzeZ432P4wJznswpZ3LI9Z6H8ZY3xzmrssLgMAAAAAd8Gc0nA52+fVYVl2NRJ402H5sCxv59UQ34/LL24dCAAAAACwA8d1vX9c11NE/nk2z1P7fLa3927rO5bfj8tXc6H/cVzX61NgPq7rw1tPAAAAAADYmNM0hhmUT+Muvp+v7vWpfc4Guiv3bm5udvN6527llzMwn70bY7y5dTDAH9ejMcb9+Y3n7n4xAXxF5wumXHkTAD7L/fnZ8+387AnAxz354JFfxxgvDsty8dFnbNyuwvKYW8Xn1vDTv29vHQAAAAAAsD3v5kzli8Oy/Lj392d3YflDcxyGkRgAAADwZf1ljPHXMcZ/xhj/tvYAn3R9WJbrTx2wN7sPywAAAAAAfFmbv3gfAAAAAADbIiwDAAAAAJAIywAAAAAAJMIyAAAAAACJsAwAAAAAQCIsAwAAAACQCMsAAAAAACTCMgAAAAAAibAMAAAAAEAiLAMAAAAAkAjLAAAAAAAkwjIAAAAAAImwDAAAAABAIiwDAAAAAJAIywAAAAAAJMIyAAAAAACJsAwAAAAAQCIsAwAAAACQCMsAAAAAACTCMgAAAAAAn2+M8V+zpPquEDsu4gAAAABJRU5ErkJggg==";
+			byte[] base64DecodedFirmas = Base64.decode(logoFirmasBase64);
+	        ImageData imgFirmas = ImageDataFactory.create(base64DecodedFirmas);
+		    Image pdfImgTabla = new Image(imgFirmas).setWidth(535).setMarginLeft(-15)
+		    .setMarginTop(33);
+		    document.add(pdfImgTabla);
+			
+			Text textEmpleado = new Text(strNombre).setFont(fontSEMIBOLD);	
+			Paragraph paragraphEmpleado = new Paragraph(textEmpleado).setFontSize(8).setMultipliedLeading(0.9f);			
+			Text textEmpleadoApellido = new Text(strApellidoPaterno + " " + strApellidoMaterno).setFont(fontSEMIBOLD);	
+			Paragraph paragraphEmpleadoApellido = new Paragraph(textEmpleadoApellido).setFontSize(8).setMultipliedLeading(0.9f);
+			
+			java.util.List<String> listNameJefe = getUser(strJefe);
+			Text textJefe = new Text(listNameJefe.size() > 0?listNameJefe.get(0).toString():"").setFont(fontSEMIBOLD);	
+			Paragraph paragraphJefe = new Paragraph(textJefe).setFontSize(8).setMultipliedLeading(0.9f);
+			Text textJefeApelido = new Text(listNameJefe.size() > 1?listNameJefe.get(1).toString() + " " + listNameJefe.get(2).toString() :"").setFont(fontSEMIBOLD);	
+			Paragraph paragraphJefeApellido = new Paragraph(textJefeApelido).setFontSize(8).setMultipliedLeading(0.9f);			
+			
+			java.util.List<String> listNameGteDir = getUser(strGerente);
+			Text textGteDir = new Text(listNameGteDir.size() > 0?listNameGteDir.get(0).toString():"").setFont(fontSEMIBOLD);	
+			Paragraph paragraphGteDir = new Paragraph(textGteDir).setFontSize(8).setMultipliedLeading(0.9f);
+			Text textGteDirApellido = new Text(listNameGteDir.size() > 1?listNameGteDir.get(1).toString() + " " + listNameGteDir.get(2).toString() :"").setFont(fontSEMIBOLD);	
+			Paragraph paragraphGteDirApellido = new Paragraph(textGteDirApellido).setFontSize(8).setMultipliedLeading(0.9f);
+			
+			java.util.List<String> listNameRH = getUser(strRH);
+			Text textRH = new Text(listNameRH.size() > 0?listNameRH.get(0).toString():"").setFont(fontSEMIBOLD);	
+			Paragraph paragraphRH = new Paragraph(textRH).setFontSize(8).setMultipliedLeading(0.9f);
+			Text textRHApellido = new Text(listNameRH.size() > 1?listNameRH.get(1).toString() + " " + listNameRH.get(2).toString() :"").setFont(fontSEMIBOLD);	
+			Paragraph paragraphRHApellido = new Paragraph(textRHApellido).setFontSize(8).setMultipliedLeading(0.9f);
+			
+			Table tableFirmasInfo = new Table(4);
+			tableFirmasInfo.setWidth(UnitValue.createPercentValue(80));
+			tableFirmasInfo.setBorder(Border.NO_BORDER);
+			tableFirmasInfo.addCell(
+						new Cell().setWidth(123).setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphEmpleado)
+						.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmasInfo.addCell(
+						new Cell().setWidth(125).setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphJefe)
+						.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmasInfo.addCell(
+						new Cell().setWidth(125).setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphGteDir)
+						.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmasInfo.addCell(
+						new Cell().setPadding(0).setBorder(Border.NO_BORDER).setMargin(0).add(paragraphRH)
+						.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			
+			tableFirmasInfo.addCell(
+					new Cell().setWidth(123).setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphEmpleadoApellido)
+					.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmasInfo.addCell(
+					new Cell().setWidth(125).setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphJefeApellido)
+					.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmasInfo.addCell(
+					new Cell().setWidth(125).setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphGteDirApellido)
+					.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmasInfo.addCell(
+					new Cell().setPadding(0).setBorder(Border.NO_BORDER).setMargin(0).add(paragraphRHApellido)
+					.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmasInfo.setFontSize(11);
+			tableFirmasInfo.setFixedPosition(47, 412, 500);
+			document.add(tableFirmasInfo);
+			
+			Text textEmpleadoDefault = new Text("NOMBRE Y FIRMA EMPLEADO").setFont(fontLIGHT_ITALIC);	
+			Paragraph paragraphEmpleadoDefault = new Paragraph(textEmpleadoDefault).setFontSize(6);
+			
+			Text textJefeDefault = new Text("NOMBRE Y FIRMA JEFE INMEDIATO").setFont(fontLIGHT_ITALIC);	
+			Paragraph paragraphJefeDefault = new Paragraph(textJefeDefault).setFontSize(6);
+			
+			Text textGteDirDefault = new Text("NOMBRE Y FIRMA GTE. O DIR. DEL AREA").setFont(fontLIGHT_ITALIC);	
+			Paragraph paragraphGteDirDefault = new Paragraph(textGteDirDefault).setFontSize(6);
+			
+			Text textRHDefault = new Text("NOMBRE Y FIRMA DE RECURSOS HUMANOS").setFont(fontLIGHT_ITALIC);	
+			Paragraph paragraphRHDefault = new Paragraph(textRHDefault).setFontSize(6);
+			
+			Table tableFirmas = new Table(4);
+			tableFirmas.setWidth(UnitValue.createPercentValue(80));
+			tableFirmas.setBorder(Border.NO_BORDER);
+			tableFirmas.addCell(
+						new Cell().setBorder(Border.NO_BORDER).setWidth(123).setPadding(0).setMargin(0).add(paragraphEmpleadoDefault)
+						.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmas.addCell(
+						new Cell().setBorder(Border.NO_BORDER).setWidth(125).setPadding(0).setMargin(0).add(paragraphJefeDefault)
+						.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmas.addCell(
+						new Cell().setBorder(Border.NO_BORDER).setWidth(125).setPadding(0).setMargin(0).add(paragraphGteDirDefault)
+						.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmas.addCell(
+						new Cell().setBorder(Border.NO_BORDER).setPadding(0).setMargin(0).add(paragraphRHDefault)
+						.setTextAlignment(TextAlignment.CENTER).setVerticalAlignment(VerticalAlignment.TOP));
+			tableFirmas.setFontSize(11);
+			tableFirmas.setFixedPosition(47, 400, 500);
+			document.add(tableFirmas);
+			
+			Text textImportante = new Text("IMPORTANTE").setFont(fontSEMIBOLD).setFontSize(10);	
+			Text textImportante2 = new Text("PARA QUE ESTE AVISO SE REGISTRE, DEBERÁ SER FIRMADO Y ENTREGADO EN RECURSOS HUMANOS EN UN PLAZO NO MAYOR A 5 DÍAS APARTIR DE LA FECHA DE ELABORACIÓN, DESPUÉS DE ESTO EL REGISTRO SE ELIMINARÁ.").setFont(fontLIGHT).setFontSize(10);
+			Paragraph paragraphImportante = new Paragraph(textImportante).setMarginTop(20).setMultipliedLeading(0.9f);
+			Paragraph paragraphImportante2 = new Paragraph(textImportante2).setMarginTop(-3).setWidth(315).setMultipliedLeading(0.9f);
+			document.add(paragraphImportante);
+			document.add(paragraphImportante2);
+		    
+			document.close();
+			SendMail.mail(objUser.getEmailAddress(), "intranet@cuervo.com.mx", "Solicitud vacaciones", temp);
+			
+			temp.deleteOnExit();
+			parent.deleteOnExit();
+			
+			return temp;
+		} catch (FileNotFoundException efne) {
+			efne.printStackTrace();
+		} catch (MalformedURLException emue) {
+			emue.printStackTrace();
+		} catch (IOException eio) {
+			eio.printStackTrace();
+		} finally {
+			if(pdf != null)
+				pdf.close();
+			
+			try {
+				os.flush();
+				os.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
 	}
 	
 	
-	public static void sendMail(String strInicio, String strFinal, String strDiasTomar, User objUser, String strGerente, String strNomina, String strJefe, String strPeriodo, String strRHVoBo) {
+	public static File sendMail(String strInicio, String strFinal, String strDiasTomar, User objUser, String strGerente, String strNomina, String strJefe, String strPeriodo, String strRHVoBo) {
 		//PdfWriter writer;
 		
 		/*FileEntry fileEntry = null;
@@ -176,7 +571,7 @@ public class AddRequestVacation {
 		try {
 			//FontProgram fontBOLD = FontProgramFactory.createFont(BOLD);
 			FontProgram fontLIGHT = FontProgramFactory.createFont(LIGHT);
-			FontProgram fontTAHOMA_BOLD = FontProgramFactory.createFont(TAHOMA_BOLD);
+			//FontProgram fontTAHOMA_BOLD = FontProgramFactory.createFont(TAHOMA_BOLD);
 			
 			//writer = new PdfWriter("C:/Users/levia/eclipse-workspace/iTextPDF/SolicitudVacaciones.pdf");
 			File tempFile = null;
@@ -234,7 +629,7 @@ public class AddRequestVacation {
 		    Paragraph paragraphCellTwoR = new Paragraph().add(firstTextCellTwoR).add(secondTextCellTwoR);
 		    
 		    Text firstTextCellThreeR = new Text("Suplente: ").setBold();
-		    Text secondTextCellThreeR = new Text(getUser(strNomina)).setFont(textRegular);
+		    Text secondTextCellThreeR = new Text("getUser(strNomina)").setFont(textRegular);
 		    Paragraph paragraphCellThreeR = new Paragraph().add(firstTextCellThreeR).add(secondTextCellThreeR);
 		    //System.out.println("Textos para tabla de informacion de empleado");
 			Table tableHeader = new Table(2);
@@ -290,7 +685,7 @@ public class AddRequestVacation {
 		    pdfImgTabla.setFixedPosition(12, 365);
 		    document.add(pdfImgTabla);
 		    
-		    PdfFont textTAHOMA_BOLD = PdfFontFactory.createFont(fontTAHOMA_BOLD);
+		    PdfFont textTAHOMA_BOLD = PdfFontFactory.createFont(fontLIGHT);
 		    Text textDiaAviso = new Text(strDiasTomar).setFont(textTAHOMA_BOLD);
 		    textDiaAviso.setFontColor(new DeviceRgb(205, 184, 116));
 			Paragraph paragraphDiaAviso = new Paragraph(textDiaAviso);
@@ -374,15 +769,15 @@ public class AddRequestVacation {
 			paragraphEmpleado.setFontSize(9);
 			//document.add(paragraphEmpleado);
 			
-			Text textJefe = new Text(getUser(strJefe)).setBold();	
+			Text textJefe = new Text("getUser(strJefe)").setBold();	
 			Paragraph paragraphJefe = new Paragraph(textJefe);
 			paragraphJefe.setFontSize(9);
 			
-			Text textGteDir = new Text(getUser(strGerente)).setBold();	
+			Text textGteDir = new Text("getUser(strGerente)").setBold();	
 			Paragraph paragraphGteDir = new Paragraph(textGteDir);
 			paragraphGteDir.setFontSize(9);
 			
-			Text textRH = new Text(getUser(strRHVoBo)).setBold();	
+			Text textRH = new Text("getUser(strRHVoBo)").setBold();	
 			Paragraph paragraphRH = new Paragraph(textRH);
 			paragraphRH.setFontSize(9);
 			
@@ -455,22 +850,27 @@ public class AddRequestVacation {
 			document.close();
 			//System.out.println("Send Mail");
 			SendMail.mail(objUser.getEmailAddress(), "intranet@cuervo.com.mx", "Solicitud vacaciones", tempFile);
+			
+			return tempFile;
 		} catch (FileNotFoundException efne) {
 			efne.printStackTrace();
+			return null;
 		} catch (MalformedURLException emue) {
 			emue.printStackTrace();
+			return null;
 		} catch (IOException eio) {
 			eio.printStackTrace();
-		}
-		
+			return null;
+		}	
 	}
 	
-	private static String getUser(String strNo_Empleado) {
+	private static java.util.List<String> getUser(String strNo_Empleado) {
 		DynamicQuery dQ = DynamicQueryFactoryUtil.forClass(ExpandoValue.class, PortalClassLoaderUtil.getClassLoader());
 		dQ.add(PropertyFactoryUtil.forName("data").eq(strNo_Empleado));
 		java.util.List<ExpandoValue> listExpando = ExpandoValueLocalServiceUtil.dynamicQuery(dQ);
 		
-		String nombreEmpleado = "";
+		java.util.List<String> listName = new java.util.ArrayList<String>();
+		
 		if(!listExpando.isEmpty()) {
 			ExpandoValue modelExpando = listExpando.get(0);
 			dQ = DynamicQueryFactoryUtil.forClass(User.class, PortalClassLoaderUtil.getClassLoader());
@@ -488,11 +888,14 @@ public class AddRequestVacation {
 				if(listUser.get(0).getExpandoBridge().hasAttribute("Apellido_Paterno"))
 					apellidoPaterno = (String)listUser.get(0).getExpandoBridge().getAttribute("Apellido_Paterno");
 				
-				nombreEmpleado = nombre + " " + apellidoPaterno + " " + apellidoMaterno;
+				
+				listName.add(nombre.toUpperCase());
+				listName.add(apellidoPaterno.toUpperCase());
+				listName.add(apellidoMaterno.toUpperCase());
 			}
 		}
 				
-		return nombreEmpleado;
+		return listName;
 	}
 	
 	private static String convert(String str){
@@ -505,5 +908,20 @@ public class AddRequestVacation {
 		
 		return result.trim();		
 	}
+	
+	public static String encodeToString(BufferedImage image, String type) {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+ 
+        try {
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();
+            imageString = Base64.encodeBytes(imageBytes); 
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imageString;
+    }
 	
 }

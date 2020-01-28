@@ -10,10 +10,10 @@
   font-size: 15px;
 }
 
-.active, .collapsible:hover {
+blockquote .active, blockquote .collapsible:hover {
   background-color: #555;
 }
-.active {
+blockquote .active {
   border: solid 1px #838383 !important;
   color: #838383 !important;
 }

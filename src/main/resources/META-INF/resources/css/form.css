@@ -629,14 +629,14 @@
 	margin-bottom: 0px;
 }
 
-/**** CALENDAR ***/
+/**** CALENDAR **/
 .ui-datepicker .ui-datepicker-header {
     background: none;
     border: none;
 }
 
 .ui-widget.ui-widget-content {
-    border: 1px solid rgb(205, 184, 116);
+    border: 1px solid rgb(205, 184, 116) !important;
     background: black;
     border-radius: 15px;
 }
@@ -665,7 +665,7 @@
 }
 
 .ui-datepicker select.ui-datepicker-month{
-	margin-right: 10px;
+	margin-right: 10px !important;
 }
 
 .ui-datepicker select.ui-datepicker-month,
